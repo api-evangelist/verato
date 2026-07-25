@@ -1,0 +1,135 @@
+openapi: 3.0.3
+info:
+  title: Verato Organization AddRelationshipService HouseholdQuery API
+  version: 2026.1.2
+  description: 'The Verato Organization API provides comprehensive identity management capabilities for organizations within the Verato LINK platform. This API enables you to:
+
+
+    - **Ingest and manage organization identities**: Add, update, and delete organization records with rich demographic and contact information.
+
+    - **Search and query**: Find organizations using demographic data, native IDs, or link IDs (Verato''s golden identifier).
+
+    - **Lifecycle management**: Soft-delete and restore organization records while preserving data history.
+
+    - **Merge and link operations**: Consolidate duplicate organizations, manage master data relationships, and maintain data lineage.
+
+    - **Relationship management**: Define and query relationships between organizations (parent-child, affiliations, etc.).
+
+    - **Notifications**: Track and audit identity changes and events across your organization data.
+
+
+    All operations follow a standard request/response envelope pattern with audit tracking, error handling, and optional response format customization.
+
+    '
+servers:
+- url: https://yourveratodomain.com/org-link-ws/svc
+  description: Production Organization Link API
+- url: https://yourveratodomain.com/org-link-ws/svc
+  description: Sandbox Organization Link API
+security:
+- basicAuth: []
+tags:
+- name: HouseholdQuery
+paths:
+  /householdQuery:
+    post:
+      summary: Query for Household (householdQuery)
+      description: Used to retrieve the collection of Link IDs that have been grouped into a household.
+      operationId: post_householdQuery
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_householdQuery'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_householdQuery'
+      tags:
+      - HouseholdQuery
+components:
+  schemas:
+    ServiceRequest_householdQuery:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/HouseholdQueryWsRequest'
+        trackingId:
+          type: string
+    Source:
+      type: object
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-mm-dd).
+        name:
+          type: string
+          description: The name of the data source.  Must be unique across Verato.
+        id:
+          type: string
+          description: The ID of an identity within the given data source.
+      description: Represents the information tracking an identity to a source that contains the identity
+    HouseholdQueryWsResponse:
+      type: object
+      properties:
+        householdId:
+          type: string
+          description: The householdId.
+        lastUpdateDate:
+          type: string
+          format: date-time
+        linkIdsInHousehold:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+          description: Current linkIds in the household.
+        createDate:
+          type: string
+          format: date-time
+      required:
+      - householdId
+      - linkIdsInHousehold
+    HouseholdQueryWsRequest:
+      type: object
+      properties:
+        householdId:
+          type: string
+          description: The householdId to use in the query
+        linkId:
+          type: string
+          description: The link ID to use in the query
+        source:
+          $ref: '#/components/schemas/Source'
+          description: The SourceNative to use in the query
+    ServiceResponse_householdQuery:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/HouseholdQueryWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

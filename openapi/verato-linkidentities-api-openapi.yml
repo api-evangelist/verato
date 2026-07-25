@@ -1,0 +1,136 @@
+openapi: 3.0.3
+info:
+  title: Verato Organization AddRelationshipService LinkIdentities API
+  version: 2026.1.2
+  description: 'The Verato Organization API provides comprehensive identity management capabilities for organizations within the Verato LINK platform. This API enables you to:
+
+
+    - **Ingest and manage organization identities**: Add, update, and delete organization records with rich demographic and contact information.
+
+    - **Search and query**: Find organizations using demographic data, native IDs, or link IDs (Verato''s golden identifier).
+
+    - **Lifecycle management**: Soft-delete and restore organization records while preserving data history.
+
+    - **Merge and link operations**: Consolidate duplicate organizations, manage master data relationships, and maintain data lineage.
+
+    - **Relationship management**: Define and query relationships between organizations (parent-child, affiliations, etc.).
+
+    - **Notifications**: Track and audit identity changes and events across your organization data.
+
+
+    All operations follow a standard request/response envelope pattern with audit tracking, error handling, and optional response format customization.
+
+    '
+servers:
+- url: https://yourveratodomain.com/org-link-ws/svc
+  description: Production Organization Link API
+- url: https://yourveratodomain.com/org-link-ws/svc
+  description: Sandbox Organization Link API
+security:
+- basicAuth: []
+tags:
+- name: LinkIdentities
+paths:
+  /linkIdentities:
+    post:
+      summary: Link two identities (linkIdentities)
+      description: 'Links two existing identities together without retiring either source. This is typically used when you determine that two separate source identities belong to the same real-world person, and they should be represented as a single link ID.
+
+        '
+      operationId: linkIdentities
+      requestBody:
+        required: true
+        description: The link identities request.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_linkIdentities'
+      responses:
+        '200':
+          description: Successful link identities operation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_linkIdentities'
+      tags:
+      - LinkIdentities
+components:
+  schemas:
+    LinkIdentitiesWsRequest:
+      type: object
+      description: 'Represents a request to link data from one identity into another, usually
+
+        across sources.
+
+        '
+      required:
+      - source
+      - linkToSource
+      properties:
+        linkToSource:
+          description: Target identity (source name + native ID) to link to.
+          $ref: '#/components/schemas/Source'
+        source:
+          description: Identity (source name + native ID) that will be linked.
+          $ref: '#/components/schemas/Source'
+    Source:
+      type: object
+      description: Tracks an identity to a particular source system and record ID.
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-MM-dd).
+        name:
+          type: string
+          description: Name of the data source. Must be unique across Verato.
+        id:
+          type: string
+          description: ID of an identity within the given data source.
+    ServiceRequest_linkIdentities:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/LinkIdentitiesWsRequest'
+        trackingId:
+          type: string
+    LinkIdentitiesWsResponse:
+      type: object
+      description: 'Response to link identities request, returning the primary link ID and
+
+        linkToSource information.
+
+        '
+      properties:
+        linkId:
+          type: string
+          description: link ID of the identity that received data in a link request.
+        linkToSource:
+          description: Original source information for the link-to identity.
+          $ref: '#/components/schemas/Source'
+    ServiceResponse_linkIdentities:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/LinkIdentitiesWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

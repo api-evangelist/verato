@@ -1,0 +1,127 @@
+openapi: 3.0.3
+info:
+  title: Verato Organization AddRelationshipService DeactivateSourceWs API
+  version: 2026.1.2
+  description: 'The Verato Organization API provides comprehensive identity management capabilities for organizations within the Verato LINK platform. This API enables you to:
+
+
+    - **Ingest and manage organization identities**: Add, update, and delete organization records with rich demographic and contact information.
+
+    - **Search and query**: Find organizations using demographic data, native IDs, or link IDs (Verato''s golden identifier).
+
+    - **Lifecycle management**: Soft-delete and restore organization records while preserving data history.
+
+    - **Merge and link operations**: Consolidate duplicate organizations, manage master data relationships, and maintain data lineage.
+
+    - **Relationship management**: Define and query relationships between organizations (parent-child, affiliations, etc.).
+
+    - **Notifications**: Track and audit identity changes and events across your organization data.
+
+
+    All operations follow a standard request/response envelope pattern with audit tracking, error handling, and optional response format customization.
+
+    '
+servers:
+- url: https://yourveratodomain.com/org-link-ws/svc
+  description: Production Organization Link API
+- url: https://yourveratodomain.com/org-link-ws/svc
+  description: Sandbox Organization Link API
+security:
+- basicAuth: []
+tags:
+- name: DeactivateSourceWs
+paths:
+  /deactivateSourceWs:
+    post:
+      summary: Deactivate source from identities (deactivateSourceWs)
+      description: Used to deactivate (logically delete) a source record from your instance of Universal Identity.
+      operationId: post_deactivateSourceWs
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_deactivateSourceWs'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_deactivateSourceWs'
+      tags:
+      - DeactivateSourceWs
+components:
+  schemas:
+    Source:
+      type: object
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-mm-dd).
+        name:
+          type: string
+          description: The name of the data source.  Must be unique across Verato.
+        id:
+          type: string
+          description: The ID of an identity within the given data source.
+      description: Represents the information tracking an identity to a source that contains the identity
+    DeactivateSourceWsResponse:
+      type: object
+      properties:
+        linkIdsModified:
+          type: array
+          items:
+            type: string
+          description: Entity Ids which got modified
+        linkIdsDeactivated:
+          type: array
+          items:
+            type: string
+          description: Entity Ids which got fully deactivated
+      required:
+      - linkIdsModified
+      - linkIdsDeactivated
+      description: Service response for a DeactivateSourceWsResponse
+    ServiceResponse_deactivateSourceWs:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/DeactivateSourceWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    ServiceRequest_deactivateSourceWs:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/DeactivateSourceWsRequest'
+        trackingId:
+          type: string
+    DeactivateSourceWsRequest:
+      type: object
+      required:
+      - sourceToDeactivate
+      properties:
+        sourceToDeactivate:
+          $ref: '#/components/schemas/Source'
+          description: The source to deactivate.
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

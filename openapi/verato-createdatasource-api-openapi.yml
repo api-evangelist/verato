@@ -1,0 +1,157 @@
+openapi: 3.0.3
+info:
+  title: Verato Organization AddRelationshipService CreateDataSource API
+  version: 2026.1.2
+  description: 'The Verato Organization API provides comprehensive identity management capabilities for organizations within the Verato LINK platform. This API enables you to:
+
+
+    - **Ingest and manage organization identities**: Add, update, and delete organization records with rich demographic and contact information.
+
+    - **Search and query**: Find organizations using demographic data, native IDs, or link IDs (Verato''s golden identifier).
+
+    - **Lifecycle management**: Soft-delete and restore organization records while preserving data history.
+
+    - **Merge and link operations**: Consolidate duplicate organizations, manage master data relationships, and maintain data lineage.
+
+    - **Relationship management**: Define and query relationships between organizations (parent-child, affiliations, etc.).
+
+    - **Notifications**: Track and audit identity changes and events across your organization data.
+
+
+    All operations follow a standard request/response envelope pattern with audit tracking, error handling, and optional response format customization.
+
+    '
+servers:
+- url: https://yourveratodomain.com/org-link-ws/svc
+  description: Production Organization Link API
+- url: https://yourveratodomain.com/org-link-ws/svc
+  description: Sandbox Organization Link API
+security:
+- basicAuth: []
+tags:
+- name: CreateDataSource
+paths:
+  /createDataSource:
+    post:
+      summary: Create Data Sources (createDataSource)
+      description: 'Creates one or more new data sources in the Universal Identity platform. Up to 10 data sources can be created per call. Newly added sources may take 10–15 minutes to become available. This service only adds data sources — it does not delete or modify existing ones.
+
+
+        Source name constraints: maximum 255 characters, no spaces, and the following characters are not supported: `" | : ''`. Source names are case-sensitive; Verato recommends a consistent capitalization standard (all uppercase or all lowercase) to avoid duplicate records.
+
+
+        Failed additions are reported individually in the response and do not prevent other sources in the same request from being created. Common failure causes include the source already existing or the name matching a reserved Verato source code (e.g. "Verato").
+
+        '
+      operationId: post_createDataSource
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_createDataSource'
+              example:
+                auditId: 3f7a1c00-12ab-4def-8901-23456789abcd
+                success: true
+                retryableError: false
+                message: null
+                errors: []
+                trackingId: my-tracking-id-001
+                content:
+                  datasourceCreationResponses:
+                  - datasource: EHR_SYSTEM_A
+                    status: SUCCESS
+                    error: null
+                  - datasource: BILLING_SYSTEM_B
+                    status: SUCCESS
+                    error: null
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_createDataSource'
+            example:
+              trackingId: my-tracking-id-001
+              content:
+                sources:
+                - EHR_SYSTEM_A
+                - BILLING_SYSTEM_B
+      tags:
+      - CreateDataSource
+components:
+  schemas:
+    DatasourceCreationResponse:
+      type: object
+      properties:
+        datasource:
+          type: string
+          description: The data source code from the request.
+        error:
+          type: string
+          nullable: true
+          description: Error message if this source failed to be created; null on success.
+        status:
+          type: string
+          description: Result for this data source. Indicates whether the source was created successfully or why it failed (e.g. already exists, reserved source code).
+    ServiceResponse_createDataSource:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/CreateDataSourcesWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    CreateDataSourcesWsRequest:
+      type: object
+      properties:
+        sources:
+          type: array
+          items:
+            type: string
+            maxLength: 255
+            description: 'A data source code. Must not contain spaces or the characters " | : ''. Case-sensitive; use a consistent capitalization standard to avoid duplicates.'
+          minItems: 1
+          maxItems: 10
+          description: List of data source codes to create. Maximum 10 per request.
+      required:
+      - sources
+      description: Request to create one or more new data sources. Up to 10 sources may be submitted per call.
+    ServiceRequest_createDataSource:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/CreateDataSourcesWsRequest'
+        trackingId:
+          type: string
+    CreateDataSourcesWsResponse:
+      type: object
+      properties:
+        datasourceCreationResponses:
+          type: array
+          items:
+            $ref: '#/components/schemas/DatasourceCreationResponse'
+          description: A list of data source creation results.
+      required:
+      - datasourceCreationResponses
+      description: Create datasource service response
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

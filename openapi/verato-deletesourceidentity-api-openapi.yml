@@ -1,0 +1,136 @@
+openapi: 3.0.3
+info:
+  title: Verato Organization AddRelationshipService DeleteSourceIdentity API
+  version: 2026.1.2
+  description: 'The Verato Organization API provides comprehensive identity management capabilities for organizations within the Verato LINK platform. This API enables you to:
+
+
+    - **Ingest and manage organization identities**: Add, update, and delete organization records with rich demographic and contact information.
+
+    - **Search and query**: Find organizations using demographic data, native IDs, or link IDs (Verato''s golden identifier).
+
+    - **Lifecycle management**: Soft-delete and restore organization records while preserving data history.
+
+    - **Merge and link operations**: Consolidate duplicate organizations, manage master data relationships, and maintain data lineage.
+
+    - **Relationship management**: Define and query relationships between organizations (parent-child, affiliations, etc.).
+
+    - **Notifications**: Track and audit identity changes and events across your organization data.
+
+
+    All operations follow a standard request/response envelope pattern with audit tracking, error handling, and optional response format customization.
+
+    '
+servers:
+- url: https://yourveratodomain.com/org-link-ws/svc
+  description: Production Organization Link API
+- url: https://yourveratodomain.com/org-link-ws/svc
+  description: Sandbox Organization Link API
+security:
+- basicAuth: []
+tags:
+- name: DeleteSourceIdentity
+paths:
+  /deleteSourceIdentity:
+    post:
+      summary: Hard Delete a Source (deleteSourceIdentity)
+      description: 'Permanently removes all information and history associated with the given
+
+        source (source name + nativeId) from Verato. This also removes any
+
+        merge/unmerge history associated with that source.
+
+        '
+      operationId: deleteSourceIdentity
+      requestBody:
+        required: true
+        description: The web service request containing the source to delete.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_deleteSourceIdentity'
+      responses:
+        '200':
+          description: Successful delete source identity operation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_deleteSourceIdentity'
+      tags:
+      - DeleteSourceIdentity
+components:
+  schemas:
+    Source:
+      type: object
+      description: Tracks an identity to a particular source system and record ID.
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-MM-dd).
+        name:
+          type: string
+          description: Name of the data source. Must be unique across Verato.
+        id:
+          type: string
+          description: ID of an identity within the given data source.
+    ServiceResponse_deleteSourceIdentity:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/DeleteSourceIdentityWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    DeleteSourceIdentityWsRequest:
+      type: object
+      description: Deletes all information associated with the provided source.
+      required:
+      - source
+      properties:
+        source:
+          description: The source to remove from the database.
+          $ref: '#/components/schemas/Source'
+    DeleteSourceIdentityWsResponse:
+      type: object
+      description: 'Service response for a source-based delete. Indicates which linkIds were
+
+        modified and which were deleted.
+
+        '
+      properties:
+        linkIdsModified:
+          type: array
+          description: link IDs with information removed but not deleted.
+          items:
+            type: string
+        linkIdsDeleted:
+          type: array
+          description: link IDs that were deleted.
+          items:
+            type: string
+    ServiceRequest_deleteSourceIdentity:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/DeleteSourceIdentityWsRequest'
+        trackingId:
+          type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
