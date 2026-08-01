@@ -1,0 +1,22 @@
+generated: '2026-07-21'
+method: searched
+probe: false
+url: https://verato.trustshare.com/
+source: https://verato.com/platform/why-verato/security/
+certifications:
+- HITRUST r2
+- SOC 2 Type II
+- PCI DSS
+- HIPAA
+detail: >-
+  Verato publishes a Trustshare-hosted trust center at verato.trustshare.com and
+  a security overview page. It states HITRUST r2 (the highest HITRUST tier,
+  maintained since 2017), SOC 2 Type II, and PCI certification, and HIPAA
+  compliance. Each customer is provisioned a fully isolated, private tenant, and
+  Verato applies privacy-by-design across the data lifecycle. A downloadable
+  security datasheet is offered from the security page.
+evidence:
+- source: https://verato.com/platform/why-verato/security/
+  keywords: [hitrust r2, soc 2 type ii, pci, hipaa, trust center, private tenant]
+- source: https://verato.trustshare.com/
+  keywords: [trust center]

@@ -1,0 +1,4562 @@
+openapi: 3.0.3
+info:
+  title: Verato Person API
+  version: 2026.1.2
+servers:
+  - url: https://yourveratodomain.com/link-ws/svc
+    description: Production Link API
+  - url: https://yourveratodomain.com/link-ws/svc
+    description: Sandbox Link API
+paths:
+  /v2/postIdentity:
+    post:
+      summary: Add an Identity (postIdentity)
+      description: Adds a new identity into Verato.
+      operationId: post_v2_postIdentity
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_v2__postIdentity'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_v2__postIdentity'
+            examples:
+              corePerson:
+                summary: Core Person
+                value:
+                  responseIdentityFormatNames:
+                    - DEFAULT
+                    - GROUP_BY_SOURCE
+                    - MOST_RECENTLY_ASSERTED
+                  identity:
+                    sources:
+                      - name: test
+                        id: ja-person-5143
+                    names:
+                      - use: official
+                        prefix: Mr.
+                        first: Jordan
+                        middle: A.
+                        last: Avery
+                        suffix: Jr.
+                        credential: MBA
+                    addresses:
+                      - type: home
+                        line1: 4567 Maplewood Ave
+                        line2: Apt 8B
+                        city: Riverton
+                        district: Northside
+                        state: NY
+                        postalCode: '13579'
+                        country: USA
+                        latitude: 40.7128
+                        longitude: -74.006
+                        validFrom: '2008-06-15'
+                        validTo: '2038-06-15'
+                    datesOfBirth:
+                      - dateOfBirth: '1985-04-12'
+                    ssns:
+                      - ssn: 219-08-3746
+                    genders:
+                      - gender: M
+                    genderIdentities:
+                      - genderIdentity: M
+                    phoneNumbers:
+                      - type: mobile
+                        countryCode: '+1'
+                        areaCode: '212'
+                        number: '5552314'
+                        extension: ''
+                        validTo: '2038-06-15'
+                        validFrom: '2008-06-15'
+                        bestTimeToContact:
+                          - day: sat
+                            startTime: '09:00'
+                            endTime: '20:00'
+                            allDay: false
+                    emails:
+                      - type: work
+                        email: jordan.avery@samplemail.com
+                        validFrom: '2008-06-15'
+                        validTo: '2038-06-15'
+                    deathDetails:
+                      - deceased: 'N'
+                        dateOfDeath: null
+                        city: null
+                        county: null
+                        state: null
+                        country: null
+                    externalUniqueIdentifier:
+                      - issuer: Riverton Records
+                        value: RV-42109
+                        status: active
+                        startDate: '2008-06-15'
+                        endDate: '2038-06-15'
+                    alternateIdentifiers:
+                      - description: Passport
+                        type: PPN
+                        value: XG9876543
+                        status: active
+                        issuer: Fictitious Passport Office
+                        issueDate: '2012-09-01'
+                        startDate: '2012-09-01'
+                        endDate: '2022-09-01'
+                    multipleBirthIndicator:
+                      - multipleBirthIndicator: false
+                        multipleBirthInteger: 1
+                        birthPlurality: 1
+                    citizenships:
+                      - citizenship: US
+                    photos:
+                      - url: https://images.placeholder.org/people/jordan-avery.jpg
+                    sexualOrientations:
+                      - sexualOrientation: ST
+                    races:
+                      - race: 2106-3
+                    ethnicities:
+                      - ethnicity: 2186-5
+                    religiousAffiliations:
+                      - religiousAffiliation: '1033'
+                    maritalStatuses:
+                      - maritalStatus: M
+                    communicationLanguages:
+                      - language: en
+                        preferred: true
+                    qualifications:
+                      - type: qualification
+                        qualification: MBA
+                        status: active
+                        issuer: Westbridge University
+                        issueDate: '2010-05-22'
+                        validFrom: '2010-05-22'
+                        validTo: '2030-05-22'
+                    consents:
+                      - name: Data Sharing Consent
+                        type: hcd
+                        status: active
+                        isRequired: true
+                        decision: permit
+                        validFrom: '2019-01-01'
+                        validTo: '2029-01-01'
+                        source: participant
+                        regulatoryBasis: hipaa-restrictions
+                    preferences:
+                      - name: SMS Alerts
+                        type: SMS
+                        channels:
+                          - type: SMSWRIT
+                            isOptedIn: true
+                            lastOptedInDate: '2025-07-01'
+                            frequency: monthly
+                            preferredStartTime: '09:00'
+                            preferredEndTime: '21:00'
+  /v2/demographicsSearch:
+    post:
+      summary: Search using demographic information (demographicsSearch)
+      description: >-
+        Searches Verato using the provided demographic attributes. It returns
+        zero or more candidate identities ordered by match score.
+      operationId: post_v2_demographicsSearch
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_v2__demographicsSearch'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_v2__demographicsSearch'
+  /v2/demographicsQuery:
+    post:
+      summary: Query using demographic information (demographicsQuery)
+      description: >-
+        Searches Verato using the provided demographic information and returns
+        the best-matching identity if found.
+      operationId: post_v2_demographicsQuery
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_v2__demographicsQuery'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_v2__demographicsQuery'
+  /v2/identityIdQuery:
+    post:
+      summary: Query using link ID (identityIdQuery)
+      description: Search for an Identity with supplied linkId
+      operationId: post_v2_identityIdQuery
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_v2__identityIdQuery'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_v2__identityIdQuery'
+  /v2/nativeIdQuery:
+    post:
+      summary: Query using native ID (nativeIdQuery)
+      description: >-
+        Searches Verato for an identity using source name + native ID (the
+        customer's source system identifier).
+      operationId: post_v2_nativeIdQuery
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_v2__nativeIdQuery'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_v2__nativeIdQuery'
+  /createDataSource:
+    post:
+      summary: Create Data Sources (createDataSource)
+      description: >
+        Creates one or more new data sources in the Universal Identity platform.
+        Up to 10 data sources can be created per call. Newly added sources may
+        take 10–15 minutes to become available. This service only adds data
+        sources — it does not delete or modify existing ones.
+
+
+        Source name constraints: maximum 255 characters, no spaces, and the
+        following characters are not supported: `" | : '`. Source names are
+        case-sensitive; Verato recommends a consistent capitalization standard
+        (all uppercase or all lowercase) to avoid duplicate records.
+
+
+        Failed additions are reported individually in the response and do not
+        prevent other sources in the same request from being created. Common
+        failure causes include the source already existing or the name matching
+        a reserved Verato source code (e.g. "Verato").
+      operationId: post_createDataSource
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_createDataSource'
+              example:
+                auditId: 3f7a1c00-12ab-4def-8901-23456789abcd
+                success: true
+                retryableError: false
+                message: null
+                errors: []
+                trackingId: my-tracking-id-001
+                content:
+                  datasourceCreationResponses:
+                    - datasource: EHR_SYSTEM_A
+                      status: SUCCESS
+                      error: null
+                    - datasource: BILLING_SYSTEM_B
+                      status: SUCCESS
+                      error: null
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_createDataSource'
+            example:
+              trackingId: my-tracking-id-001
+              content:
+                sources:
+                  - EHR_SYSTEM_A
+                  - BILLING_SYSTEM_B
+  /deleteSourceIdentity:
+    post:
+      summary: Hard Delete a Source (deleteSourceIdentity)
+      description: >-
+        Permanently removes all information and history associated with a
+        specific source name + native ID across Verato. This also removes
+        merge/unmerge history associated with that source identity. Use with
+        caution.
+      operationId: post_deleteSourceIdentity
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_deleteSourceIdentity'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_deleteSourceIdentity'
+  /reactivateSourceWs:
+    post:
+      summary: Reactivate source from identities (reactivateSourceWs)
+      description: >-
+        Used to reactivate a source record from your instance of Universal
+        Identity, that was previously deactivated.
+      operationId: post_reactivateSourceWs
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_reactivateSourceWs'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_reactivateSourceWs'
+  /deactivateSourceWs:
+    post:
+      summary: Deactivate source from identities (deactivateSourceWs)
+      description: >-
+        Used to deactivate (logically delete) a source record from your instance
+        of Universal Identity.
+      operationId: post_deactivateSourceWs
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_deactivateSourceWs'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_deactivateSourceWs'
+  /householdQuery:
+    post:
+      summary: Query for Household (householdQuery)
+      description: >-
+        Used to retrieve the collection of Link IDs that have been grouped into
+        a household.
+      operationId: post_householdQuery
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_householdQuery'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_householdQuery'
+  /linkIdentities:
+    post:
+      summary: Link two identities (linkIdentities)
+      description: >
+        Links two existing identities together without retiring either source.
+        This is typically used when you determine that two separate source
+        identities belong to the same real-world person, and they should be
+        represented as a single link ID.
+      operationId: post_linkIdentities
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_linkIdentities'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_linkIdentities'
+  /mergeIdentities:
+    post:
+      summary: Merge two identities (mergeIdentities)
+      description: >
+        Merges a "toRetire" source identity into a "toSurvive" source identity.
+        After a merge, the retired source is marked as merged and the surviving
+        identity contains combined data. The response returns the surviving
+        linkId.
+      operationId: post_mergeIdentities
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_mergeIdentities'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_mergeIdentities'
+  /searchNotifications:
+    post:
+      summary: Query notifications (searchNotifications)
+      description: >
+        Retrieves identity-related notifications for a specific period of time,
+        such as merge events, link/unlink events, or other configured
+        notifications.
+      operationId: post_searchNotifications
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_searchNotifications'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_searchNotifications'
+  /unlinkIdentities:
+    post:
+      summary: Unlink two identities (unlinkIdentities)
+      description: |
+        Unlinks two previously linked identities, splitting them into separate
+        entities and returning their linkIds and associated source information.
+      operationId: post_unlinkIdentities
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_unlinkIdentities'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_unlinkIdentities'
+  /unmergeIdentities:
+    post:
+      summary: Unmerge two identities (unmergeIdentities)
+      description: >
+        Reverses a previous merge operation by extracting a previously merged
+        source identity into its own record. Returns the new link ID and the
+        linkId it was unmerged from.
+      operationId: post_unmergeIdentities
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_unmergeIdentities'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_unmergeIdentities'
+  /addRelationshipService:
+    post:
+      summary: Add a new relationship (addRelationshipService)
+      description: |
+        Adds a relationship between two identities according to configured
+        relationship definitions.
+      operationId: post_addRelationshipService
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_addRelationshipService'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_addRelationshipService'
+  /searchRelationshipsService:
+    post:
+      summary: Searches for relationships (searchRelationshipsService)
+      description: |
+        Searches for relationships
+      operationId: post_searchRelationshipsService
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/ServiceResponse_searchRelationshipsService
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_searchRelationshipsService'
+  /deleteRelationshipService:
+    post:
+      summary: Delete a relationship (deleteRelationshipService)
+      description: |
+        Deletes a previously defined relationship between two identities.
+      operationId: post_deleteRelationshipService
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_deleteRelationshipService'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_deleteRelationshipService'
+components:
+  schemas:
+    ServiceRequest_linkIdentities:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/LinkIdentitiesWsRequest'
+        trackingId:
+          type: string
+    ServiceRequest_demographicsSearch:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/DemographicsSearchWsRequest'
+        trackingId:
+          type: string
+    DeleteSourceIdentityWsResponse:
+      type: object
+      properties:
+        linkIdsModified:
+          type: array
+          items:
+            type: string
+          description: >-
+            The list of LINK ids that had information removed, but were not
+            deleted
+        linkIdsDeleted:
+          type: array
+          items:
+            type: string
+          description: The list of LINK ids that were deleted
+      description: Service response for a Source-based query
+    Address:
+      type: object
+      properties:
+        type:
+          type: string
+        line1:
+          type: string
+        line2:
+          type: string
+        city:
+          type: string
+        district:
+          type: string
+        state:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+        validFrom:
+          type: string
+          format: date
+        validTo:
+          type: string
+          format: date
+        verifiedAddress:
+          $ref: '#/components/schemas/VerifiedAddress'
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+          description: The source for this cluster
+        verifiedAddressMetaData:
+          $ref: '#/components/schemas/VerifiedAddressMetaData'
+        clusterStatus:
+          type: string
+          enum:
+            - ACTIVE
+            - INACTIVE
+          description: The current clusterStatus
+      description: API address model
+    ServiceRequest_nativeIdQuery:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/NativeIdQueryWsRequest'
+        trackingId:
+          type: string
+    GenderPerSource:
+      type: object
+      properties:
+        identityCluster:
+          $ref: '#/components/schemas/Gender'
+        firstAsserted:
+          type: string
+          description: The date the source first saw this property value.
+        gender:
+          $ref: '#/components/schemas/Gender'
+          description: The Gender provided by this source
+        lastAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was last asserted
+        lastAsserted:
+          type: string
+          description: The date the source last saw this property value.
+        firstAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was first asserted
+      description: ''
+    ServiceResponse_unlinkIdentities:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/UnlinkIdentitiesWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    Gender:
+      type: object
+      properties:
+        gender:
+          type: string
+          description: The person's gender
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+          description: The source for this cluster
+        clusterStatus:
+          type: string
+          enum:
+            - ACTIVE
+            - INACTIVE
+          description: The current clusterStatus
+    DemographicsQueryWsRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+          description: Identity containing demographic search values
+        responseIdentityFormatNames:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+          description: >-
+            A set of values that indicates the different formats of the Identity
+            to be sent back in the response. If no values are specified,
+            "DEFAULT" is assumed.
+      required:
+        - identity
+      description: Request object for demographics query
+    DeleteRelationshipWsRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    ZonedDateTime:
+      type: object
+      properties:
+        dayOfWeek:
+          type: string
+          enum:
+            - FRIDAY
+            - MONDAY
+            - SATURDAY
+            - SUNDAY
+            - THURSDAY
+            - TUESDAY
+            - WEDNESDAY
+        offset:
+          $ref: '#/components/schemas/ZoneOffset'
+        hour:
+          type: integer
+          format: int32
+        month:
+          type: string
+          enum:
+            - APRIL
+            - AUGUST
+            - DECEMBER
+            - FEBRUARY
+            - JANUARY
+            - JULY
+            - JUNE
+            - MARCH
+            - MAY
+            - NOVEMBER
+            - OCTOBER
+            - SEPTEMBER
+        zone:
+          $ref: '#/components/schemas/ZoneId'
+        year:
+          type: integer
+          format: int32
+        dayOfMonth:
+          type: integer
+          format: int32
+        dayOfYear:
+          type: integer
+          format: int32
+        monthValue:
+          type: integer
+          format: int32
+        nano:
+          type: integer
+          format: int32
+        minute:
+          type: integer
+          format: int32
+        second:
+          type: integer
+          format: int32
+    DeactivatedData:
+      type: object
+      properties:
+        identityGroupedBySource:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityPerSource'
+          description: deactivated data grouped by source
+      description: Adds deactivated data
+    ServiceResponse_postIdentity:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/PostIdentityWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    AddressPerSource:
+      type: object
+      properties:
+        identityCluster:
+          $ref: '#/components/schemas/Address'
+        firstAsserted:
+          type: string
+          description: The date the source first saw this property value.
+        address:
+          $ref: '#/components/schemas/Address'
+          description: The Address provided by this source
+        lastAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was last asserted
+        lastAsserted:
+          type: string
+          description: The date the source last saw this property value.
+        firstAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was first asserted
+      description: ''
+    ServiceRequest_dismissRejectedEntitiesWebService:
+      type: object
+      properties:
+        content:
+          type: string
+        trackingId:
+          type: string
+    ServiceRequest_searchRelationshipsService:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/SearchRelationshipsWsRequest'
+        trackingId:
+          type: string
+    Identity:
+      type: object
+      properties:
+        names:
+          type: array
+          items:
+            $ref: '#/components/schemas/names'
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/addresses'
+        datesOfBirth:
+          type: array
+          items:
+            $ref: '#/components/schemas/datesOfBirth'
+        ssns:
+          type: array
+          items:
+            $ref: '#/components/schemas/ssns'
+        genders:
+          type: array
+          items:
+            $ref: '#/components/schemas/genders'
+        genderIdentities:
+          type: array
+          items:
+            $ref: '#/components/schemas/genderIdentities'
+        phoneNumbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/phoneNumbers'
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/emails'
+        deathDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/deathDetails'
+        externalUniqueIdentifier:
+          type: array
+          items:
+            $ref: '#/components/schemas/externalUniqueIdentifier'
+        alternateIdentifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/alternateIdentifiers'
+        multipleBirthIndicator:
+          type: array
+          items:
+            $ref: '#/components/schemas/multipleBirthIndicator'
+        citizenships:
+          type: array
+          items:
+            $ref: '#/components/schemas/citizenships'
+        photos:
+          type: array
+          items:
+            $ref: '#/components/schemas/photos'
+        sexualOrientations:
+          type: array
+          items:
+            $ref: '#/components/schemas/sexualOrientations'
+        races:
+          type: array
+          items:
+            $ref: '#/components/schemas/races'
+        ethnicities:
+          type: array
+          items:
+            $ref: '#/components/schemas/ethnicities'
+        religiousAffiliations:
+          type: array
+          items:
+            $ref: '#/components/schemas/religiousAffiliations'
+        maritalStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/maritalStatuses'
+        communicationLanguages:
+          type: array
+          items:
+            $ref: '#/components/schemas/communicationLanguages'
+        qualifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/qualifications'
+        consents:
+          type: array
+          items:
+            $ref: '#/components/schemas/consents'
+        preferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/preferences'
+        healthInsuranceCoverage:
+          type: array
+          items:
+            $ref: '#/components/schemas/healthInsuranceCoverage'
+        guarantor:
+          type: array
+          items:
+            $ref: '#/components/schemas/guarantor'
+        upcomingAppointment:
+          type: array
+          items:
+            $ref: '#/components/schemas/upcomingAppointment'
+        recentEncounter:
+          type: array
+          items:
+            $ref: '#/components/schemas/recentEncounter'
+      description: API object representing a Patient identity
+    CODE-SET:
+      type: string
+      description: CODE-SET data type, see documentation for more details
+    TEXT:
+      type: string
+      description: TEXT data type, see documentation for more details
+    NUMBER:
+      type: string
+      description: NUMBER data type, see documentation for more details
+    DATE:
+      type: string
+      description: DATE data type, see documentation for more details
+    TIME:
+      type: string
+      description: TIME data type, see documentation for more details
+    BOOLEAN:
+      type: boolean
+      description: BOOLEAN data type, see documentation for more details
+    addresses:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CODE-SET'
+        line1:
+          $ref: '#/components/schemas/TEXT'
+        line2:
+          $ref: '#/components/schemas/TEXT'
+        city:
+          $ref: '#/components/schemas/TEXT'
+        district:
+          $ref: '#/components/schemas/TEXT'
+        state:
+          $ref: '#/components/schemas/TEXT'
+        postalCode:
+          $ref: '#/components/schemas/TEXT'
+        country:
+          $ref: '#/components/schemas/TEXT'
+        latitude:
+          $ref: '#/components/schemas/NUMBER'
+        longitude:
+          $ref: '#/components/schemas/NUMBER'
+        validFrom:
+          $ref: '#/components/schemas/DATE'
+        validTo:
+          $ref: '#/components/schemas/DATE'
+    datesOfBirth:
+      type: object
+      properties:
+        dateOfBirth:
+          $ref: '#/components/schemas/DATE'
+    ssns:
+      type: object
+      properties:
+        ssn:
+          $ref: '#/components/schemas/TEXT'
+    genders:
+      type: object
+      properties:
+        gender:
+          $ref: '#/components/schemas/CODE-SET'
+    genderIdentities:
+      type: object
+      properties:
+        genderIdentity:
+          $ref: '#/components/schemas/CODE-SET'
+    phoneNumbers:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CODE-SET'
+        countryCode:
+          $ref: '#/components/schemas/TEXT'
+        areaCode:
+          $ref: '#/components/schemas/TEXT'
+        number:
+          $ref: '#/components/schemas/TEXT'
+        extension:
+          $ref: '#/components/schemas/TEXT'
+        validTo:
+          $ref: '#/components/schemas/DATE'
+        validFrom:
+          $ref: '#/components/schemas/DATE'
+        bestTimeToContact:
+          type: array
+          items:
+            type: object
+            properties:
+              day:
+                $ref: '#/components/schemas/CODE-SET'
+              startTime:
+                $ref: '#/components/schemas/TIME'
+              endTime:
+                $ref: '#/components/schemas/TIME'
+              allDay:
+                $ref: '#/components/schemas/BOOLEAN'
+    emails:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CODE-SET'
+        email:
+          $ref: '#/components/schemas/TEXT'
+        validFrom:
+          $ref: '#/components/schemas/DATE'
+        validTo:
+          $ref: '#/components/schemas/DATE'
+    deathDetails:
+      type: object
+      properties:
+        deceased:
+          $ref: '#/components/schemas/CODE-SET'
+        dateOfDeath:
+          $ref: '#/components/schemas/DATE'
+        city:
+          $ref: '#/components/schemas/TEXT'
+        county:
+          $ref: '#/components/schemas/TEXT'
+        state:
+          $ref: '#/components/schemas/TEXT'
+        country:
+          $ref: '#/components/schemas/TEXT'
+    externalUniqueIdentifier:
+      type: object
+      properties:
+        issuer:
+          $ref: '#/components/schemas/TEXT'
+        value:
+          $ref: '#/components/schemas/TEXT'
+        status:
+          $ref: '#/components/schemas/TEXT'
+        startDate:
+          $ref: '#/components/schemas/DATE'
+        endDate:
+          $ref: '#/components/schemas/DATE'
+    alternateIdentifiers:
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/TEXT'
+        type:
+          $ref: '#/components/schemas/CODE-SET'
+        value:
+          $ref: '#/components/schemas/TEXT'
+        status:
+          $ref: '#/components/schemas/TEXT'
+        issuer:
+          $ref: '#/components/schemas/TEXT'
+        issueDate:
+          $ref: '#/components/schemas/DATE'
+        startDate:
+          $ref: '#/components/schemas/DATE'
+        endDate:
+          $ref: '#/components/schemas/DATE'
+    multipleBirthIndicator:
+      type: object
+      properties:
+        multipleBirthIndicator:
+          $ref: '#/components/schemas/BOOLEAN'
+        multipleBirthInteger:
+          $ref: '#/components/schemas/NUMBER'
+        birthPlurality:
+          $ref: '#/components/schemas/NUMBER'
+    citizenships:
+      type: object
+      properties:
+        citizenship:
+          $ref: '#/components/schemas/CODE-SET'
+    photos:
+      type: object
+      properties:
+        url:
+          $ref: '#/components/schemas/TEXT'
+    sexualOrientations:
+      type: object
+      properties:
+        sexualOrientation:
+          $ref: '#/components/schemas/CODE-SET'
+    races:
+      type: object
+      properties:
+        race:
+          $ref: '#/components/schemas/CODE-SET'
+    ethnicities:
+      type: object
+      properties:
+        ethnicity:
+          $ref: '#/components/schemas/CODE-SET'
+    religiousAffiliations:
+      type: object
+      properties:
+        religiousAffiliation:
+          $ref: '#/components/schemas/CODE-SET'
+    maritalStatuses:
+      type: object
+      properties:
+        maritalStatus:
+          $ref: '#/components/schemas/CODE-SET'
+    communicationLanguages:
+      type: object
+      properties:
+        language:
+          $ref: '#/components/schemas/CODE-SET'
+        preferred:
+          $ref: '#/components/schemas/BOOLEAN'
+    qualifications:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CODE-SET'
+        qualification:
+          $ref: '#/components/schemas/CODE-SET'
+        status:
+          $ref: '#/components/schemas/CODE-SET'
+        issuer:
+          $ref: '#/components/schemas/TEXT'
+        issueDate:
+          $ref: '#/components/schemas/DATE'
+        validFrom:
+          $ref: '#/components/schemas/DATE'
+        validTo:
+          $ref: '#/components/schemas/DATE'
+    consents:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/TEXT'
+        type:
+          $ref: '#/components/schemas/CODE-SET'
+        status:
+          $ref: '#/components/schemas/CODE-SET'
+        isRequired:
+          $ref: '#/components/schemas/BOOLEAN'
+        decision:
+          $ref: '#/components/schemas/CODE-SET'
+        validFrom:
+          $ref: '#/components/schemas/DATE'
+        validTo:
+          $ref: '#/components/schemas/DATE'
+        source:
+          $ref: '#/components/schemas/TEXT'
+        regulatoryBasis:
+          $ref: '#/components/schemas/CODE-SET'
+    preferences:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/TEXT'
+        type:
+          $ref: '#/components/schemas/TEXT'
+        channels:
+          type: array
+          items: {}
+    channels:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CODE-SET'
+        isOptedIn:
+          $ref: '#/components/schemas/BOOLEAN'
+        lastOptedInDate:
+          $ref: '#/components/schemas/DATE'
+        frequency:
+          $ref: '#/components/schemas/TEXT'
+        preferredStartTime:
+          $ref: '#/components/schemas/TIME'
+        preferredEndTime:
+          $ref: '#/components/schemas/TIME'
+    names:
+      type: object
+      properties:
+        use:
+          $ref: '#/components/schemas/CODE-SET'
+        prefix:
+          $ref: '#/components/schemas/TEXT'
+        first:
+          $ref: '#/components/schemas/TEXT'
+        middle:
+          $ref: '#/components/schemas/TEXT'
+        last:
+          $ref: '#/components/schemas/TEXT'
+        suffix:
+          $ref: '#/components/schemas/TEXT'
+        credential:
+          $ref: '#/components/schemas/TEXT'
+    healthInsuranceCoverage:
+      type: object
+      properties:
+        payerName:
+          $ref: '#/components/schemas/TEXT'
+        status:
+          $ref: '#/components/schemas/CODE-SET'
+        insuranceType:
+          $ref: '#/components/schemas/CODE-SET'
+        planType:
+          $ref: '#/components/schemas/CODE-SET'
+        subscriberId:
+          $ref: '#/components/schemas/TEXT'
+        relationship:
+          $ref: '#/components/schemas/CODE-SET'
+        groupNumber:
+          $ref: '#/components/schemas/TEXT'
+        idNumber:
+          $ref: '#/components/schemas/TEXT'
+        sequenceNumber:
+          $ref: '#/components/schemas/TEXT'
+        effectiveDate:
+          $ref: '#/components/schemas/TEXT'
+        endDate:
+          $ref: '#/components/schemas/DATE'
+    guarantor:
+      type: object
+      properties:
+        relationship:
+          $ref: '#/components/schemas/CODE-SET'
+        firstName:
+          $ref: '#/components/schemas/TEXT'
+        middleName:
+          $ref: '#/components/schemas/TEXT'
+        lastName:
+          $ref: '#/components/schemas/TEXT'
+        suffix:
+          $ref: '#/components/schemas/TEXT'
+        dob:
+          $ref: '#/components/schemas/DATE'
+        ssn:
+          $ref: '#/components/schemas/TEXT'
+        addressLine1:
+          $ref: '#/components/schemas/TEXT'
+        addressLine2:
+          $ref: '#/components/schemas/TEXT'
+        city:
+          $ref: '#/components/schemas/TEXT'
+        state:
+          $ref: '#/components/schemas/TEXT'
+        zip:
+          $ref: '#/components/schemas/TEXT'
+        phone:
+          $ref: '#/components/schemas/TEXT'
+        onHold:
+          $ref: '#/components/schemas/BOOLEAN'
+        startDate:
+          $ref: '#/components/schemas/DATE'
+        endDate:
+          $ref: '#/components/schemas/DATE'
+    upcomingAppointment:
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/TEXT'
+        status:
+          $ref: '#/components/schemas/CODE-SET'
+        cancellationDate:
+          $ref: '#/components/schemas/DATE'
+        cancellationReason:
+          $ref: '#/components/schemas/CODE-SET'
+        serviceCategory:
+          $ref: '#/components/schemas/CODE-SET'
+        serviceType:
+          $ref: '#/components/schemas/CODE-SET'
+        practitionerSpecialty:
+          $ref: '#/components/schemas/CODE-SET'
+        start:
+          $ref: '#/components/schemas/DATE'
+        end:
+          $ref: '#/components/schemas/DATE'
+        type:
+          $ref: '#/components/schemas/CODE-SET'
+        reason:
+          $ref: '#/components/schemas/TEXT'
+        priority:
+          $ref: '#/components/schemas/CODE-SET'
+        note:
+          $ref: '#/components/schemas/TEXT'
+    recentEncounter:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/CODE-SET'
+        class:
+          $ref: '#/components/schemas/CODE-SET'
+        priority:
+          $ref: '#/components/schemas/CODE-SET'
+        type:
+          $ref: '#/components/schemas/CODE-SET'
+        serviceType:
+          $ref: '#/components/schemas/CODE-SET'
+        start:
+          $ref: '#/components/schemas/DATE'
+        end:
+          $ref: '#/components/schemas/DATE'
+        reason:
+          $ref: '#/components/schemas/TEXT'
+        diagnosis:
+          $ref: '#/components/schemas/TEXT'
+        specialArrangement:
+          $ref: '#/components/schemas/CODE-SET'
+        specialCourtesy:
+          $ref: '#/components/schemas/CODE-SET'
+    PhoneNumberPerSource:
+      type: object
+      properties:
+        identityCluster:
+          $ref: '#/components/schemas/Phone'
+        firstAsserted:
+          type: string
+          description: The date the source first saw this property value.
+        phoneNumber:
+          $ref: '#/components/schemas/Phone'
+          description: The Phone Number provided by this source
+        lastAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was last asserted
+        lastAsserted:
+          type: string
+          description: The date the source last saw this property value.
+        firstAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was first asserted
+      description: ''
+    DateOfBirth:
+      type: object
+      properties:
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+          description: The source for this cluster
+        dateOfBirth:
+          type: string
+          description: The date of birth
+        clusterStatus:
+          type: string
+          enum:
+            - ACTIVE
+            - INACTIVE
+          description: The current clusterStatus
+    ServiceResponse_linkIdentities:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/LinkIdentitiesWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    EmailPerSource:
+      type: object
+      properties:
+        identityCluster:
+          $ref: '#/components/schemas/Email'
+        firstAsserted:
+          type: string
+          description: The date the source first saw this property value.
+        lastAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was last asserted
+        email:
+          $ref: '#/components/schemas/Email'
+          description: The Email provided by this source
+        lastAsserted:
+          type: string
+          description: The date the source last saw this property value.
+        firstAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was first asserted
+      description: ''
+    ServiceResponse_unmergeIdentities:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/UnmergeIdentitiesWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    LocalTime:
+      type: object
+      properties:
+        hour:
+          type: integer
+          format: int32
+        nano:
+          type: integer
+          format: int32
+        minute:
+          type: integer
+          format: int32
+        second:
+          type: integer
+          format: int32
+    CustomerMetaData:
+      type: object
+      properties:
+        transactionType:
+          type: string
+        sourceLoginName:
+          type: string
+        sourceUserName:
+          type: string
+        transactionDateTime:
+          type: string
+        sourceTransactionDateTime:
+          type: string
+        customMetaData:
+          type: object
+          additionalProperties:
+            type: string
+        location:
+          type: string
+    ServiceResponse_createDataSource:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/CreateDataSourcesWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    EntityLookUp:
+      type: object
+      properties:
+        sourceId:
+          type: integer
+          format: int64
+        domainList:
+          type: array
+          items: {}
+          uniqueItems: true
+        sourceGroup:
+          type: array
+          items: {}
+          uniqueItems: true
+        displayName:
+          type: string
+        source:
+          type: string
+        nativeId:
+          type: string
+        matchTier:
+          type: string
+    Instant:
+      type: object
+      properties:
+        nano:
+          type: integer
+          format: int32
+        epochSecond:
+          type: integer
+          format: int64
+    AutoUnlinkWsRequest:
+      type: object
+      properties:
+        linkId:
+          type: string
+          description: The link ID to evaluate for autoUnlink
+      required:
+        - linkId
+      description: Evaluates the state of an Entity provided a link id
+    ServiceRequest_getRelationshipDefinitionv2Service:
+      type: object
+      properties:
+        content: {}
+        trackingId:
+          type: string
+    ServiceResponse_demographicsQuery:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/DemographicsQueryWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    ServiceResponse_searchTasksWs:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/SearchTasksWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    RelationshipWs:
+      type: object
+      properties:
+        relationshipVerb:
+          type: string
+        endDate:
+          type: string
+          format: date-time
+        objectVeratoId:
+          type: string
+        domain:
+          type: string
+        inverseRelationshipVerb:
+          type: string
+        subjectVeratoId:
+          type: string
+        trustFactor:
+          type: string
+        details:
+          type: object
+          additionalProperties: {}
+        id:
+          type: string
+        startDate:
+          type: string
+          format: date-time
+        status:
+          type: string
+    ServiceRequest_getRelationshipDefinitionService:
+      type: object
+      properties:
+        content: {}
+        trackingId:
+          type: string
+    ServiceRequest_autoUnlink:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/AutoUnlinkWsRequest'
+        trackingId:
+          type: string
+    ServiceResponse_deleteSourceIdentity:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/DeleteSourceIdentityWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    ZoneRules:
+      type: object
+      properties:
+        fixedOffset:
+          type: boolean
+        transitionRules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ZoneOffsetTransitionRule'
+        transitions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ZoneOffsetTransition'
+    MultiUnlinkEventsWsResponse:
+      type: object
+      properties:
+        modifiedLinkIds:
+          type: array
+          items:
+            type: string
+          description: Modified Entity ids
+      required:
+        - modifiedLinkIds
+      description: Service response for a MultiUnlinkEventsWsResponse
+    ServiceResponse_autoUnlink:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/AutoUnlinkWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    ReactivateSourceWsRequest:
+      type: object
+      required:
+        - sourceToReactivate
+      properties:
+        sourceToReactivate:
+          $ref: '#/components/schemas/Source'
+          description: The source to reactivate.
+    DeactivateSourceWsRequest:
+      type: object
+      required:
+        - sourceToDeactivate
+      properties:
+        sourceToDeactivate:
+          $ref: '#/components/schemas/Source'
+          description: The source to deactivate.
+    ServiceRequest_reactivateSourceWs:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/ReactivateSourceWsRequest'
+        trackingId:
+          type: string
+    NetworkIdQueryWsResponse:
+      type: object
+      properties:
+        identities:
+          type: array
+          items:
+            $ref: '#/components/schemas/NetworkIdQueryResult'
+          description: Identities associated with the requested Network ID
+        requestedNetworkId:
+          type: string
+          description: The Network ID used in the original query
+      description: Response object for query by Verato Network ID
+    ServiceRequest_unlinkIdentities:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/UnlinkIdentitiesWsRequest'
+        trackingId:
+          type: string
+    RelationshipWsFilter:
+      type: object
+      properties:
+        filterBySubjectVeratoId:
+          type: string
+        filterBySubjectOrObjectVeratoId:
+          type: string
+        filterByObjectVeratoId:
+          type: string
+        filterByRelationshipVerb:
+          type: string
+    GetRelationshipDefinitionWsResponse:
+      type: object
+      properties:
+        definitions:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    ServiceRequest_deleteRelationshipService:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/DeleteRelationshipWsRequest'
+        trackingId:
+          type: string
+    ServiceResponse_identityIdQuery:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/IdentityIdQueryWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    DismissRejectedEntitiesWsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          enum:
+            - false
+            - true
+          description: >-
+            Only response from the DismissRejectedEntitites service is success
+            true/false, nothing else to echo back
+      description: DismissRejectedEntitites service response
+    ServiceRequest_taskRecommendation:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/TaskRecommendationWsRequest'
+        trackingId:
+          type: string
+    DeathDetailsPerSource:
+      type: object
+      properties:
+        identityCluster:
+          $ref: '#/components/schemas/DeathDetails'
+        firstAsserted:
+          type: string
+          description: The date the source first saw this property value.
+        lastAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was last asserted
+        deathDetails:
+          $ref: '#/components/schemas/DeathDetails'
+          description: The DeathDetails provided by this source
+        lastAsserted:
+          type: string
+          description: The date the source last saw this property value.
+        firstAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was first asserted
+      description: ''
+    ServiceRequest_augmentedMatchSummary:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/AugmentedMatchSummaryRequest'
+        trackingId:
+          type: string
+    MergeIdentitiesWsRequest:
+      type: object
+      properties:
+        toSurviveSource:
+          $ref: '#/components/schemas/Source'
+          description: >-
+            Source represents the source/nativeId of the Identity that will
+            survive
+        toRetireSource:
+          $ref: '#/components/schemas/Source'
+          description: >-
+            Source represents the source/nativeId of the Identity that will get
+            retired/merged
+      required:
+        - toRetireSource
+        - toSurviveSource
+      description: >-
+        Request by a customer to (merge/retire) data from one Source into
+        another
+    AugmentedMatchSummaryResponse:
+      type: object
+      properties:
+        matches:
+          type: array
+          items:
+            type: string
+          description: summary of the matches
+      required:
+        - matches
+      description: AugmentedMatchSummaryResponse service response
+    ServiceResponse_getRelationshipDefinitionService:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/GetRelationshipDefinitionWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    HouseholdQueryWsRequest:
+      type: object
+      properties:
+        householdId:
+          type: string
+          description: The householdId to use in the query
+        linkId:
+          type: string
+          description: The link ID to use in the query
+        source:
+          $ref: '#/components/schemas/Source'
+          description: The SourceNative to use in the query
+    AddressDetailsPerSource:
+      type: object
+      properties:
+        identityCluster:
+          $ref: '#/components/schemas/AddressDetails'
+        firstAsserted:
+          type: string
+          description: The date the source first saw this property value.
+        lastAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was last asserted
+        addressDetails:
+          $ref: '#/components/schemas/AddressDetails'
+          description: The Address provided by this source
+        lastAsserted:
+          type: string
+          description: The date the source last saw this property value.
+        firstAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was first asserted
+      description: ''
+    NativeIdQueryWsRequest:
+      type: object
+      properties:
+        source:
+          $ref: '#/components/schemas/Source'
+          description: The source to be used in the query
+        responseIdentityFormatNames:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+          description: >-
+            A set of values that indicates the different formats of the Identity
+            to be sent back in the response. If no values are specified,
+            "DEFAULT" is assumed.
+      required:
+        - source
+      description: Queries link database using source information
+    ServiceResponse_taskRecommendation:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/TaskRecommendationWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    SearchRelationshipsWsRequest:
+      type: object
+      properties:
+        relationshipFilter:
+          $ref: '#/components/schemas/RelationshipWsFilter'
+    AddressDetails:
+      type: object
+      properties:
+        country:
+          type: string
+        streetType:
+          type: string
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+          description: The source for this cluster
+        city:
+          type: string
+        zipcode4:
+          type: string
+        addressType:
+          type: string
+        houseNumber:
+          type: string
+        streetPostDirection:
+          type: string
+        unitNumber:
+          type: string
+        attributesMap:
+          type: object
+          additionalProperties: {}
+        streetDirection:
+          type: string
+        unitType:
+          type: string
+        zipcode:
+          type: string
+        streetName:
+          type: string
+        state:
+          type: string
+        line2:
+          type: string
+        clusterStatus:
+          type: string
+          enum:
+            - ACTIVE
+            - INACTIVE
+          description: The current clusterStatus
+    NetworkIdQueryWsRequest:
+      type: object
+      properties:
+        networkId:
+          type: string
+          description: The Verato Network ID to query for
+        responseIdentityFormatNames:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+          description: >-
+            A set of values that indicates the different formats of the Identity
+            to be sent back in the response. If no values are specified,
+            "DEFAULT" is assumed.
+      required:
+        - networkId
+      description: Request object used to query by Verato Network ID
+    TemporalUnit:
+      type: object
+      properties:
+        duration:
+          $ref: '#/components/schemas/Duration'
+        durationEstimated:
+          type: boolean
+        timeBased:
+          type: boolean
+        dateBased:
+          type: boolean
+    NamePerSource:
+      type: object
+      properties:
+        identityCluster:
+          $ref: '#/components/schemas/Name'
+        firstAsserted:
+          type: string
+          description: The date the source first saw this property value.
+        lastAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was last asserted
+        name:
+          $ref: '#/components/schemas/Name'
+          description: The Name provided by this source
+        lastAsserted:
+          type: string
+          description: The date the source last saw this property value.
+        firstAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was first asserted
+      description: ''
+    PostRejectedIdentityWsRequest:
+      type: object
+      properties:
+        rejectedLinkId:
+          type: string
+          description: >-
+            an optional field that can be used by the customer to correlate
+            requests with responses. Echoed in response
+        responseIdentityFormatNames:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+          description: >-
+            A set of values that indicates the different formats of the Identity
+            to be sent back in the response. If no values are specified,
+            "DEFAULT" is assumed.
+      required:
+        - rejectedLinkId
+      description: Posts a rejected identity to Link Database
+    AugmentedMatchSummaryRequest:
+      type: object
+      properties:
+        targetId:
+          type: string
+          description: target link id
+        candidateId:
+          type: string
+          description: candidate link id
+        targetSourcesToAugment:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+          uniqueItems: true
+          description: target sources - needed to perform augmentation
+      required:
+        - targetId
+        - candidateId
+        - targetSourcesToAugment
+      description: AugmentedMatchSummaryRequest service request
+    ServiceResponse_augmentedMatchSummary:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/AugmentedMatchSummaryResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    ServiceRequest_searchNotifications:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/SearchNotificationsWsRequest'
+        trackingId:
+          type: string
+    VerifiedAddressMetaData:
+      type: object
+      properties:
+        verifiedAddress:
+          type: string
+        rdi:
+          type: string
+        countyFips:
+          type: string
+        cmra:
+          type: boolean
+        latitude:
+          type: number
+          format: double
+        precision:
+          type: string
+        congressionalDistrict:
+          type: string
+        vacant:
+          type: boolean
+        verificationCode:
+          type: string
+        longitude:
+          type: number
+          format: double
+        countyName:
+          type: string
+    ServiceResponse_getRelationshipDefinitionv2Service:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/GetRelationshipDefinitionV2WsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    DemographicsSearchWsResponse:
+      type: object
+      properties:
+        searchResults:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemographicsSearchResult'
+          description: >-
+            A list of search results in order of best to worst match for the
+            Identity provided in the request. Empty if no matches were found.
+      required:
+        - searchResults
+      description: Response object for demographics query
+    DatesOfBirthPerSource:
+      type: object
+      properties:
+        identityCluster:
+          $ref: '#/components/schemas/DateOfBirth'
+        firstAsserted:
+          type: string
+          description: The date the source first saw this property value.
+        lastAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was last asserted
+        dateOfBirth:
+          $ref: '#/components/schemas/DateOfBirth'
+          description: The Date Of Birth provided by this source
+        lastAsserted:
+          type: string
+          description: The date the source last saw this property value.
+        firstAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was first asserted
+      description: ''
+    AutoUnlinkWsResponse:
+      type: object
+      properties:
+        linkId:
+          type: string
+          description: The link ID used in the original query
+        recommendedEntities:
+          type: array
+          items:
+            type: string
+          description: The recommended entities to group together based on Source-NativeId
+        lastUpdateDate:
+          type: string
+          format: date-time
+          description: Timestamp of last update to link ID evaluated by service
+        recommendation:
+          type: string
+          description: The recommendation based on the state of the evaluated entity
+        version:
+          type: integer
+          format: int32
+          description: The version of the link ID evaluated by the service
+      description: Returns a recommendation based on the state of the entity
+    SearchNotificationsWsResponse:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: The name of the customer for the notifications
+        hasNext:
+          type: boolean
+          description: Boolean to determinate if there are more elements
+        notifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationData'
+          description: The notifications retrieved
+        totalElements:
+          type: integer
+          format: int64
+          description: The number of notifications retrieved
+    DemographicsSearchWsRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+          description: Identity containing demographic search values
+        matchScoreThreshold:
+          type: number
+          format: double
+          description: >-
+            Only identities with match scores equal to or above this value will
+            appear in the response. If not provided, then no filtering based on
+            match score is performed.
+        maxSearchResults:
+          type: integer
+          format: int32
+          maximum: 100000000
+          minimum: 1
+          description: >-
+            The number of results to return at one time. Must be greater than 0.
+            If not provided, the system's maximum number of results will be
+            returned. Note that while very large values are acceptable, the
+            system has a default maximum, and the response will include a
+            warning message if that maximum is exceeded.
+        responseIdentityFormatNames:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+          description: >-
+            A set of values that indicates the different formats of the Identity
+            to be sent back in the response. If no values are specified,
+            "DEFAULT" is assumed.
+      required:
+        - identity
+      description: Request object for demographics query
+    MergeIdentitiesWsResponse:
+      type: object
+      properties:
+        linkId:
+          type: string
+          description: >-
+            Return the link ID of the Identity that received merged/retired data
+            during a MergeIdentity request
+        toSurviveSource:
+          $ref: '#/components/schemas/Source'
+          description: >-
+            Return the original source information for the Identity that was the
+            toSurvive Identity. If the merge fails, this will be null
+      description: >-
+        When two identities have been merged by the MergeIdentities WebService ,
+        return the link ID of the primary Identity
+    ReactivateSourceWsResponse:
+      type: object
+      properties:
+        linkIdsModified:
+          type: array
+          items:
+            type: string
+          description: Entity Ids which got modified
+        linkIdCreated:
+          type: string
+          description: Entity Id which got created
+      required:
+        - linkIdsModified
+      description: Service response for a ReactivateSourceWsResponse
+    PostIdentitySource:
+      description: >-
+        Source object used when posting a new identity. The customerMetaData
+        field is deprecated and will be removed in a future version — do not
+        include it in new integrations.
+      allOf:
+        - $ref: '#/components/schemas/Source'
+        - type: object
+          properties:
+            customerMetaData:
+              deprecated: true
+              description: >-
+                **Deprecated.** Customer metadata should no longer be passed
+                inside the source object. This field will be removed in a future
+                version.
+              allOf:
+                - $ref: '#/components/schemas/CustomerMetaData'
+    PostIdentityIdentity:
+      description: >-
+        Identity payload used when posting a new identity. Extends the base
+        Identity model with a sources array that associates the identity with
+        one or more data sources.
+      allOf:
+        - $ref: '#/components/schemas/Identity'
+        - type: object
+          required:
+            - sources
+          properties:
+            sources:
+              type: array
+              minItems: 1
+              maxItems: 1
+              description: >-
+                The data source that provided this identity. Exactly one source
+                is required per request.
+              items:
+                $ref: '#/components/schemas/PostIdentitySource'
+    PostIdentityWsRequest:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/PostIdentityIdentity'
+          description: The identity to add.
+        responseIdentityFormatNames:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+          description: >-
+            A set of values that indicates the different formats of the Identity
+            to be sent back in the response. If no values are specified,
+            "DEFAULT" is assumed.
+      required:
+        - identity
+      description: adds a new identity to the LINK database
+    ServiceRequest_multiUnlinkEventsWs:
+      type: object
+      properties:
+        content:
+          type: string
+        trackingId:
+          type: string
+    SearchNotificationsWsRequest:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+          description: Page number
+        endDate:
+          type: string
+          format: date-time
+          description: End date
+        pageSize:
+          type: integer
+          format: int32
+          description: page size
+        startDate:
+          type: string
+          format: date-time
+          description: Start date
+      required:
+        - pageNumber
+        - pageSize
+        - startDate
+        - endDate
+      description: query notificiations for the customer
+    CreateDataSourcesWsRequest:
+      type: object
+      properties:
+        sources:
+          type: array
+          items:
+            type: string
+            maxLength: 255
+            description: >-
+              A data source code. Must not contain spaces or the characters " |
+              : '. Case-sensitive; use a consistent capitalization standard to
+              avoid duplicates.
+          minItems: 1
+          maxItems: 10
+          description: List of data source codes to create. Maximum 10 per request.
+      required:
+        - sources
+      description: >-
+        Request to create one or more new data sources. Up to 10 sources may be
+        submitted per call.
+    UnlinkIdentitiesWsRequest:
+      type: object
+      required:
+        - unlinkFromSource
+        - source
+      properties:
+        unlinkFromSource:
+          $ref: '#/components/schemas/Source'
+          description: >-
+            Return the source info that targets the Identity from which we will
+            unlink the source Identity
+        source:
+          $ref: '#/components/schemas/Source'
+          description: Represents the Identity that will be unlinked
+      description: >-
+        a request by a customer to unlink ( extract) data from one Identity to
+        create another
+    DeathDetails:
+      type: object
+      properties:
+        deceased:
+          type: string
+        dateOfDeath:
+          type: string
+          format: date-time
+        city:
+          type: string
+        county:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+        clusterStatus:
+          type: string
+          enum:
+            - ACTIVE
+            - INACTIVE
+          description: The current clusterStatus
+      description: API address model
+    Email:
+      type: object
+      properties:
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+          description: The source for this cluster
+        type:
+          type: string
+        email:
+          type: string
+        validFrom:
+          type: string
+          format: date
+        validTo:
+          type: string
+          format: date
+        clusterStatus:
+          type: string
+          enum:
+            - ACTIVE
+            - INACTIVE
+          description: The current clusterStatus
+    ServiceResponse_householdQuery:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/HouseholdQueryWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    Unmergeable:
+      type: object
+      properties:
+        originSource:
+          type: string
+        source:
+          type: string
+        nativeId:
+          type: string
+        originNativeId:
+          type: string
+    ServiceResponse_postRejectedIdentity:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/PostRejectedIdentityWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    MergedSourceRecord:
+      type: object
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-mm-dd).
+        name:
+          type: string
+          description: The name of the data source.  Must be unique across Verato.
+        id:
+          type: string
+          description: The ID of an identity within the given data source.
+        activeNativeId:
+          type: string
+          description: The surviving (active) native id.
+        activeSource:
+          type: string
+          description: The surviving (active) source name.
+        timestamp:
+          type: string
+          description: The merge timestamp (UTC, ISO_LOCAL_DATE_TIME).
+      description: A retired source record enriched with linkage metadata.
+    SearchTasksWsResponse:
+      type: object
+      properties:
+        hasNext:
+          type: boolean
+          description: Boolean to determinate if there are more elements
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/SlimTask'
+          description: The tasks retrieved
+        totalElements:
+          type: integer
+          format: int64
+          description: The number of tasks retrieved
+    ServiceResponse_deleteRelationshipService:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/DeleteRelationshipWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    ServiceRequest_demographicsQuery:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/DemographicsQueryWsRequest'
+        trackingId:
+          type: string
+    ServiceResponse_deactivateSourceWs:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/DeactivateSourceWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    Name:
+      type: object
+      properties:
+        use:
+          type: string
+        prefix:
+          type: string
+        first:
+          type: string
+        middle:
+          type: string
+        last:
+          type: string
+        suffix:
+          type: string
+        credential:
+          type: string
+        clusterStatus:
+          type: string
+          enum:
+            - ACTIVE
+            - INACTIVE
+          description: The current clusterStatus
+      description: Represents a person's name
+    DatasourceCreationResponse:
+      type: object
+      properties:
+        datasource:
+          type: string
+          description: The data source code from the request.
+        error:
+          type: string
+          nullable: true
+          description: Error message if this source failed to be created; null on success.
+        status:
+          type: string
+          description: >-
+            Result for this data source. Indicates whether the source was
+            created successfully or why it failed (e.g. already exists, reserved
+            source code).
+    SocialSecurityNumberPerSource:
+      type: object
+      properties:
+        identityCluster:
+          $ref: '#/components/schemas/SSN'
+        firstAsserted:
+          type: string
+          description: The date the source first saw this property value.
+        lastAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was last asserted
+        ssn:
+          $ref: '#/components/schemas/SSN'
+          description: The Social Security Number provided by this source
+        lastAsserted:
+          type: string
+          description: The date the source last saw this property value.
+        firstAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was first asserted
+      description: ''
+    ServiceResponse_multiUnlinkEventsWs:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/MultiUnlinkEventsWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    TaskFilters:
+      type: object
+      properties:
+        before:
+          $ref: '#/components/schemas/ZonedDateTime'
+        minMatchScore:
+          type: number
+          format: double
+        assignees:
+          type: array
+          items:
+            type: string
+        maxMatchScore:
+          type: number
+          format: double
+        trigger:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityLookUp'
+        sort:
+          $ref: '#/components/schemas/Sort'
+        manual:
+          type: boolean
+        resolutionReason:
+          type: array
+          items:
+            type: string
+        related:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityLookUp'
+        createdBy:
+          type: array
+          items:
+            type: string
+        statuses:
+          type: array
+          items:
+            type: string
+        categories:
+          type: array
+          items:
+            type: string
+        after:
+          $ref: '#/components/schemas/ZonedDateTime'
+    ServiceRequest_mergeIdentities:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/MergeIdentitiesWsRequest'
+        trackingId:
+          type: string
+    Sort:
+      type: object
+      properties:
+        field:
+          type: string
+          enum:
+            - ASSIGNEE
+            - CATEGORY
+            - CREATED_BY
+            - CREATION_DATE
+            - MANUAL
+            - MATCH_SCORE
+            - NATIVE_ID
+            - RESOLUTION_REASON
+            - SOURCE
+            - STATUS
+        direction:
+          type: string
+          enum:
+            - ASC
+            - DESC
+    UnmergeIdentitiesWsResponse:
+      type: object
+      properties:
+        unmergedSource:
+          $ref: '#/components/schemas/Source'
+          description: The source information of identity that was unmerged
+        unmergedFromSource:
+          $ref: '#/components/schemas/Source'
+          description: The source information for unmerged from Identity
+        unmergedId:
+          type: string
+          description: Link ID of the Identity that was unmerged
+        unmergedFromId:
+          type: string
+          description: Link ID of Identity unmerged from.
+      required:
+        - unmergedId
+        - unmergedFromId
+        - unmergedSource
+        - unmergedFromSource
+      description: >-
+        When two identities have been merged by the MergeIdentities WebService ,
+        unmerge them by 
+         extracting the previously merged Identity into its own record.
+    ServiceRequest_unmergeIdentities:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/UnmergeIdentitiesWsRequest'
+        trackingId:
+          type: string
+    VerifiedAddress:
+      type: object
+      properties:
+        pmbDesignator:
+          type: string
+        zip:
+          type: string
+        secondaryNumber:
+          type: string
+        deliveryPoint:
+          type: string
+        country:
+          type: string
+        extraSecondaryDesignator:
+          type: string
+        streetPredirection:
+          type: string
+        city:
+          type: string
+        extraSecondaryNumber:
+          type: string
+        secondaryDesignator:
+          type: string
+        zip4:
+          type: string
+        urbanization:
+          type: string
+        primaryNumber:
+          type: string
+        streetName:
+          type: string
+        deliveryPointCheckDigit:
+          type: string
+        streetSuffix:
+          type: string
+        state:
+          type: string
+        cityAka:
+          type: string
+        streetPostdirection:
+          type: string
+        pmbNumber:
+          type: string
+    ServiceResponse_searchRelationshipsService:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/SearchRelationshipsWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    PostIdentityWsResponse:
+      type: object
+      properties:
+        identityGroupedBySource:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityPerSource'
+          description: >-
+            An alternative view of the link identity where information is
+            grouped by the source. Present if the Request object contains
+            "GROUP_BY_SOURCE" in its identity view names list.
+        linkIdentity:
+          $ref: '#/components/schemas/Identity'
+          description: the link identity as it exists in the link database
+        linkId:
+          type: string
+          enum:
+            - String
+          description: LinkId of the returned Identity, if any. Null if no match found
+        identity:
+          type: string
+          enum:
+            - Identity
+          description: Found identity, if any. Null if no match found
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/Domain'
+          uniqueItems: true
+          description: Domains of the returned Identity, if any. Null if none
+        customizedIdentitiesWithSource:
+          type: object
+          additionalProperties:
+            type: string
+          description: >-
+            An alternative view of the link identity where information is
+            customized according to the view name along with source information.
+            Present if the Request object contains "CUSTOM_VIEW" in its identity
+            view names list.
+        customizedIdentities:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Identity'
+          description: >-
+            An alternative view of the link identity where information is
+            customized according to the view name. Present if the Request object
+            contains "CUSTOM_VIEW" in its identity view names list.
+        vinIds:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+          description: The VIN IDs associated with the identity
+        events:
+          type: array
+          items:
+            type: string
+        incomingIdentity:
+          $ref: '#/components/schemas/Identity'
+          description: The identity being posted.
+        enrichedDetails:
+          type: string
+          enum:
+            - EnrichedDetails
+          description: >-
+            Enriched details for an Identity that is augmented from the enrich
+            stack
+      description: PostIdentity service response
+    NewRelationshipRequest:
+      type: object
+      description: >-
+        Public fields required to create a new relationship between two
+        identities.
+      properties:
+        id:
+          type: string
+        relationshipVerb:
+          type: string
+        subjectVeratoId:
+          type: string
+        objectVeratoId:
+          type: string
+        domain:
+          type: string
+        status:
+          type: string
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+    AddRelationshipWsRequest:
+      type: object
+      properties:
+        relationship:
+          $ref: '#/components/schemas/NewRelationshipRequest'
+    NotificationData:
+      type: object
+      properties:
+        partitionKey:
+          type: string
+        service:
+          type: string
+        customerId:
+          type: string
+        notificationLowerCaseBody:
+          $ref: '#/components/schemas/NotificationLowerCaseBody'
+        notificationType:
+          type: string
+        body:
+          type: string
+        ts:
+          type: string
+          format: date-time
+        username:
+          type: string
+    ServiceResponse_dismissRejectedEntitiesWebService:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/DismissRejectedEntitiesWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    ZoneOffsetTransitionRule:
+      type: object
+      properties:
+        localTime:
+          $ref: '#/components/schemas/LocalTime'
+        dayOfWeek:
+          type: string
+          enum:
+            - FRIDAY
+            - MONDAY
+            - SATURDAY
+            - SUNDAY
+            - THURSDAY
+            - TUESDAY
+            - WEDNESDAY
+        dayOfMonthIndicator:
+          type: integer
+          format: int32
+        month:
+          type: string
+          enum:
+            - APRIL
+            - AUGUST
+            - DECEMBER
+            - FEBRUARY
+            - JANUARY
+            - JULY
+            - JUNE
+            - MARCH
+            - MAY
+            - NOVEMBER
+            - OCTOBER
+            - SEPTEMBER
+        standardOffset:
+          $ref: '#/components/schemas/ZoneOffset'
+        midnightEndOfDay:
+          type: boolean
+        timeDefinition:
+          type: string
+          enum:
+            - STANDARD
+            - UTC
+            - WALL
+        offsetAfter:
+          $ref: '#/components/schemas/ZoneOffset'
+        offsetBefore:
+          $ref: '#/components/schemas/ZoneOffset'
+    CreateDataSourcesWsResponse:
+      type: object
+      properties:
+        datasourceCreationResponses:
+          type: array
+          items:
+            $ref: '#/components/schemas/DatasourceCreationResponse'
+          description: A list of data source creation results.
+      required:
+        - datasourceCreationResponses
+      description: Create datasource service response
+    DeleteRelationshipWsResponse:
+      type: object
+      properties:
+        id:
+          type: string
+    DeleteSourceIdentityWsRequest:
+      type: object
+      properties:
+        source:
+          $ref: '#/components/schemas/Source'
+          description: The source to remove from the database
+      required:
+        - source
+      description: Deletes all information associated with the source provided within
+    GetRelationshipDefinitionV2WsResponse:
+      type: object
+      properties:
+        relationshipDefinitions:
+          type: array
+          items:
+            $ref: '#/components/schemas/RelationshipDefinition'
+    ServiceResponse_nativeIdQuery:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/NativeIdQueryWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    Duration:
+      type: object
+      properties:
+        zero:
+          type: boolean
+        seconds:
+          type: integer
+          format: int64
+        negative:
+          type: boolean
+        nano:
+          type: integer
+          format: int32
+        units:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemporalUnit'
+    ServiceResponse_demographicsSearch:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/DemographicsSearchWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    LinkIdentitiesWsResponse:
+      type: object
+      properties:
+        linkId:
+          type: string
+          description: >-
+            The link ID of the Identity that received data in a LinkIdentity
+            request
+        linkToSource:
+          $ref: '#/components/schemas/Source'
+          description: >-
+            The original source information for the Identity that was the linkTo
+            Identity. If the link fails, this will be null.
+      description: >-
+        When two identities have been linked by the LinkIdentities WebService,
+        return the link ID of the primary Identity
+    ServiceResponse_mergeIdentities:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/MergeIdentitiesWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    ServiceRequest_addRelationshipService:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/AddRelationshipWsRequest'
+        trackingId:
+          type: string
+    TaskRecommendationWsRequest:
+      type: object
+      properties:
+        taskType:
+          type: string
+          description: Type of the task
+        related:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+          description: Related sources of the task
+        segment:
+          type: string
+          description: Model segment to use for the task recommendation
+        trigger:
+          $ref: '#/components/schemas/Source'
+          description: Trigger source of the task
+        version:
+          type: string
+          description: Model segment version to use for the task recommendation
+        taskId:
+          type: string
+          description: The ID of the task
+      required:
+        - taskId
+        - taskType
+        - trigger
+        - related
+      description: Task recommendation request to predict task resolution
+    DemographicsQueryWsResponse:
+      type: object
+      properties:
+        identityGroupedBySource:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityPerSource'
+          description: >-
+            An alternative view of the link identity where information is
+            grouped by the source. Present if the Request object contains
+            "GROUP_BY_SOURCE" in its identity view names list.
+        linkId:
+          type: string
+          enum:
+            - String
+          description: LinkId of the returned Identity, if any. Null if no match found
+        identity:
+          type: string
+          enum:
+            - Identity
+          description: Found identity, if any. Null if no match found
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/Domain'
+          uniqueItems: true
+          description: Domains of the returned Identity, if any. Null if none
+        customizedIdentitiesWithSource:
+          type: object
+          additionalProperties:
+            type: string
+          description: >-
+            An alternative view of the link identity where information is
+            customized according to the view name along with source information.
+            Present if the Request object contains "CUSTOM_VIEW" in its identity
+            view names list.
+        customizedIdentities:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Identity'
+          description: >-
+            An alternative view of the link identity where information is
+            customized according to the view name. Present if the Request object
+            contains "CUSTOM_VIEW" in its identity view names list.
+        vinIds:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+          description: The VIN IDs associated with the identity
+        enrichedDetails:
+          type: string
+          enum:
+            - EnrichedDetails
+          description: >-
+            Enriched details for an Identity that is augmented from the enrich
+            stack
+      description: Response object for demographics query
+    ServiceResponse_searchNotifications:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/SearchNotificationsWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    DemographicsSearchResult:
+      type: object
+      properties:
+        identityGroupedBySource:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityPerSource'
+          description: >-
+            An alternative view of the link identity where information is
+            grouped by the source. Present if the Request object contains
+            "GROUP_BY_SOURCE" in its identity view names list.
+        matchScore:
+          type: number
+          format: double
+          maximum: 1
+          minimum: 0
+          description: >-
+            Represents how well the "Identity" (or "IdentityGroupedBySource") is
+            thought to match the identity provided in the request.
+        linkId:
+          type: string
+          enum:
+            - String
+          description: LinkId of the returned Identity, if any. Null if no match found
+        identity:
+          type: string
+          enum:
+            - Identity
+          description: Found identity, if any. Null if no match found
+        sameIdentity:
+          type: string
+          enum:
+            - 'N'
+            - U
+            - 'Y'
+          description: >-
+            Represents whether or not the "Identity" (or
+            "IdentityGroupedBySource") is thought to be the same identity as
+            provided in the request.
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/Domain'
+          uniqueItems: true
+          description: Domains of the returned Identity, if any. Null if none
+        customizedIdentitiesWithSource:
+          type: object
+          additionalProperties:
+            type: string
+          description: >-
+            An alternative view of the link identity where information is
+            customized according to the view name along with source information.
+            Present if the Request object contains "CUSTOM_VIEW" in its identity
+            view names list.
+        customizedIdentities:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Identity'
+          description: >-
+            An alternative view of the link identity where information is
+            customized according to the view name. Present if the Request object
+            contains "CUSTOM_VIEW" in its identity view names list.
+        vinIds:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+          description: The VIN IDs associated with the identity
+        enrichedDetails:
+          type: string
+          enum:
+            - EnrichedDetails
+          description: >-
+            Enriched details for an Identity that is augmented from the enrich
+            stack
+      required:
+        - sameIdentity
+        - matchScore
+      description: ''
+    TaskRecommendationWsResponse:
+      type: object
+      properties:
+        segment:
+          type: string
+          description: The segment used in the task recommendation
+        confidence:
+          type: number
+          format: float
+          description: Score for confidence
+        confidenceCategory:
+          type: string
+          description: Confidence category (high/medium/low/unknown
+        recommendation:
+          type: string
+          description: Recommendation for the given task
+        message:
+          type: string
+          description: A small message describing the recommendation
+        version:
+          type: string
+          description: The segment version used in the task recommendation
+        taskId:
+          type: string
+          description: The ID of the task to resolve
+      required:
+        - taskId
+        - segment
+        - version
+        - recommendation
+        - message
+      description: task recommendation response to predict task resolution
+    RelationshipDefinition:
+      type: object
+      properties:
+        verbDefinitions:
+          type: array
+          items:
+            $ref: '#/components/schemas/VerbDefinition'
+        restricted:
+          type: boolean
+        name:
+          type: string
+    Domain:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+    LocalDateTime:
+      type: object
+      properties:
+        dayOfWeek:
+          type: string
+          enum:
+            - FRIDAY
+            - MONDAY
+            - SATURDAY
+            - SUNDAY
+            - THURSDAY
+            - TUESDAY
+            - WEDNESDAY
+        hour:
+          type: integer
+          format: int32
+        month:
+          type: string
+          enum:
+            - APRIL
+            - AUGUST
+            - DECEMBER
+            - FEBRUARY
+            - JANUARY
+            - JULY
+            - JUNE
+            - MARCH
+            - MAY
+            - NOVEMBER
+            - OCTOBER
+            - SEPTEMBER
+        year:
+          type: integer
+          format: int32
+        dayOfMonth:
+          type: integer
+          format: int32
+        dayOfYear:
+          type: integer
+          format: int32
+        monthValue:
+          type: integer
+          format: int32
+        nano:
+          type: integer
+          format: int32
+        minute:
+          type: integer
+          format: int32
+        second:
+          type: integer
+          format: int32
+    ServiceRequest_deleteSourceIdentity:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/DeleteSourceIdentityWsRequest'
+        trackingId:
+          type: string
+    VerbDefinition:
+      type: object
+      properties:
+        inverse:
+          type: string
+        verb:
+          type: string
+        subjectType:
+          type: string
+        objectType:
+          type: string
+    NetworkIdQueryResult:
+      type: object
+      properties:
+        identityGroupedBySource:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityPerSource'
+          description: >-
+            An alternative view of the link identity where information is
+            grouped by the source. Present if the Request object contains
+            "GROUP_BY_SOURCE" in its identity view names list.
+        linkId:
+          type: string
+          enum:
+            - String
+          description: LinkId of the returned Identity, if any. Null if no match found
+        identity:
+          type: string
+          enum:
+            - Identity
+          description: Found identity, if any. Null if no match found
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/Domain'
+          uniqueItems: true
+          description: Domains of the returned Identity, if any. Null if none
+        customizedIdentitiesWithSource:
+          type: object
+          additionalProperties:
+            type: string
+          description: >-
+            An alternative view of the link identity where information is
+            customized according to the view name along with source information.
+            Present if the Request object contains "CUSTOM_VIEW" in its identity
+            view names list.
+        customizedIdentities:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Identity'
+          description: >-
+            An alternative view of the link identity where information is
+            customized according to the view name. Present if the Request object
+            contains "CUSTOM_VIEW" in its identity view names list.
+        vinIds:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+          description: The VIN IDs associated with the identity
+        enrichedDetails:
+          type: string
+          enum:
+            - EnrichedDetails
+          description: >-
+            Enriched details for an Identity that is augmented from the enrich
+            stack
+      description: Identity result returned from a Network ID query
+    RetiredData:
+      type: object
+      properties:
+        identityGroupedBySource:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityPerSource'
+          description: Retired data grouped by source
+      description: Adds retired data
+    IdentityPerSource:
+      type: object
+      properties:
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddressPerSource'
+          description: The addresses associated with this identity
+        extendedAndCustomProperties:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        addressDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddressDetailsPerSource'
+          description: The addresses associated with this identity
+        genders:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenderPerSource'
+          description: The genders associated with this identity
+        source:
+          $ref: '#/components/schemas/Source'
+          description: The source that provided all of the info for this identity.
+        datesOfBirth:
+          type: array
+          items:
+            $ref: '#/components/schemas/DatesOfBirthPerSource'
+          description: The dates of birth associated with the identity
+        phoneNumbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhoneNumberPerSource'
+          description: The phone numbers associated with this identity
+        deathDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeathDetailsPerSource'
+          description: The death details associated with this identity
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmailPerSource'
+          description: The email addresses associated with this identity
+        names:
+          type: array
+          items:
+            $ref: '#/components/schemas/NamePerSource'
+          description: The names associated with the identity
+        ssns:
+          type: array
+          items:
+            $ref: '#/components/schemas/SocialSecurityNumberPerSource'
+          description: The Social Security Numbers associated with the identity
+        mergedSourceRecord:
+          $ref: '#/components/schemas/MergedSourceRecord'
+          description: A source that has been merged into this identity.
+        deactivatedSourceRecord:
+          $ref: '#/components/schemas/Source'
+          description: A source that has been deactivated in this identity.
+      description: >-
+        API object representing an identity, with information grouped by the
+        single source that provided that information (this may include multiple
+        updates, as expressed in the "lastAsserted" and "firstAsserted"
+        properties).
+    ServiceRequest_searchTasksWs:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/SearchTasksWsRequest'
+        trackingId:
+          type: string
+    Source:
+      type: object
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-mm-dd).
+        name:
+          type: string
+          description: The name of the data source.  Must be unique across Verato.
+        id:
+          type: string
+          description: The ID of an identity within the given data source.
+      description: >-
+        Represents the information tracking an identity to a source that
+        contains the identity
+    ZoneOffset:
+      type: object
+      properties:
+        totalSeconds:
+          type: integer
+          format: int32
+        rules:
+          $ref: '#/components/schemas/ZoneRules'
+        id:
+          type: string
+    ServiceResponse_reactivateSourceWs:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/ReactivateSourceWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    Phone:
+      type: object
+      properties:
+        type:
+          type: string
+        countryCode:
+          type: string
+        areaCode:
+          type: string
+        number:
+          type: string
+        extension:
+          type: string
+        validTo:
+          type: string
+          format: date
+        validFrom:
+          type: string
+          format: date
+        bestTimeToContact:
+          type: object
+          properties:
+            day:
+              type: string
+            startTime:
+              type: string
+              format: time
+            endTime:
+              type: string
+              format: time
+            allDay:
+              type: boolean
+        clusterStatus:
+          type: string
+          enum:
+            - ACTIVE
+            - INACTIVE
+          description: The current clusterStatus
+      description: Represents a phone number
+    ServiceResponse_addRelationshipService:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/AddRelationshipWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    HouseholdQueryWsResponse:
+      type: object
+      properties:
+        householdId:
+          type: string
+          description: The householdId.
+        lastUpdateDate:
+          type: string
+          format: date-time
+        linkIdsInHousehold:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+          description: Current linkIds in the household.
+        createDate:
+          type: string
+          format: date-time
+      required:
+        - householdId
+        - linkIdsInHousehold
+    UnmergeIdentitiesWsRequest:
+      type: object
+      required:
+        - unmergeFromSource
+        - unmergeSource
+      properties:
+        unmergeFromSource:
+          $ref: '#/components/schemas/Source'
+          description: >-
+            Return the source info that targets the Identity from which we will
+            unmerge the source Identity
+        unmergeSource:
+          $ref: '#/components/schemas/Source'
+          description: Represents the source that will be unmerged
+      description: >-
+        a request by a customer to unmerge ( extract) data from retired section
+        of one Identity to create another new Identity
+    ZoneOffsetTransition:
+      type: object
+      properties:
+        duration:
+          $ref: '#/components/schemas/Duration'
+        overlap:
+          type: boolean
+        gap:
+          type: boolean
+        offsetAfter:
+          $ref: '#/components/schemas/ZoneOffset'
+        dateTimeBefore:
+          $ref: '#/components/schemas/LocalDateTime'
+        dateTimeAfter:
+          $ref: '#/components/schemas/LocalDateTime'
+        offsetBefore:
+          $ref: '#/components/schemas/ZoneOffset'
+        instant:
+          $ref: '#/components/schemas/Instant'
+    SearchRelationshipsWsResponse:
+      type: object
+      properties:
+        relationships:
+          type: array
+          items:
+            $ref: '#/components/schemas/RelationshipWs'
+    LinkIdentitiesWsRequest:
+      type: object
+      properties:
+        linkToSource:
+          $ref: '#/components/schemas/Source'
+          description: >-
+            The source name + native ID of the target Identity that will be
+            linked to the Identity identified by the source.
+        source:
+          $ref: '#/components/schemas/Source'
+          description: >-
+            The source name + native ID of the Identity that will be linked to
+            the Identity identified by the link-to source.
+      required:
+        - source
+        - linkToSource
+      description: >-
+        Represents a request by a customer to link data from one Identity into
+        another. Generally, this means linking two source name + native ID
+        combinations from different sources.
+    ServiceRequest_postRejectedIdentity:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/PostRejectedIdentityWsRequest'
+        trackingId:
+          type: string
+    ServiceRequest_identityIdQuery:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/IdentityIdQueryWsRequest'
+        trackingId:
+          type: string
+    ZoneId:
+      type: object
+      properties:
+        rules:
+          $ref: '#/components/schemas/ZoneRules'
+        id:
+          type: string
+    ServiceRequest_createDataSource:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/CreateDataSourcesWsRequest'
+        trackingId:
+          type: string
+    AddRelationshipWsResponse:
+      type: object
+      properties:
+        relationship:
+          $ref: '#/components/schemas/RelationshipWs'
+    SearchTasksWsRequest:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+          description: Page number
+        entityType:
+          type: string
+          description: EntityType
+        pageSize:
+          type: integer
+          format: int32
+          description: page size
+        source:
+          type: string
+          description: Source
+        filters:
+          $ref: '#/components/schemas/TaskFilters'
+          description: Filters
+        nativeId:
+          type: string
+          description: NativeId
+      required:
+        - pageNumber
+        - pageSize
+        - source
+        - nativeId
+        - filters
+      description: query tasks for the customer
+    IdentityIdQueryWsResponse:
+      type: object
+      properties:
+        identityGroupedBySource:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityPerSource'
+          description: >-
+            An alternative view of the link identity where information is
+            grouped by the source. Present if the Request object contains
+            "GROUP_BY_SOURCE" in its identity view names list.
+        linkId:
+          type: string
+          enum:
+            - String
+          description: >-
+            The link ID of the returned Identity. May differ from requested
+            LinkId for Identities that have been merged
+        identity:
+          type: string
+          enum:
+            - Identity
+          description: Found identity, if any. Null if no match found
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/Domain'
+          uniqueItems: true
+          description: Domains of the returned Identity, if any. Null if none
+        customizedIdentitiesWithSource:
+          type: object
+          additionalProperties:
+            type: string
+          description: >-
+            An alternative view of the link identity where information is
+            customized according to the view name along with source information.
+            Present if the Request object contains "CUSTOM_VIEW" in its identity
+            view names list.
+        requestedLinkId:
+          type: string
+          description: The link ID used in the original query
+        customizedIdentities:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Identity'
+          description: >-
+            An alternative view of the link identity where information is
+            customized according to the view name. Present if the Request object
+            contains "CUSTOM_VIEW" in its identity view names list.
+        vinIds:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+          description: The VIN IDs associated with the identity
+        enrichedDetails:
+          type: string
+          enum:
+            - EnrichedDetails
+          description: >-
+            Enriched details for an Identity that is augmented from the enrich
+            stack
+      description: Response object for query by linkId
+    DeactivateSourceWsResponse:
+      type: object
+      properties:
+        linkIdsModified:
+          type: array
+          items:
+            type: string
+          description: Entity Ids which got modified
+        linkIdsDeactivated:
+          type: array
+          items:
+            type: string
+          description: Entity Ids which got fully deactivated
+      required:
+        - linkIdsModified
+        - linkIdsDeactivated
+      description: Service response for a DeactivateSourceWsResponse
+    EnrichedDetails:
+      type: object
+      properties:
+        enrichData:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Identity'
+        enrichPropensity:
+          type: object
+          additionalProperties:
+            type: string
+    SSN:
+      type: object
+      properties:
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source'
+          description: The source for this cluster
+        attributesMap:
+          type: object
+          additionalProperties: {}
+        clusterStatus:
+          type: string
+          enum:
+            - ACTIVE
+            - INACTIVE
+          description: The current clusterStatus
+        ssn:
+          type: string
+          description: The social security number
+    ServiceRequest_deactivateSourceWs:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/DeactivateSourceWsRequest'
+        trackingId:
+          type: string
+    PostRejectedIdentityWsResponse:
+      type: object
+      properties:
+        identityGroupedBySource:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityPerSource'
+          description: >-
+            An alternative view of the link identity where information is
+            grouped by the source. Present if the Request object contains
+            "GROUP_BY_SOURCE" in its identity view names list.
+        deletedData:
+          $ref: '#/components/schemas/DeletedData'
+          description: Deleted data grouped by source
+        linkId:
+          type: string
+          enum:
+            - String
+          description: >-
+            The link ID of the returned Identity. May differ from requested
+            LinkId for Identities that have been posted
+        retiredData:
+          $ref: '#/components/schemas/RetiredData'
+          description: Retired data grouped by source
+        deactivatedData:
+          $ref: '#/components/schemas/DeactivatedData'
+          description: Deactivated data grouped by source
+        identity:
+          type: string
+          enum:
+            - Identity
+          description: Found identity, if any. Null if no match found
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/Domain'
+          uniqueItems: true
+          description: Domains of the returned Identity, if any. Null if none
+        customizedIdentitiesWithSource:
+          type: object
+          additionalProperties:
+            type: string
+          description: >-
+            An alternative view of the link identity where information is
+            customized according to the view name along with source information.
+            Present if the Request object contains "CUSTOM_VIEW" in its identity
+            view names list.
+        customizedIdentities:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Identity'
+          description: >-
+            An alternative view of the link identity where information is
+            customized according to the view name. Present if the Request object
+            contains "CUSTOM_VIEW" in its identity view names list.
+        vinIds:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+          description: The VIN IDs associated with the identity
+        enrichedDetails:
+          type: string
+          enum:
+            - EnrichedDetails
+          description: >-
+            Enriched details for an Identity that is augmented from the enrich
+            stack
+      description: PostRejectedIdentity service response
+    SlimTask:
+      type: object
+      properties:
+        matchScore:
+          type: number
+          format: double
+        id:
+          type: string
+        assignee:
+          type: string
+        category:
+          type: string
+          enum:
+            - IDENTITY_VERATO_PLATFORM_SOURCE_INCORPORATED
+            - MATCH_SAME_SOURCE
+            - POTENTIAL_MATCH_CROSS_SOURCE
+            - POTENTIAL_MATCH_SAME_SOURCE
+            - POTENTIAL_OVERLAY
+            - PREVENTED_MATCH_SAME_SOURCE
+            - REJECTED_OVERLAY
+        creationDateTime:
+          $ref: '#/components/schemas/ZonedDateTime'
+        status:
+          type: string
+          enum:
+            - CLOSED
+            - DEFERRED
+            - IN_PROGRESS
+            - OPEN
+            - WAITING_FOR_EXTERNAL_REVIEW
+    UnlinkIdentitiesWsResponse:
+      type: object
+      properties:
+        unlinkedId:
+          type: string
+          description: Link ID of the Identity that was unlinked
+        unlinkedSource:
+          $ref: '#/components/schemas/Source'
+          description: The source information of identity that was unlinked
+        unlinkedFromId:
+          type: string
+          description: Link ID of Identity unlinked from.
+        unlinkedFromSource:
+          $ref: '#/components/schemas/Source'
+          description: The source information for unlinked from Identity
+      required:
+        - unlinkedId
+        - unlinkedFromId
+        - unlinkedSource
+        - unlinkedFromSource
+      description: >-
+        When two identities have been linked by the LinkIdentities WebService,
+        unlink them by extracting the previously linked Identity into its own
+        record.
+    NativeIdQueryWsResponse:
+      type: object
+      properties:
+        identityGroupedBySource:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityPerSource'
+          description: >-
+            An alternative view of the link identity where information is
+            grouped by the source. Present if the Request object contains
+            "GROUP_BY_SOURCE" in its identity view names list.
+        linkId:
+          type: string
+          enum:
+            - String
+          description: LinkId of the returned Identity, if any. Null if no match found
+        identity:
+          type: string
+          enum:
+            - Identity
+          description: Found identity, if any. Null if no match found
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/Domain'
+          uniqueItems: true
+          description: Domains of the returned Identity, if any. Null if none
+        customizedIdentitiesWithSource:
+          type: object
+          additionalProperties:
+            type: string
+          description: >-
+            An alternative view of the link identity where information is
+            customized according to the view name along with source information.
+            Present if the Request object contains "CUSTOM_VIEW" in its identity
+            view names list.
+        customizedIdentities:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Identity'
+          description: >-
+            An alternative view of the link identity where information is
+            customized according to the view name. Present if the Request object
+            contains "CUSTOM_VIEW" in its identity view names list.
+        vinIds:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+          description: The VIN IDs associated with the identity
+        enrichedDetails:
+          type: string
+          enum:
+            - EnrichedDetails
+          description: >-
+            Enriched details for an Identity that is augmented from the enrich
+            stack
+      description: Service response for a Source-based query
+    ServiceRequest_postIdentity:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/PostIdentityWsRequest'
+        trackingId:
+          type: string
+    IdentityIdQueryWsRequest:
+      type: object
+      properties:
+        linkId:
+          type: string
+          description: The ID to query for
+        responseIdentityFormatNames:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+          description: >-
+            A set of values that indicates the different formats of the Identity
+            to be sent back in the response. If no values are specified,
+            "DEFAULT" is assumed.
+      required:
+        - linkId
+      description: Request object used to query by LinkId or external entity Id
+    ServiceRequest_householdQuery:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/HouseholdQueryWsRequest'
+        trackingId:
+          type: string
+    DeletedData:
+      type: object
+      properties:
+        identityGroupedBySource:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityPerSource'
+          description: Deleted data grouped by source
+      description: Adds deleted data
+    NotificationLowerCaseBody:
+      type: object
+      properties:
+        survivingSource:
+          type: string
+        retiredSource:
+          type: string
+        previousLinkId:
+          type: string
+        survivingNativeId:
+          type: string
+        newLinkId:
+          type: string
+        source:
+          type: string
+        nativeId:
+          type: string
+        retiredNativeId:
+          type: string
+    AuditID:
+      type: string
+      description: (Auto-generated stub schema from Swagger 1.2 $ref)
+    Category:
+      type: string
+      description: (Auto-generated stub schema from Swagger 1.2 $ref)
+    ClusterStatus:
+      type: string
+      description: (Auto-generated stub schema from Swagger 1.2 $ref)
+    DayOfWeek:
+      type: string
+      description: (Auto-generated stub schema from Swagger 1.2 $ref)
+    Direction:
+      type: string
+      description: (Auto-generated stub schema from Swagger 1.2 $ref)
+    Month:
+      type: string
+      description: (Auto-generated stub schema from Swagger 1.2 $ref)
+    PostIdentityWsEvent:
+      type: string
+      description: (Auto-generated stub schema from Swagger 1.2 $ref)
+    ResolutionReason:
+      type: string
+      description: (Auto-generated stub schema from Swagger 1.2 $ref)
+    SortingField:
+      type: string
+      description: (Auto-generated stub schema from Swagger 1.2 $ref)
+    Status:
+      type: string
+      description: (Auto-generated stub schema from Swagger 1.2 $ref)
+    TimeDefinition:
+      type: string
+      description: (Auto-generated stub schema from Swagger 1.2 $ref)
+    YesNoUnknown:
+      type: string
+      description: (Auto-generated stub schema from Swagger 1.2 $ref)
+    com.verato.link.ws.api.DismissRejectedEntititesWsRequest:
+      type: object
+      description: (Auto-generated stub schema from Swagger 1.2 $ref)
+    com.verato.link.ws.service.impl.DeactivateSourceWebService:
+      type: object
+      description: (Auto-generated stub schema from Swagger 1.2 $ref)
+    com.verato.link.ws.ui.api.MultiUnlinkEventsWsRequest:
+      type: object
+      description: (Auto-generated stub schema from Swagger 1.2 $ref)
+    com.verato.link.ws.ui.api.ReactivateSourceWsRequest:
+      type: object
+      description: (Auto-generated stub schema from Swagger 1.2 $ref)
+    ServiceRequest_v2__demographicsSearch:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/DemographicsSearchWsRequest'
+        trackingId:
+          type: string
+    ServiceResponse_v2__identityIdQuery:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/IdentityIdQueryWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    ServiceRequest_v2__postRejectedIdentity:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/PostRejectedIdentityWsRequest'
+        trackingId:
+          type: string
+    ServiceRequest_v2__networkIdQuery:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/NetworkIdQueryWsRequest'
+        trackingId:
+          type: string
+    ServiceResponse_v2__nativeIdQuery:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/NativeIdQueryWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    ServiceResponse_v2__demographicsSearch:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/DemographicsSearchWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    ServiceRequest_v2__identityIdQuery:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/IdentityIdQueryWsRequest'
+        trackingId:
+          type: string
+    ServiceRequest_v2__nativeIdQuery:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/NativeIdQueryWsRequest'
+        trackingId:
+          type: string
+    ServiceResponse_v2__demographicsQuery:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/DemographicsQueryWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    ServiceResponse_v2__networkIdQuery:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/NetworkIdQueryWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    ServiceRequest_v2__postIdentity:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/PostIdentityWsRequest'
+        trackingId:
+          type: string
+    ServiceResponse_v2__postIdentity:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/PostIdentityWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    ServiceResponse_v2__postRejectedIdentity:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/PostRejectedIdentityWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    ServiceRequest_v2__demographicsQuery:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/DemographicsQueryWsRequest'
+        trackingId:
+          type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+security:
+  - basicAuth: []

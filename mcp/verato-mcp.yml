@@ -1,0 +1,37 @@
+generated: '2026-07-21'
+method: searched
+status: published
+source: https://developer.verato.com/mcp
+notes: >-
+  Verato's developer portal (Redocly) exposes a live, hosted Model Context
+  Protocol server over streamable HTTP at https://developer.verato.com/mcp.
+  Verified by a JSON-RPC initialize handshake (protocolVersion 2025-06-18,
+  serverInfo "MCP server") followed by tools/list. It is a documentation MCP
+  server that lets an agent discover and read the Person, Organization, and
+  Provider API descriptions — it does not itself execute Verato identity
+  operations. OAuth discovery is advertised at
+  /.well-known/oauth-authorization-server (Redocly cloud auth, PKCE S256).
+server:
+  name: verato-docs
+  transport: http
+  url: https://developer.verato.com/mcp
+  protocol_version: '2025-06-18'
+  server_info: MCP server
+  auth:
+    discovery: https://developer.verato.com/.well-known/oauth-authorization-server
+    issuer: https://auth.cloud.redocly.com
+    grant_types: [authorization_code, refresh_token, client_credentials]
+    code_challenge_methods: [S256]
+tools:
+- name: list-apis
+  description: Lists available APIs with their context and purpose
+- name: get-endpoints
+  description: Get all endpoints for a specific API
+- name: get-endpoint-info
+  description: Get comprehensive information about specific endpoint including parameters, security, and examples
+- name: get-security-schemes
+  description: Get the security schemes for a specific API
+- name: get-full-api-description
+  description: Get the complete OpenAPI description
+- name: search
+  description: Search across the documentation to fetch relevant content for a given query

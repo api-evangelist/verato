@@ -1,0 +1,77 @@
+generated: '2026-07-21'
+method: derived
+source: >-
+  openapi/verato-person-openapi.yml, openapi/verato-organization-openapi.yml,
+  openapi/verato-provider-openapi.yml, https://developer.verato.com/docs/quickstart/intro
+notes: >-
+  Cross-cutting request/response semantics for the Verato Universal Identity
+  Platform web-service (Link WS) APIs, derived from the three OpenAPI documents
+  and the developer-portal quickstart. All three entity APIs (Person,
+  Organization, Provider) share the same envelope and calling conventions.
+authentication:
+  style: HTTP Basic over mutual TLS (mTLS)
+  detail: >-
+    Every operation is secured with the basicAuth scheme (HTTP Basic). Client
+    certificates (mutual TLS) are required at the transport layer; the portal
+    documents Postman connectivity with mutual TLS. API credentials are
+    provisioned per tenant by a Verato Customer Success Manager (no self-serve
+    signup). SSO is available for portal/console access.
+  docs: https://developer.verato.com/docs/quickstart/sso
+transport:
+  protocol: HTTPS + mutual TLS
+  method: POST for all operations (RPC-style JSON web service)
+  request_content_type: application/json
+  response_content_type: application/json
+  base_url_pattern: https://<tenant>.verato.com/{link-ws|org-link-ws|provider-link-ws}/svc
+  note: >-
+    Base host is tenant-specific; the published OpenAPI servers use the
+    placeholder host yourveratodomain.com.
+error_envelope:
+  style: response-envelope (HTTP 200 with success flag in body; not HTTP status codes)
+  schema: ServiceResponse
+  fields:
+    success: boolean — whether the operation succeeded
+    errors: array — error messages when success is false
+    warnings: array — non-fatal warnings
+    retryableError: boolean — whether the caller may safely retry
+    message: string — human-readable status/summary message
+    content: object — the operation payload on success
+    auditId: string — server-assigned audit identifier
+    trackingId: string — request tracking identifier
+  cross_ref: errors/verato-problem-types.yml
+request_tracing:
+  fields: [trackingId, auditId]
+  detail: >-
+    Responses carry a trackingId and auditId for correlating a call with Verato
+    support and audit logs.
+pagination:
+  style: page-based (in request/response body, not query params)
+  request_fields: [pageNumber, pageSize, maxSearchResults]
+  response_fields: [totalElements]
+  detail: >-
+    Search operations (e.g. demographicsSearch) accept pageNumber/pageSize and
+    a maxSearchResults cap; responses report totalElements. Match ranking is
+    controlled by matchScoreThreshold / minMatchScore / maxMatchScore.
+idempotency:
+  supported: false
+  detail: >-
+    No idempotency-key header or parameter is documented or present in the
+    OpenAPI. Mutating operations (postIdentity, link/merge/unlink/unmerge) are
+    keyed on source identity identifiers rather than a client-supplied
+    idempotency key; retryableError signals when a retry is safe.
+versioning:
+  scheme: mixed — URI path (Person API uses /v2/* operations) plus calendar spec versions
+  current: '2026.1.2'
+  detail: >-
+    OpenAPI info.version is a calendar version (2026.1.2). The Person API
+    namespaces its core operations under /v2/ (postIdentity, demographicsSearch,
+    demographicsQuery, identityIdQuery, nativeIdQuery).
+  cross_ref: lifecycle/verato-lifecycle.yml
+events:
+  webhooks: false
+  detail: >-
+    No webhook/callback surface. Notifications are retrieved by polling the
+    searchNotifications operation rather than being pushed.
+rate_limiting:
+  documented: false
+  detail: No public rate-limit headers or quotas are documented; limits are tenant-contractual.

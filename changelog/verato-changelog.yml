@@ -1,0 +1,13 @@
+generated: '2026-07-21'
+method: searched
+source: https://support.verato.com/hc/en-us/sections/8836852287764-Release-Notes
+scheme: calendar-version
+current_version: '2026.1.2'
+url: https://support.verato.com/hc/en-us/sections/8836852287764-Release-Notes
+notes: >-
+  Verato maintains a dated Release Notes section in its support portal and
+  versions the platform APIs with a calendar scheme (current OpenAPI
+  info.version 2026.1.2). The Release Notes pages are gated to anonymous fetch
+  (HTTP 403), so individual dated entries are not reproduced here to avoid
+  fabrication; the live section above is the source of truth.
+entries: []

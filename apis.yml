@@ -1,27 +1,316 @@
 aid: verato
 name: Verato
-description: 'Verato is a company surfaced as a portfolio company of bessemer-venture-partners and added
-  to the API Evangelist network as a stub for enrichment. Sector: cybersecurity. This profile is a lead
-  awaiting the enrichment pipeline.'
+description: >-
+  Verato is a healthcare identity company whose Universal Identity Platform (MDM
+  Cloud) resolves and matches records for people, providers, and organizations
+  against a proprietary nationwide referential database to create and maintain a
+  single source of truth (golden record). Verato publishes a developer portal
+  with three RESTful JSON web-service APIs — the Person API (patient/consumer
+  identity, demographics search, linking, merging, households, relationships),
+  the Organization API, and the Provider API (Practitioner Type-1 and Health
+  Facility Type-2 identities) — used for enterprise master data management,
+  patient matching, provider data management, identity resolution, and
+  downstream data enrichment. APIs authenticate with HTTP basic credentials over
+  mutual TLS, with keys provisioned per tenant by a Customer Success Manager.
 url: https://raw.githubusercontent.com/api-evangelist/verato/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - bessemer-venture-partners
-x-tier: stub
+x-tier: enriched
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://verato.com/wp-content/uploads/2022/09/cropped-verato_favicon-_1_-270x270.png
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
 - Cybersecurity
-apis: []
+- Healthcare
+- Identity
+- Identity Resolution
+- Master Data Management
+- Patient Matching
+- Provider Data Management
+- Data Quality
+- EMPI
+apis:
+- aid: verato:verato-addrelationshipservice-api
+  name: Verato AddRelationshipService API
+  description: The AddRelationshipService API from Verato — 1 operation(s) for addrelationshipservice.
+  humanURL: https://developer.verato.com/apis/person.openapi
+  baseURL: https://developer.verato.com
+  tags:
+  - AddRelationshipService
+  properties:
+  - type: OpenAPI
+    url: openapi/verato-addrelationshipservice-api-openapi.yml
+- aid: verato:verato-createdatasource-api
+  name: Verato CreateDataSource API
+  description: The CreateDataSource API from Verato — 1 operation(s) for createdatasource.
+  humanURL: https://developer.verato.com/apis/person.openapi
+  baseURL: https://developer.verato.com
+  tags:
+  - CreateDataSource
+  properties:
+  - type: OpenAPI
+    url: openapi/verato-createdatasource-api-openapi.yml
+- aid: verato:verato-deactivatesourcews-api
+  name: Verato DeactivateSourceWs API
+  description: The DeactivateSourceWs API from Verato — 1 operation(s) for deactivatesourcews.
+  humanURL: https://developer.verato.com/apis/person.openapi
+  baseURL: https://developer.verato.com
+  tags:
+  - DeactivateSourceWs
+  properties:
+  - type: OpenAPI
+    url: openapi/verato-deactivatesourcews-api-openapi.yml
+- aid: verato:verato-deleterelationshipservice-api
+  name: Verato DeleteRelationshipService API
+  description: >-
+    The DeleteRelationshipService API from Verato — 1 operation(s) for deleterelationshipservice.
+  humanURL: https://developer.verato.com/apis/person.openapi
+  baseURL: https://developer.verato.com
+  tags:
+  - DeleteRelationshipService
+  properties:
+  - type: OpenAPI
+    url: openapi/verato-deleterelationshipservice-api-openapi.yml
+- aid: verato:verato-deletesourceidentity-api
+  name: Verato DeleteSourceIdentity API
+  description: The DeleteSourceIdentity API from Verato — 1 operation(s) for deletesourceidentity.
+  humanURL: https://developer.verato.com/apis/person.openapi
+  baseURL: https://developer.verato.com
+  tags:
+  - DeleteSourceIdentity
+  properties:
+  - type: OpenAPI
+    url: openapi/verato-deletesourceidentity-api-openapi.yml
+- aid: verato:verato-demographicsquery-api
+  name: Verato DemographicsQuery API
+  description: The DemographicsQuery API from Verato — 2 operation(s) for demographicsquery.
+  humanURL: https://developer.verato.com/apis/person.openapi
+  baseURL: https://developer.verato.com
+  tags:
+  - DemographicsQuery
+  properties:
+  - type: OpenAPI
+    url: openapi/verato-demographicsquery-api-openapi.yml
+- aid: verato:verato-demographicssearch-api
+  name: Verato DemographicsSearch API
+  description: The DemographicsSearch API from Verato — 2 operation(s) for demographicssearch.
+  humanURL: https://developer.verato.com/apis/person.openapi
+  baseURL: https://developer.verato.com
+  tags:
+  - DemographicsSearch
+  properties:
+  - type: OpenAPI
+    url: openapi/verato-demographicssearch-api-openapi.yml
+- aid: verato:verato-householdquery-api
+  name: Verato HouseholdQuery API
+  description: The HouseholdQuery API from Verato — 1 operation(s) for householdquery.
+  humanURL: https://developer.verato.com/apis/person.openapi
+  baseURL: https://developer.verato.com
+  tags:
+  - HouseholdQuery
+  properties:
+  - type: OpenAPI
+    url: openapi/verato-householdquery-api-openapi.yml
+- aid: verato:verato-identityidquery-api
+  name: Verato IdentityIdQuery API
+  description: The IdentityIdQuery API from Verato — 2 operation(s) for identityidquery.
+  humanURL: https://developer.verato.com/apis/person.openapi
+  baseURL: https://developer.verato.com
+  tags:
+  - IdentityIdQuery
+  properties:
+  - type: OpenAPI
+    url: openapi/verato-identityidquery-api-openapi.yml
+- aid: verato:verato-linkidentities-api
+  name: Verato LinkIdentities API
+  description: The LinkIdentities API from Verato — 1 operation(s) for linkidentities.
+  humanURL: https://developer.verato.com/apis/person.openapi
+  baseURL: https://developer.verato.com
+  tags:
+  - LinkIdentities
+  properties:
+  - type: OpenAPI
+    url: openapi/verato-linkidentities-api-openapi.yml
+- aid: verato:verato-mergeidentities-api
+  name: Verato MergeIdentities API
+  description: The MergeIdentities API from Verato — 1 operation(s) for mergeidentities.
+  humanURL: https://developer.verato.com/apis/person.openapi
+  baseURL: https://developer.verato.com
+  tags:
+  - MergeIdentities
+  properties:
+  - type: OpenAPI
+    url: openapi/verato-mergeidentities-api-openapi.yml
+- aid: verato:verato-nativeidquery-api
+  name: Verato NativeIdQuery API
+  description: The NativeIdQuery API from Verato — 2 operation(s) for nativeidquery.
+  humanURL: https://developer.verato.com/apis/person.openapi
+  baseURL: https://developer.verato.com
+  tags:
+  - NativeIdQuery
+  properties:
+  - type: OpenAPI
+    url: openapi/verato-nativeidquery-api-openapi.yml
+- aid: verato:verato-postidentity-api
+  name: Verato PostIdentity API
+  description: The PostIdentity API from Verato — 2 operation(s) for postidentity.
+  humanURL: https://developer.verato.com/apis/person.openapi
+  baseURL: https://developer.verato.com
+  tags:
+  - PostIdentity
+  properties:
+  - type: OpenAPI
+    url: openapi/verato-postidentity-api-openapi.yml
+- aid: verato:verato-reactivatesourcews-api
+  name: Verato ReactivateSourceWs API
+  description: The ReactivateSourceWs API from Verato — 1 operation(s) for reactivatesourcews.
+  humanURL: https://developer.verato.com/apis/person.openapi
+  baseURL: https://developer.verato.com
+  tags:
+  - ReactivateSourceWs
+  properties:
+  - type: OpenAPI
+    url: openapi/verato-reactivatesourcews-api-openapi.yml
+- aid: verato:verato-restoresource-api
+  name: Verato RestoreSource API
+  description: The RestoreSource API from Verato — 1 operation(s) for restoresource.
+  humanURL: https://developer.verato.com/apis/person.openapi
+  baseURL: https://developer.verato.com
+  tags:
+  - RestoreSource
+  properties:
+  - type: OpenAPI
+    url: openapi/verato-restoresource-api-openapi.yml
+- aid: verato:verato-searchnotifications-api
+  name: Verato SearchNotifications API
+  description: The SearchNotifications API from Verato — 1 operation(s) for searchnotifications.
+  humanURL: https://developer.verato.com/apis/person.openapi
+  baseURL: https://developer.verato.com
+  tags:
+  - SearchNotifications
+  properties:
+  - type: OpenAPI
+    url: openapi/verato-searchnotifications-api-openapi.yml
+- aid: verato:verato-searchrelationshipsservice-api
+  name: Verato SearchRelationshipsService API
+  description: >-
+    The SearchRelationshipsService API from Verato — 1 operation(s) for searchrelationshipsservice.
+  humanURL: https://developer.verato.com/apis/person.openapi
+  baseURL: https://developer.verato.com
+  tags:
+  - SearchRelationshipsService
+  properties:
+  - type: OpenAPI
+    url: openapi/verato-searchrelationshipsservice-api-openapi.yml
+- aid: verato:verato-softdeletesource-api
+  name: Verato SoftDeleteSource API
+  description: The SoftDeleteSource API from Verato — 1 operation(s) for softdeletesource.
+  humanURL: https://developer.verato.com/apis/person.openapi
+  baseURL: https://developer.verato.com
+  tags:
+  - SoftDeleteSource
+  properties:
+  - type: OpenAPI
+    url: openapi/verato-softdeletesource-api-openapi.yml
+- aid: verato:verato-unlinkidentities-api
+  name: Verato UnlinkIdentities API
+  description: The UnlinkIdentities API from Verato — 1 operation(s) for unlinkidentities.
+  humanURL: https://developer.verato.com/apis/person.openapi
+  baseURL: https://developer.verato.com
+  tags:
+  - UnlinkIdentities
+  properties:
+  - type: OpenAPI
+    url: openapi/verato-unlinkidentities-api-openapi.yml
+- aid: verato:verato-unmergeidentities-api
+  name: Verato UnmergeIdentities API
+  description: The UnmergeIdentities API from Verato — 1 operation(s) for unmergeidentities.
+  humanURL: https://developer.verato.com/apis/person.openapi
+  baseURL: https://developer.verato.com
+  tags:
+  - UnmergeIdentities
+  properties:
+  - type: OpenAPI
+    url: openapi/verato-unmergeidentities-api-openapi.yml
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 20
+  pass: local-v1
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: AgenticAccess
+  url: agentic-access/verato-agentic-access.yml
 - type: Website
   url: https://verato.com/
+- type: DeveloperPortal
+  url: https://developer.verato.com/
+- type: Documentation
+  url: https://developer.verato.com/docs/reference/intro
+- type: APIReference
+  url: https://developer.verato.com/docs/reference/intro
+- type: GettingStarted
+  url: https://developer.verato.com/docs/quickstart/intro
+- type: Support
+  url: https://support.verato.com/hc/en-us
+- type: Blog
+  url: https://verato.com/blog/
+- type: StatusPage
+  url: https://support.verato.com/hc/en-us/articles/40628559657492-Verato-Status-Page
+- type: ChangeLog
+  url: https://support.verato.com/hc/en-us/sections/8836852287764-Release-Notes
+- type: ChangeLog
+  url: changelog/verato-changelog.yml
+- type: TrustCenter
+  url: security/verato-trust-center.yml
+- type: PrivacyPolicy
+  url: https://verato.com/privacy-policy/
+- type: TermsOfService
+  url: https://verato.com/terms-and-conditions/
+- type: TrustCenter
+  url: https://verato.trustshare.com/
+- type: Compliance
+  url: https://verato.com/platform/why-verato/security/
+- type: LLMsTxt
+  url: llms/verato-llms.txt
+- type: MCPServer
+  url: mcp/verato-mcp.yml
+- type: WellKnown
+  url: well-known/verato-well-known.yml
+- type: Authentication
+  url: authentication/verato-authentication.yml
+- type: Conventions
+  url: conventions/verato-conventions.yml
+- type: ErrorCatalog
+  url: errors/verato-problem-types.yml
+- type: DataModel
+  url: data-model/verato-data-model.yml
+- type: Conformance
+  url: conformance/verato-conformance.yml
+- type: Lifecycle
+  url: lifecycle/verato-lifecycle.yml
+- type: DomainSecurity
+  url: security/verato-domain-security.yml
+- type: AgentSkill
+  url: skills/_index.yml

@@ -1,0 +1,14 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/verato-organization-openapi.yml, openapi/verato-person-openapi.yml, openapi/verato-provider-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  sources:
+  - openapi/verato-organization-openapi.yml
+  - openapi/verato-person-openapi.yml
+  - openapi/verato-provider-openapi.yml

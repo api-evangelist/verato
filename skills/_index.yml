@@ -1,0 +1,22 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/verato-person-openapi.yml
+notes: >-
+  Packaged Agent Skills for the Verato Person API (Universal Identity Platform).
+  Every step is grounded in a verbatim operationId from
+  openapi/verato-person-openapi.yml. Skills encode the shared conventions:
+  HTTP Basic auth over mutual TLS, JSON POST calls, and the ServiceResponse
+  envelope (check `success`; read `errors`/`warnings`; honor `retryableError`).
+skills:
+- file: verato-resolve-and-match-identity.md
+  name: Resolve and match a person identity
+  api: openapi/verato-person-openapi.yml
+  operations: [post_v2_postIdentity, post_v2_demographicsSearch, post_v2_demographicsQuery]
+- file: verato-link-and-merge-identities.md
+  name: Link and merge duplicate identities
+  api: openapi/verato-person-openapi.yml
+  operations: [post_linkIdentities, post_mergeIdentities, post_unlinkIdentities, post_unmergeIdentities]
+- file: verato-households-and-relationships.md
+  name: Query households and manage relationships
+  api: openapi/verato-person-openapi.yml
+  operations: [post_householdQuery, post_addRelationshipService, post_searchRelationshipsService, post_deleteRelationshipService]

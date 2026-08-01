@@ -1,0 +1,38 @@
+# Verato Docs
+
+> Learn how to get set up, integrate, and make the most of the Universal Identity Platform.
+
+## Table of contents
+
+ - [Get Started](https://developer.verato.com/docs/quickstart/intro.md): Quickstart and setup guides to start building with Verato.
+ - [Analytics && Insights (Reporting)](https://developer.verato.com/docs/data-dictionary/analytics-insights.md)
+ - [MDM Cloud Platform Data Model](https://developer.verato.com/docs/data-dictionary/platform-data-model.md)
+ - [Fire And Forget Data Sync: Passing adds, updates, deletes to Verato](https://developer.verato.com/docs/guides/fire-forget-data.page.md)
+ - [Automating Identity Search/Retrieval (No End-User)](https://developer.verato.com/docs/guides/automating-identity-search.page.md)
+ - [Use Case Guides](https://developer.verato.com/docs/guides/intro.md)
+ - [Building an End-User Identity Search with Verato APIs](https://developer.verato.com/docs/guides/identity-search.page.md)
+ - [Maintaining a Golden Record in Your Data Warehouse](https://developer.verato.com/docs/guides/maintaining-golden-record.page.md)
+ - [Propagating Golden Records Across the Enterprise](https://developer.verato.com/docs/guides/propagating-golden-record.page.md)
+ - [Tracking Original Source System Metadata](https://developer.verato.com/docs/guides/tracking-original-source-system-metadata.page.md)
+ - [Troubleshooting API Connectivity with Postman (Mutual TLS)](https://developer.verato.com/docs/quickstart/postman.md)
+ - [Single Sign-On (SSO) Overview](https://developer.verato.com/docs/quickstart/sso.md)
+ - [Verato API Reference](https://developer.verato.com/docs/reference/intro.md)
+ - [Entity - Organization](https://developer.verato.com/docs/reference/organization.page.md)
+ - [Creating and Using an ID Crosswalk (External Data Warehouse)](https://developer.verato.com/docs/guides/id-crosswalk.page.md)
+ - [Snowflake Data Dictionary](https://developer.verato.com/docs/data-dictionary/snowflake-data-share.md)
+ - [Verato Enrich for Verato MDM Cloud](https://developer.verato.com/quickstart/enrich.md)
+ - [MDM Cloud Platform Data Model - API (Link WS)](https://developer.verato.com/docs/data-dictionary/intro.page.md)
+ - [Entity - Provider](https://developer.verato.com/docs/reference/provider.page.md)
+ - [Verato API Connectivity Using Postman](https://developer.verato.com/docs/tutorials/api-connectivity.page.md)
+ - [Batch Processing Data For Auto Steward](https://developer.verato.com/docs/tutorials/batch-processing.page.md)
+ - [Tutorials](https://developer.verato.com/docs/tutorials/tutorials.index.md)
+ - [Using CURL with Verato APIs](https://developer.verato.com/docs/tutorials/using-curl.page.md)
+ - [Core Organization Data Model](https://developer.verato.com/docs/data-dictionary/organization/core-organization.md)
+ - [Core Person Data Model](https://developer.verato.com/docs/data-dictionary/person/core-person.md)
+ - [Patient Data Model](https://developer.verato.com/docs/data-dictionary/person/patient.md)
+ - [Health Facility (Type-2)](https://developer.verato.com/docs/data-dictionary/provider/health-facility.md)
+ - [Practitioner (Type-1)](https://developer.verato.com/docs/data-dictionary/provider/practitioner.md)
+ - [Verato Organization API](https://developer.verato.com/apis/organization.openapi.md)
+ - [Verato Person API](https://developer.verato.com/apis/person.openapi.md)
+ - [Verato Provider API](https://developer.verato.com/apis/provider.openapi.md)
+

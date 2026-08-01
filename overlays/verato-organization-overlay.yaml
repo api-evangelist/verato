@@ -1,0 +1,18 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Verato Organization API
+  version: 1.0.0
+extends: openapi/verato-organization-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: verato
+    x-apievangelist-entity: organization
+    x-apievangelist-auth: HTTP Basic over mutual TLS
+    x-apievangelist-error-model: ServiceResponse envelope (HTTP 200, success flag)
+    x-apievangelist-idempotency: not-supported
+- target: $.servers
+  update:
+    x-apievangelist-note: >-
+      Published server host is the placeholder yourveratodomain.com; production
+      base is tenant-specific https://<tenant>.verato.com/org-link-ws/svc.

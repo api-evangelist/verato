@@ -1,0 +1,21 @@
+generated: '2026-07-21'
+method: searched
+source: https://developer.verato.com/ ; https://support.verato.com/hc/en-us
+versioning:
+  scheme: calendar spec version + URI-path major (Person API /v2/*)
+  current: '2026.1.2'
+  detail: >-
+    OpenAPI info.version is a calendar version (2026.1.2, shared across the
+    Person, Organization, and Provider APIs). Person core operations are
+    namespaced under /v2/.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  detail: No public deprecation policy or RFC 8594 Sunset/Deprecation header support was found.
+sla:
+  url: null
+  uptime_target: null
+  detail: SLA/uptime targets are tenant-contractual and not published publicly.
+status_page: https://support.verato.com/hc/en-us/articles/40628559657492-Verato-Status-Page
+release_notes: https://support.verato.com/hc/en-us/sections/8836852287764-Release-Notes
+deprecated_operations: []

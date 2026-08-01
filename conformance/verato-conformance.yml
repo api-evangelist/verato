@@ -1,0 +1,38 @@
+generated: '2026-07-21'
+method: derived
+source: >-
+  openapi/*.yml securitySchemes + https://verato.com/platform/why-verato/security/
+notes: >-
+  Standards and compliance posture. Security-program conformance (HITRUST/SOC 2/
+  PCI/HIPAA) is confirmed from Verato's published security page and trust center;
+  technical protocol conformance is derived from the OpenAPI documents.
+standards:
+- id: http-basic-auth
+  conforms: true
+  evidence: openapi securitySchemes type http scheme basic (all three specs)
+- id: mutual-tls
+  conforms: true
+  evidence: developer portal documents mutual-TLS client-certificate connectivity (Postman mTLS guide)
+- id: oauth2
+  conforms: false
+  evidence: no oauth2 securityScheme on the API (portal MCP uses OAuth via Redocly, not the data APIs)
+- id: openid-connect
+  conforms: false
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: errors returned in a ServiceResponse envelope, not application/problem+json
+- id: fhir
+  conforms: false
+  evidence: proprietary identity model; not FHIR resources
+- id: hitrust-r2
+  conforms: true
+  evidence: HITRUST r2 certified, maintained since 2017 (verato.com security page)
+- id: soc2-type-ii
+  conforms: true
+  evidence: SOC 2 Type II (verato.com security page)
+- id: pci-dss
+  conforms: true
+  evidence: PCI certified (verato.com security page)
+- id: hipaa
+  conforms: true
+  evidence: HIPAA compliant; healthcare identity platform (verato.com security page)

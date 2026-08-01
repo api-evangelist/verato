@@ -1,0 +1,45 @@
+generated: '2026-07-21'
+method: derived
+format: response-envelope
+source: >-
+  openapi/verato-person-openapi.yml (ServiceResponse schema);
+  docs: https://support.verato.com/hc/en-us/articles/7961794066324-Web-Services-General-Message-Codes
+notes: >-
+  Verato web-service APIs do NOT use HTTP 4xx/5xx status codes or RFC 9457
+  problem+json for application errors — every operation returns HTTP 200 with a
+  ServiceResponse envelope whose `success` boolean and `errors`/`warnings`
+  arrays convey outcome. The three OpenAPI documents declare only 200 responses,
+  so there are no HTTP problem types to derive; error semantics live in the
+  envelope. Verato publishes a general message-codes reference (link above) that
+  enumerates response/message codes; its content is gated (HTTP 403 to
+  anonymous fetch) and is not reproduced here to avoid fabrication.
+envelope:
+  schema: ServiceResponse
+  success_field: success
+  error_array: errors
+  warning_array: warnings
+  retryable_flag: retryableError
+  message_field: message
+  audit_fields: [auditId, trackingId]
+error_reference_docs:
+  - title: Web Services General Message Codes
+    url: https://support.verato.com/hc/en-us/articles/7961794066324-Web-Services-General-Message-Codes
+  - title: API Documentation (troubleshooting, response codes, error messages)
+    url: https://support.verato.com/hc/en-us/categories/7584183310484-API-Documentation
+problems:
+- outcome: success=false
+  signal: response.success == false
+  description: >-
+    Operation failed; the `errors` array carries one or more message strings and
+    `message` a human-readable summary. Inspect `retryableError` to decide
+    whether a retry is safe.
+- outcome: warning
+  signal: response.warnings not empty
+  description: >-
+    Operation succeeded (success=true) but returned non-fatal warnings (e.g.
+    partial match, data-quality notes) in the `warnings` array.
+- outcome: retryable
+  signal: response.retryableError == true
+  description: >-
+    A transient/retryable condition occurred; the caller may safely re-issue the
+    request.

@@ -1,0 +1,35 @@
+generated: '2026-07-21'
+method: searched
+source: live probes of https://developer.verato.com and https://verato.com
+hosts:
+- host: https://developer.verato.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: verato-oauth-authorization-server.json
+    note: Redocly portal MCP OAuth 2.0 authorization-server metadata (RFC 8414)
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /llms.txt
+    status: 200
+    file: ../llms/verato-llms.txt
+- host: https://verato.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /llms.txt
+    status: 404

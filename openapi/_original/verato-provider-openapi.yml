@@ -1,0 +1,2706 @@
+openapi: 3.0.3
+info:
+  title: Verato Provider API
+  version: 2026.1.2
+  description: >
+    Verato Provider Link services for managing provider identities (Practitioner
+    Type 1, Health Facility Type 2, and Organizations), including:
+      - Creating and updating master identities
+      - Searching and querying by demographics, source/native IDs, and link IDs
+      - Managing source lifecycle (soft delete, restore, hard delete)
+      - Managing merge, unmerge, link, unlink workflows
+      - Managing graph relationships between Verato entities
+      - Retrieving identity-related notifications
+security:
+  - basicAuth: []
+servers:
+  - url: https://yourveratodomain.com/provider-link-ws/svc
+    description: Production Provider Link API
+  - url: https://yourveratodomain.com/provider-link-ws/svc
+    description: Sandbox Provider Link API
+paths:
+  /postIdentity:
+    post:
+      summary: Add an Identity (postIdentity)
+      description: >-
+        Adds a new identity into Verato. The posted identity may represent a
+        Practitioner (Type 1) or Health Facility (Type 2).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_postIdentity'
+            examples:
+              practitioner:
+                summary: Practitioner (Type 1)
+                value:
+                  responseIdentityFormatNames:
+                    - DEFAULT
+                    - GROUP_BY_SOURCE
+                    - MOST_RECENTLY_ASSERTED
+                  identity:
+                    sources:
+                      - name: state_license
+                        id: prov-1
+                    names:
+                      - use: official
+                        prefix: Dr.
+                        first: Emily
+                        middle: Jane
+                        last: Thompson
+                        suffix: MD
+                        credential: MD
+                    datesOfBirth:
+                      - dateOfBirth: '1978-04-12'
+                    genders:
+                      - gender: F
+                    genderIdentities:
+                      - genderIdentity: F
+                    contactInformation:
+                      - address:
+                          addressName: Main Office
+                          addressType: work
+                          line1: 123 Wellness Blvd
+                          line2: Suite 400
+                          city: Austin
+                          district: Travis
+                          state: TX
+                          postalCode: '78701'
+                          country: USA
+                          latitude: 30.2672
+                          longitude: -97.7431
+                          validFrom: '2015-01-01'
+                          validTo: '2030-12-31'
+                        phoneList:
+                          - number: '5125551234'
+                            type: work
+                            validFrom: '2015-01-01'
+                            validTo: '2030-12-31'
+                        faxList:
+                          - number: '5125555678'
+                            type: work
+                            validFrom: '2015-01-01'
+                            validTo: '2030-12-31'
+                        bestTimeToContact:
+                          - day: mon
+                            startTime: '09:00'
+                            endTime: '17:00'
+                            allDay: false
+                    addresses:
+                      - addressName: Home
+                        addressType: home
+                        line1: 456 Peace St
+                        line2: Apt 12
+                        city: Austin
+                        district: Travis
+                        state: TX
+                        postalCode: '78702'
+                        country: USA
+                        latitude: 30.2672
+                        longitude: -97.7431
+                        validFrom: '2010-01-01'
+                        validTo: '2030-12-31'
+                    phoneNumbers:
+                      - type: mobile
+                        number: '5125556789'
+                        validFrom: '2010-01-01'
+                        validTo: '2030-12-31'
+                        bestTimeToContact:
+                          - day: fri
+                            startTime: '10:00'
+                            endTime: '16:00'
+                            allDay: false
+                    faxNumbers:
+                      - number: '5125559999'
+                        type: home
+                        validFrom: '2010-01-01'
+                        validTo: '2030-12-31'
+                    emails:
+                      - email: emily.thompson@healthcare.org
+                        type: work
+                        validFrom: '2015-01-01'
+                        validTo: '2030-12-31'
+                    npis:
+                      - npi: '5324832746'
+                        entityTypeCode: 1
+                      - npi: '5324832483'
+                        entityTypeCode: 1
+                    license:
+                      - number: TX123456
+                        state: TX
+                        taxonomyCode: 207Q00000X
+                        licenseEffectiveDate: '2010-06-01'
+                        licenseExpirationDate: '2030-06-01'
+                        licenseStatus: active
+                        licenseStatusDetail: in good standing
+                        licenseProfessionCode: MD
+                        licenseProfessionRankCode: '1'
+                        licenseLastUpdateDate: '2025-01-01'
+                        licenseProfessionDescription: Medical Doctor
+                        licenseType: permanent
+                        licensePrimary: 'true'
+                    specialties:
+                      - specialtyTaxonomyCode: 207Q00000X
+                    communicationLanguages:
+                      - language: en
+                        preferred: true
+                      - language: es
+                        preferred: false
+                    practitionerRoles:
+                      - acceptingNewPatients: true
+                        serviceMode: in-person
+                        clinicalExpertise:
+                          - name: Diabetes Management
+                            url: https://healthcare.org/expertise/diabetes
+                        program:
+                          - name: Chronic Care Program
+                            url: https://healthcare.org/programs/chronic-care
+                        specialty:
+                          - taxonomyCode: 207Q00000X
+                            isPrimary: true
+                        subSpecialty:
+                          - code: Endocrinology
+                            status: true
+                        availability:
+                          - day: mon
+                            startTime: '09:00'
+                            endTime: '17:00'
+                            allDay: false
+                        acceptedInsurances:
+                          - payerName: Blue Cross Blue Shield
+                            status: active
+                            insuranceType: dental
+                            planId: BCBS-TX-123
+                            planType: vision
+                            networkStatus: in
+                            startDate: '2020-01-01'
+                            endDate: '2030-01-01'
+                    qualifications:
+                      - type: certification
+                        qualification: BBA
+                        status: active
+                        issuer: ABIM
+                        issueDate: '2010-01-01'
+                        validFrom: '2010-01-01'
+                        validTo: '2030-01-01'
+                    alternateIdentifiers:
+                      - description: State License ID
+                        type: clear-id
+                        value: TX-MD-7890
+                        status: active
+                        issuer: Texas Medical Board
+                        issueDate: '2010-01-01'
+                        startDate: '2010-01-01'
+                        endDate: '2030-01-01'
+                    externalUniqueIdentifier:
+                      - issuer: DEA
+                        value: DEA1234567
+                        status: active
+                        startDate: '2010-01-01'
+                        endDate: '2030-01-01'
+                    multipleBirthIndicator:
+                      - multipleBirthIndicator: false
+                        multipleBirthInteger: 1
+                        birthPlurality: 1
+                    ssns:
+                      - ssn: 123-45-6789
+                    citizenships:
+                      - citizenship: US
+                    photos:
+                      - url: https://healthcare.org/photos/emily-thompson.jpg
+                    sexualOrientations:
+                      - sexualOrientation: OT
+                    races:
+                      - race: 2106-3
+                    ethnicities:
+                      - ethnicity: UNK
+                    religiousAffiliations:
+                      - religiousAffiliation: '1022'
+                    maritalStatuses:
+                      - maritalStatus: M
+                    deathDetails:
+                      - deceased: 'N'
+                        dateOfDeath: null
+                        city: null
+                        county: null
+                        state: null
+                        country: null
+                    consents:
+                      - name: Data Sharing
+                        type: patient-privacy
+                        status: active
+                        isRequired: true
+                        decision: permit
+                        validFrom: '2020-01-01'
+                        validTo: '2030-01-01'
+                        source: patient
+                        regulatoryBasis: hipaa-restrictions
+                    preferences:
+                      - name: Contact Preferences
+                        type: communication
+                        channels:
+                          - type: EMAILWRIT
+                            isOptedIn: true
+                            lastOptedInDate: '2023-01-01'
+                            frequency: weekly
+                            preferredStartTime: '08:00'
+                            preferredEndTime: '10:00'
+                    medicareInfo:
+                      - inPecos: true
+                        acceptsMedicare: true
+                    disciplinaryInfo:
+                      - warning: false
+                        exclusionType: None
+                    locationInfo:
+                      - ruralUrbanSuburban: urban
+                        coloCode: TX-AUS-001
+                    education:
+                      - medSchool: Harvard Medical School
+                        gradYear: 2005
+                    practiceInfo:
+                      - estimatedPracticeYears: 20
+                    research:
+                      - areasOfInterest: Endocrinology, Diabetes
+                        publications: Thompson E. Advances in Diabetes Care. J Med 2020.
+              healthFacility:
+                summary: Health Facility (Type 2)
+                value:
+                  responseIdentityFormatNames:
+                    - GROUP_BY_SOURCE
+                  identity:
+                    sources:
+                      - name: directory
+                        id: NFF3-311
+                    organizationNames:
+                      - legalBusinessName: Sunrise Health Center
+                        otherOrgName: Sunrise Clinic
+                        tradingName: Sunrise Medical
+                        parentOrgName: Sunrise Health Network
+                    contactInformation:
+                      - address:
+                          addressName: Main Campus
+                          addressType: work
+                          line1: 456 Care Avenue
+                          line2: Building B
+                          city: Denver
+                          district: Denver County
+                          state: CO
+                          postalCode: '80203'
+                          country: USA
+                          latitude: 39.7392
+                          longitude: -104.9903
+                          validFrom: '2010-01-01'
+                          validTo: '2035-12-31'
+                        phoneList:
+                          - number: '3035557890'
+                            type: work
+                            validFrom: '2010-01-01'
+                            validTo: '2035-12-31'
+                        faxList:
+                          - number: '3035557891'
+                            type: work
+                            validFrom: '2010-01-01'
+                            validTo: '2035-12-31'
+                        bestTimeToContact:
+                          - day: tue
+                            startTime: '08:00'
+                            endTime: '17:00'
+                            allDay: false
+                    emails:
+                      - email: info@sunrisehealth.org
+                        type: work
+                        validFrom: '2010-01-01'
+                        validTo: '2035-12-31'
+                    npis:
+                      - npi: 1987654321
+                        entityTypeCode: 2
+                    license:
+                      - number: CO-HF-789456
+                        state: CO
+                        taxonomyCode: 282N00000X
+                        licenseStatus: active
+                        licenseStatusDetail: compliant
+                        licenseEffectiveDate: '2010-01-01'
+                        licenseExpirationDate: '2030-01-01'
+                        licenseProfessionCode: HF
+                        licenseProfessionRankCode: '1'
+                        licenseProfessionDescription: Health Facility
+                        licenseType: permanent
+                        licenseLastUpdateDate: '2025-01-01'
+                        licensePrimary: true
+                    specialties:
+                      - specialtyTaxonomyCode: 282N00000X
+                    alternateIdentifiers:
+                      - description: State Facility ID
+                        type: state-id
+                        value: CO123456
+                        status: true
+                        issuer: Colorado Department of Health
+                        issueDate: '2010-01-01'
+                        startDate: '2010-01-01'
+                        endDate: '2030-01-01'
+                    groupTaxonomies:
+                      - groupTaxonomyCode: 282N00000X
+                    authorizedOfficials:
+                      - title: Chief Medical Officer
+                        prefix: Dr.
+                        first: Laura
+                        middle: Anne
+                        last: Reynolds
+                        suffix: MD
+                        credential: MD
+                        phoneNumber: '3035551234'
+                    employerIdentificationNumber:
+                      - value: 84-1234567
+                        status: active
+                        issuer: IRS
+                        issueDate: '2009-12-01'
+                        validFrom: '2010-01-01'
+                        validTo: '2035-12-31'
+                    naicsClassifications:
+                      - sector: '62'
+                        subSector: '621'
+                        industryGroup: '6214'
+                        industry: '62149'
+                        nationalIndustry: '621491'
+                    sicClassifications:
+                      - code: '8062'
+                    qualifications:
+                      - type: accreditation
+                        qualification: Joint Commission Accredited
+                        status: active
+                        issuer: The Joint Commission
+                        issueDate: '2015-06-01'
+                        validFrom: '2015-06-01'
+                        validTo: '2025-06-01'
+                    types:
+                      - type: Hospital
+                        subType: General Acute Care
+                    contactOther:
+                      - system: website
+                        type: info
+                        value: https://www.sunrisehealth.org
+                        validFrom: '2010-01-01'
+                        validTo: '2035-12-31'
+                    product:
+                      - name: Outpatient Surgery
+                        code: OPS-001
+                        type: service
+                        category: Surgical Services
+                        price: 1500
+                        status: active
+                        description: Same-day surgical procedures
+                        launchDate: '2012-03-01'
+                        market: Denver Metro
+                        lineOfBusiness: Healthcare
+                        serviceLines:
+                          - serviceLine: Surgery
+                            subServiceLine: Outpatient
+                    numberOfEmployees:
+                      - numberOfEmployees: 250
+                    foundedDate:
+                      - foundedDate: '2009-11-15'
+                    annualRevenue:
+                      - annualRevenue: 12500000
+                        year: 2024
+                    legalStatus:
+                      - type: non-profit
+                        source: IRS
+                        effectiveDate: '2010-01-01'
+                        verificationDate: '2010-06-01'
+                        jurisdiction: Colorado
+                        registrationCountry: USA
+                    acceptedInsurances:
+                      - payerName: UnitedHealthcare
+                        status: active
+                        insuranceType: medical
+                        planId: UHC-CO-789
+                        planType: HMO
+                        networkStatus: in
+                        startDate: '2020-01-01'
+                        endDate: '2030-01-01'
+      responses:
+        '200':
+          description: PostIdentity service response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_postIdentity'
+  /demographicsSearch:
+    post:
+      summary: Search using demographic information (demographicsSearch)
+      description: >-
+        Searches Verato using the provided demographic and provider attributes.
+        It returns zero or more candidate identities ordered by match score.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_demographicsSearch'
+      responses:
+        '200':
+          description: Demographics search response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_demographicsSearch'
+  /demographicsQuery:
+    post:
+      summary: Query using demographic information (demographicsQuery)
+      description: >-
+        Searches Verato using the provided demographic information and returns
+        the best-matching identity if found.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_demographicsQuery'
+      responses:
+        '200':
+          description: Demographics query response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_demographicsQuery'
+  /identityIdQuery:
+    post:
+      summary: Query using link ID (identityIdQuery)
+      description: Search for an Identity with supplied linkId
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_identityIdQuery'
+      responses:
+        '200':
+          description: Identity by link ID response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_identityIdQuery'
+  /nativeIdQuery:
+    post:
+      summary: Query using native ID (nativeIdQuery)
+      description: >-
+        Searches Verato for an identity using source name + native ID (the
+        customer's source system identifier).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_nativeIdQuery'
+      responses:
+        '200':
+          description: Native ID query response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_nativeIdQuery'
+  /deleteSourceIdentity:
+    post:
+      summary: Hard Delete a Source (deleteSourceIdentity)
+      description: >-
+        Permanently removes all information and history associated with a
+        specific source name + native ID across Verato. This also removes
+        merge/unmerge history associated with that source identity. Use with
+        caution.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_deleteSourceIdentity'
+      responses:
+        '200':
+          description: Hard delete source response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_deleteSourceIdentity'
+  /restoreSource:
+    post:
+      summary: Restore a soft-deleted source (restoreSource)
+      description: >
+        Restores a previously soft-deleted source across all identities where it
+        was present. A new entity may be created or existing entities modified
+        depending on the current state of the graph.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_restoreSource'
+      responses:
+        '200':
+          description: Restore source response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_restoreSource'
+  /softDeleteSource:
+    post:
+      summary: Soft delete a source from identities (softDeleteSource)
+      description: >
+        Soft deletes a source from all identities that reference it. The source
+        and its data are marked as deleted but can be restored later. Merge and
+        linkage history is preserved for audit.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_softDeleteSource'
+      responses:
+        '200':
+          description: Soft delete source response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_softDeleteSource'
+  /linkIdentities:
+    post:
+      summary: Link two identities (linkIdentities)
+      description: >
+        Links two existing identities together without retiring either source.
+        This is typically used when you determine that two separate source
+        identities belong to the same real-world provider, and they should be
+        represented as a single link ID. Note: only provider identities of the
+        same type can be linked together (ie Practitioner to Practitioner, not
+        Practitioner and Health Facility).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_linkIdentities'
+      responses:
+        '200':
+          description: Link identities response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_linkIdentities'
+  /mergeIdentities:
+    post:
+      summary: Merge two identities (mergeIdentities)
+      description: >
+        Merges a "toRetire" source identity into a "toSurvive" source identity.
+        After a merge, the retired source is marked as merged and the surviving
+        identity contains combined data. The response returns the surviving
+        linkId. Note: only provider identities of the same type can be merged
+        together (ie Practitioner to Practitioner, not Practitioner and Health
+        Facility).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_mergeIdentities'
+      responses:
+        '200':
+          description: Merge identities response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_mergeIdentities'
+  /searchNotifications:
+    post:
+      summary: Query notifications (searchNotifications)
+      description: >
+        Retrieves identity-related notifications for a specific period of time,
+        such as merge events, link/unlink events, or other configured
+        notifications.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_searchNotifications'
+      responses:
+        '200':
+          description: Notifications search response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_searchNotifications'
+  /unlinkIdentities:
+    post:
+      summary: Unlink two identities (unlinkIdentities)
+      description: |
+        Unlinks two previously linked identities, splitting them into separate
+        entities and returning their linkIds and associated source information.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_unlinkIdentities'
+      responses:
+        '200':
+          description: Unlink identities response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_unlinkIdentities'
+  /unmergeIdentities:
+    post:
+      summary: Unmerge two identities (unmergeIdentities)
+      description: >
+        Reverses a previous merge operation by extracting a previously merged
+        source identity into its own record. Returns the new link ID and the
+        linkId it was unmerged from.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_unmergeIdentities'
+      responses:
+        '200':
+          description: Unmerge identities response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_unmergeIdentities'
+  /addRelationshipService:
+    post:
+      summary: Add a new relationship (addRelationshipService)
+      description: |
+        Adds a relationship between two identities according to configured
+        relationship definitions.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_addRelationshipService'
+      responses:
+        '200':
+          description: Add relationship response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_addRelationshipService'
+  /searchRelationshipsService:
+    post:
+      summary: Searches for relationships (searchRelationshipsService)
+      description: |
+        Searches for relationships
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_searchRelationshipsService'
+      responses:
+        '200':
+          description: Search/update relationship response
+          content:
+            application/json:
+              schema:
+                $ref: >-
+                  #/components/schemas/ServiceResponse_searchRelationshipsService
+  /deleteRelationshipService:
+    post:
+      summary: Delete a relationship (deleteRelationshipService)
+      description: |
+        Deletes a previously defined relationship between two identities.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_deleteRelationshipService'
+      responses:
+        '200':
+          description: Delete relationship response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_deleteRelationshipService'
+components:
+  schemas:
+    ClusterStatus:
+      type: string
+      description: Status of a clustered attribute.
+      enum:
+        - ACTIVE
+        - INACTIVE
+    YesNoUnknown:
+      type: string
+      description: Ternary value indicating yes/no/unknown.
+      enum:
+        - 'Y'
+        - U
+        - 'N'
+    StringMap:
+      type: object
+      additionalProperties:
+        type: string
+      description: Map of string keys to string values.
+    ObjectMap:
+      type: object
+      additionalProperties: {}
+      description: Map of string keys to arbitrary JSON values.
+    StringListMap:
+      type: object
+      additionalProperties:
+        type: array
+        items:
+          type: string
+      description: Map of string keys to lists of strings.
+    Domain:
+      type: object
+      description: Identity domain (e.g., Provider, Person, Organization).
+      properties:
+        id:
+          type: string
+          description: Domain identifier.
+        name:
+          type: string
+          description: Domain name.
+    BaseServiceRequest:
+      type: object
+      description: Standard wrapper for all service requests.
+      properties:
+        trackingId:
+          type: string
+          description: Optional client-defined correlation ID.
+    BaseServiceResponse:
+      type: object
+      description: Standard wrapper for all service responses.
+      properties:
+        auditId:
+          type: string
+          description: Unique audit identifier for correlating requests and responses.
+        success:
+          type: boolean
+          description: Indicates whether the business operation succeeded.
+        warnings:
+          type: array
+          items:
+            type: string
+          description: Non-fatal warnings generated by the operation.
+        retryableError:
+          type: boolean
+          description: >-
+            Indicates whether an error is transient and the request may be
+            retried.
+        message:
+          type: string
+          description: Human-readable status message.
+        errors:
+          type: array
+          items:
+            type: string
+          description: Error messages if success is false.
+        trackingId:
+          type: string
+          description: Echo of the request trackingId, if provided.
+    Identity:
+      type: object
+      description: >
+        Unified identity representation containing the properties common to
+        Practitioner (Type 1) and Health Facility (Type 2) provider identities.
+        Type-specific properties (e.g., `names`, `practitionerRoles` for
+        Practitioner; `organizationNames`, `authorizedOfficials` for Health
+        Facility) are also accepted on this object — see the request examples
+        for the full shape per type.
+      required:
+        - sources
+      properties:
+        sources:
+          type: array
+          minItems: 1
+          maxItems: 1
+          description: >-
+            The data source that provided this identity. Exactly one source is
+            required per request.
+          items:
+            $ref: '#/components/schemas/PostIdentitySource'
+        contactInformation:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactInformationGrouped'
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Address'
+        phoneNumbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhoneNumber'
+        faxNumbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/FaxNumber'
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmailAddress'
+        npis:
+          type: array
+          items:
+            $ref: '#/components/schemas/NPI'
+        license:
+          type: array
+          items:
+            $ref: '#/components/schemas/LicenseSimple'
+        specialties:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpecialtySimple'
+        qualifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/Qualification'
+        alternateIdentifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlternateIdentifier'
+        externalUniqueIdentifier:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalUniqueIdentifier'
+    PractitionerType1:
+      type: object
+      description: Practitioner (Type 1) – individual healthcare provider domain.
+      required:
+        - sources
+      properties:
+        sources:
+          type: array
+          minItems: 1
+          maxItems: 1
+          description: >-
+            The data source that provided this identity. Exactly one source is
+            required per request.
+          items:
+            $ref: '#/components/schemas/PostIdentitySource'
+        names:
+          type: array
+          items:
+            $ref: '#/components/schemas/PractitionerName'
+        datesOfBirth:
+          type: array
+          items:
+            $ref: '#/components/schemas/DateOfBirth'
+        genders:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenderCode'
+        genderIdentities:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenderIdentityCode'
+        contactInformation:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactInformationGrouped'
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Address'
+        phoneNumbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhoneNumber'
+        faxNumbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/FaxNumber'
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmailAddress'
+        npis:
+          type: array
+          items:
+            $ref: '#/components/schemas/NPI'
+        license:
+          type: array
+          items:
+            $ref: '#/components/schemas/LicenseSimple'
+        specialties:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpecialtySimple'
+        communicationLanguages:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommunicationLanguage'
+        practitionerRoles:
+          type: array
+          items:
+            $ref: '#/components/schemas/PractitionerRole'
+        qualifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/Qualification'
+        alternateIdentifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlternateIdentifier'
+        externalUniqueIdentifier:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalUniqueIdentifier'
+        multipleBirthIndicator:
+          type: array
+          items:
+            $ref: '#/components/schemas/MultipleBirth'
+        ssns:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ssn'
+        citizenships:
+          type: array
+          items:
+            $ref: '#/components/schemas/Citizenship'
+        photos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Photo'
+        sexualOrientations:
+          type: array
+          items:
+            $ref: '#/components/schemas/SexualOrientation'
+        races:
+          type: array
+          items:
+            $ref: '#/components/schemas/Race'
+        ethnicities:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ethnicity'
+        religiousAffiliations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReligiousAffiliation'
+        maritalStatuses:
+          type: array
+          items:
+            $ref: '#/components/schemas/MaritalStatus'
+        deathDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeathDetails'
+        consents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Consent'
+        preferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/Preference'
+        medicareInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/MedicareInfoSimple'
+        disciplinaryInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/DisciplinaryInfoSimple'
+        locationInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/LocationInfoSimple'
+        education:
+          type: array
+          items:
+            $ref: '#/components/schemas/EducationSimple'
+        practiceInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/PracticeInfoSimple'
+        research:
+          type: array
+          items:
+            $ref: '#/components/schemas/Research'
+    HealthFacilityType2:
+      type: object
+      description: Health Facility (Type 2) – organizational healthcare provider domain.
+      required:
+        - sources
+      properties:
+        sources:
+          type: array
+          minItems: 1
+          maxItems: 1
+          description: >-
+            The data source that provided this identity. Exactly one source is
+            required per request.
+          items:
+            $ref: '#/components/schemas/PostIdentitySource'
+        organizationNames:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationNames'
+        contactInformation:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactInformationGrouped'
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Address'
+        phoneNumbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhoneNumber'
+        faxNumbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/FaxNumber'
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmailAddress'
+        npis:
+          type: array
+          items:
+            $ref: '#/components/schemas/NPI'
+        license:
+          type: array
+          items:
+            $ref: '#/components/schemas/LicenseSimple'
+        specialties:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpecialtySimple'
+        alternateIdentifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AlternateIdentifier'
+        externalUniqueIdentifier:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalUniqueIdentifier'
+        groupTaxonomies:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupTaxonomySimple'
+        authorizedOfficials:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizedOfficialSimple'
+        employerIdentificationNumber:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmployerIdentificationNumber'
+        naicsClassifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/NaicsClassification'
+        sicClassifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/SicClassification'
+        qualifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/Qualification'
+        types:
+          type: array
+          items:
+            $ref: '#/components/schemas/FacilityType'
+        contactOther:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactOther'
+        product:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        numberOfEmployees:
+          type: array
+          items:
+            $ref: '#/components/schemas/NumberOfEmployees'
+        foundedDate:
+          type: array
+          items:
+            $ref: '#/components/schemas/FoundedDate'
+        annualRevenue:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnnualRevenue'
+        legalStatus:
+          type: array
+          items:
+            $ref: '#/components/schemas/LegalStatus'
+        acceptedInsurances:
+          type: array
+          items:
+            $ref: '#/components/schemas/AcceptedInsurance'
+    PractitionerName:
+      type: object
+      properties:
+        use:
+          type: string
+          description: Name usage code (e.g., official, nickname).
+        prefix:
+          type: string
+        first:
+          type: string
+        middle:
+          type: string
+        last:
+          type: string
+        suffix:
+          type: string
+        credential:
+          type: string
+    DateOfBirth:
+      type: object
+      properties:
+        dateOfBirth:
+          type: string
+          format: date
+    GenderCode:
+      type: object
+      properties:
+        gender:
+          type: string
+          description: Administrative gender code.
+    GenderIdentityCode:
+      type: object
+      properties:
+        genderIdentity:
+          type: string
+          description: Self-identified gender code.
+    Address:
+      type: object
+      description: Standalone address representation.
+      properties:
+        addressName:
+          type: string
+        addressType:
+          type: string
+        line1:
+          type: string
+        line2:
+          type: string
+        city:
+          type: string
+        district:
+          type: string
+        state:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+        validFrom:
+          type: string
+          format: date
+        validTo:
+          type: string
+          format: date
+    ContactInformationGrouped:
+      type: object
+      description: Grouped contact information (address + phone/fax + best time).
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+        phoneList:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhoneNumber'
+        faxList:
+          type: array
+          items:
+            $ref: '#/components/schemas/FaxNumber'
+        bestTimeToContact:
+          type: array
+          items:
+            $ref: '#/components/schemas/BestTimeToContact'
+    BestTimeToContact:
+      type: object
+      properties:
+        day:
+          type: string
+          description: Day-of-week code.
+        startTime:
+          type: string
+          format: time
+        endTime:
+          type: string
+          format: time
+        allDay:
+          type: boolean
+    PhoneNumber:
+      type: object
+      properties:
+        number:
+          type: string
+          description: Phone number including country code and extension.
+        type:
+          type: string
+        validFrom:
+          type: string
+          format: date
+        validTo:
+          type: string
+          format: date
+    FaxNumber:
+      type: object
+      properties:
+        number:
+          type: string
+        type:
+          type: string
+        validFrom:
+          type: string
+          format: date
+        validTo:
+          type: string
+          format: date
+    EmailAddress:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        type:
+          type: string
+        validFrom:
+          type: string
+          format: date
+        validTo:
+          type: string
+          format: date
+    NPI:
+      type: object
+      description: National Provider Identifier (NPI).
+      properties:
+        npi:
+          type: string
+        entityTypeCode:
+          type: string
+        deactivationDate:
+          type: string
+          format: date
+    LicenseSimple:
+      type: object
+      description: Provider license information (simplified).
+      properties:
+        number:
+          type: string
+        state:
+          type: string
+        taxonomyCode:
+          type: string
+        licenseEffectiveDate:
+          type: string
+          format: date
+        licenseExpirationDate:
+          type: string
+          format: date
+        licenseStatus:
+          type: string
+        licenseStatusDetail:
+          type: string
+        licenseProfessionCode:
+          type: string
+        licenseProfessionRankCode:
+          type: string
+        licenseLastUpdateDate:
+          type: string
+          format: date
+        licenseProfessionDescription:
+          type: string
+        licenseType:
+          type: string
+        licensePrimary:
+          type: string
+    SpecialtySimple:
+      type: object
+      description: Specialty taxonomy entry.
+      properties:
+        specialtyTaxonomyCode:
+          type: string
+    CommunicationLanguage:
+      type: object
+      properties:
+        language:
+          type: string
+        preferred:
+          type: boolean
+    PractitionerRole:
+      type: object
+      description: Practitioner role and participation attributes.
+      properties:
+        acceptingNewPatients:
+          type: boolean
+        serviceMode:
+          type: string
+        clinicalExpertise:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClinicalExpertise'
+        program:
+          type: array
+          items:
+            $ref: '#/components/schemas/Program'
+        specialty:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleSpecialty'
+        subSpecialty:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubSpecialty'
+        availability:
+          type: array
+          items:
+            $ref: '#/components/schemas/Availability'
+        acceptedInsurances:
+          type: array
+          items:
+            $ref: '#/components/schemas/AcceptedInsurance'
+    ClinicalExpertise:
+      type: object
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+    Program:
+      type: object
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+    RoleSpecialty:
+      type: object
+      properties:
+        taxonomyCode:
+          type: string
+        isPrimary:
+          type: boolean
+    SubSpecialty:
+      type: object
+      properties:
+        code:
+          type: string
+        status:
+          type: boolean
+    Availability:
+      type: object
+      properties:
+        day:
+          type: string
+        startTime:
+          type: string
+          format: time
+        endTime:
+          type: string
+          format: time
+        allDay:
+          type: boolean
+    AcceptedInsurance:
+      type: object
+      properties:
+        payerName:
+          type: string
+        status:
+          type: string
+        insuranceType:
+          type: string
+        planId:
+          type: string
+        planType:
+          type: string
+        networkStatus:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+    Qualification:
+      type: object
+      properties:
+        type:
+          type: string
+        qualification:
+          type: string
+        status:
+          type: string
+        issuer:
+          type: string
+        issueDate:
+          type: string
+          format: date
+        validFrom:
+          type: string
+          format: date
+        validTo:
+          type: string
+          format: date
+    AlternateIdentifier:
+      type: object
+      properties:
+        description:
+          type: string
+        type:
+          type: string
+        value:
+          type: string
+        status:
+          type: boolean
+        issuer:
+          type: string
+        issueDate:
+          type: string
+          format: date
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+    ExternalUniqueIdentifier:
+      type: object
+      properties:
+        issuer:
+          type: string
+        value:
+          type: string
+        status:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+    MultipleBirth:
+      type: object
+      properties:
+        multipleBirthIndicator:
+          type: boolean
+        multipleBirthInteger:
+          type: integer
+        birthPlurality:
+          type: integer
+    Ssn:
+      type: object
+      properties:
+        ssn:
+          type: string
+    Citizenship:
+      type: object
+      properties:
+        citizenship:
+          type: string
+    Photo:
+      type: object
+      properties:
+        url:
+          type: string
+    SexualOrientation:
+      type: object
+      properties:
+        sexualOrientation:
+          type: string
+    Race:
+      type: object
+      properties:
+        race:
+          type: string
+    Ethnicity:
+      type: object
+      properties:
+        ethnicity:
+          type: string
+    ReligiousAffiliation:
+      type: object
+      properties:
+        religiousAffiliation:
+          type: string
+    MaritalStatus:
+      type: object
+      properties:
+        maritalStatus:
+          type: string
+    DeathDetails:
+      type: object
+      properties:
+        deceased:
+          type: string
+        dateOfDeath:
+          type: string
+          format: date
+        city:
+          type: string
+        county:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+    Consent:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        status:
+          type: string
+        isRequired:
+          type: boolean
+        decision:
+          type: string
+        validFrom:
+          type: string
+          format: date
+        validTo:
+          type: string
+          format: date
+        source:
+          type: string
+        regulatoryBasis:
+          type: string
+    Preference:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        channels:
+          type: array
+          items:
+            $ref: '#/components/schemas/PreferenceChannel'
+    PreferenceChannel:
+      type: object
+      properties:
+        type:
+          type: string
+        isOptedIn:
+          type: boolean
+        lastOptedInDate:
+          type: string
+          format: date
+        frequency:
+          type: string
+        preferredStartTime:
+          type: string
+          format: time
+        preferredEndTime:
+          type: string
+          format: time
+    MedicareInfoSimple:
+      type: object
+      properties:
+        inPecos:
+          type: boolean
+        acceptsMedicare:
+          type: boolean
+    DisciplinaryInfoSimple:
+      type: object
+      properties:
+        warning:
+          type: boolean
+        exclusionType:
+          type: string
+    LocationInfoSimple:
+      type: object
+      properties:
+        ruralUrbanSuburban:
+          type: string
+        coloCode:
+          type: string
+    EducationSimple:
+      type: object
+      properties:
+        medSchool:
+          type: string
+        gradYear:
+          type: integer
+    PracticeInfoSimple:
+      type: object
+      properties:
+        estimatedPracticeYears:
+          type: integer
+    Research:
+      type: object
+      properties:
+        areasOfInterest:
+          type: string
+        publications:
+          type: string
+    OrganizationNames:
+      type: object
+      properties:
+        legalBusinessName:
+          type: string
+        otherOrgName:
+          type: string
+        tradingName:
+          type: string
+        parentOrgName:
+          type: string
+    GroupTaxonomySimple:
+      type: object
+      properties:
+        groupTaxonomyCode:
+          type: string
+    AuthorizedOfficialSimple:
+      type: object
+      properties:
+        title:
+          type: string
+        prefix:
+          type: string
+        first:
+          type: string
+        middle:
+          type: string
+        last:
+          type: string
+        suffix:
+          type: string
+        credential:
+          type: string
+        phoneNumber:
+          type: string
+    EmployerIdentificationNumber:
+      type: object
+      properties:
+        value:
+          type: string
+        status:
+          type: boolean
+        issuer:
+          type: string
+        issueDate:
+          type: string
+          format: date
+        validFrom:
+          type: string
+          format: date
+        validTo:
+          type: string
+          format: date
+    NaicsClassification:
+      type: object
+      properties:
+        sector:
+          type: string
+        subSector:
+          type: string
+        industryGroup:
+          type: string
+        industry:
+          type: string
+        nationalIndustry:
+          type: string
+    SicClassification:
+      type: object
+      properties:
+        code:
+          type: string
+    FacilityType:
+      type: object
+      properties:
+        type:
+          type: string
+        subType:
+          type: string
+    ContactOther:
+      type: object
+      properties:
+        system:
+          type: string
+        type:
+          type: string
+        value:
+          type: string
+        validFrom:
+          type: string
+          format: date
+        validTo:
+          type: string
+          format: date
+    Product:
+      type: object
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+        type:
+          type: string
+        category:
+          type: string
+        price:
+          type: number
+        status:
+          type: string
+        description:
+          type: string
+        launchDate:
+          type: string
+          format: date
+        market:
+          type: string
+        lineOfBusiness:
+          type: string
+        serviceLines:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceLine'
+    ServiceLine:
+      type: object
+      properties:
+        serviceLine:
+          type: string
+        subServiceLine:
+          type: string
+    NumberOfEmployees:
+      type: object
+      properties:
+        numberOfEmployees:
+          type: integer
+    FoundedDate:
+      type: object
+      properties:
+        foundedDate:
+          type: string
+          format: date
+    AnnualRevenue:
+      type: object
+      properties:
+        annualRevenue:
+          type: number
+        year:
+          type: integer
+    LegalStatus:
+      type: object
+      properties:
+        type:
+          type: string
+        source:
+          type: string
+        effectiveDate:
+          type: string
+          format: date
+        verificationDate:
+          type: string
+          format: date
+        jurisdiction:
+          type: string
+        registrationCountry:
+          type: string
+    Source:
+      type: object
+      description: Tracks an identity back to its source system.
+      properties:
+        date:
+          type: string
+          format: date
+        name:
+          type: string
+          description: Unique source system name across Verato.
+        id:
+          type: string
+          description: Native ID of the identity within the source.
+    CustomerMetaData:
+      type: object
+      description: >-
+        Optional metadata about the transaction that produced this identity
+        record.
+      properties:
+        transactionType:
+          type: string
+          description: Type of transaction (e.g., INSERT, UPDATE).
+        sourceLoginName:
+          type: string
+          description: Login name of the user or system that submitted the record.
+        sourceUserName:
+          type: string
+          description: Display name of the user or system that submitted the record.
+        transactionDateTime:
+          type: string
+          description: Timestamp of the transaction in the Verato system (ISO 8601).
+        sourceTransactionDateTime:
+          type: string
+          description: Timestamp of the transaction in the source system (ISO 8601).
+        customMetaData:
+          type: object
+          additionalProperties:
+            type: string
+          description: Arbitrary key-value pairs for customer-defined metadata.
+        location:
+          type: string
+          description: >-
+            Logical location or system identifier where the transaction
+            originated.
+    PostIdentitySource:
+      description: >-
+        Source object used when posting a new identity. Extends the base Source
+        with an optional customerMetaData field for transaction context.
+      allOf:
+        - $ref: '#/components/schemas/Source'
+        - type: object
+          properties:
+            customerMetaData:
+              description: >-
+                Optional metadata about the transaction that produced this
+                record.
+              allOf:
+                - $ref: '#/components/schemas/CustomerMetaData'
+    IdentityPerSource:
+      type: object
+      description: Identity view grouped by a single source.
+      properties:
+        source:
+          $ref: '#/components/schemas/Source'
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Address'
+        names:
+          type: array
+          items:
+            $ref: '#/components/schemas/PractitionerName'
+        phoneNumbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhoneNumber'
+        faxNumbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/FaxNumber'
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmailAddress'
+        licenses:
+          type: array
+          items:
+            $ref: '#/components/schemas/LicenseSimple'
+        specialties:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpecialtySimple'
+        nPIs:
+          type: array
+          items:
+            $ref: '#/components/schemas/NPI'
+        medicareInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/MedicareInfoSimple'
+        disciplinaryInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/DisciplinaryInfoSimple'
+        practiceInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/PracticeInfoSimple'
+        locationInfo:
+          type: array
+          items:
+            $ref: '#/components/schemas/LocationInfoSimple'
+        groupTaxonomies:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupTaxonomySimple'
+        organizationNames:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationNames'
+        authorizedOfficials:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorizedOfficialSimple'
+        mergedSourceRecord:
+          $ref: '#/components/schemas/MergedSourceRecord'
+        softDeletedSourceRecord:
+          $ref: '#/components/schemas/Source'
+    MergedSourceRecord:
+      type: object
+      description: Retired source record enriched with linkage metadata.
+      properties:
+        date:
+          type: string
+          format: date
+        name:
+          type: string
+        id:
+          type: string
+        activeNativeId:
+          type: string
+        activeSource:
+          type: string
+        timestamp:
+          type: string
+          description: Merge timestamp (UTC, ISO_LOCAL_DATE_TIME).
+    DemographicsQueryWsRequest:
+      type: object
+      description: Request for demographics-based query.
+      required:
+        - identity
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        responseIdentityFormatNames:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+          description: >
+            Optional set of identity format names to include in the response. If
+            omitted, DEFAULT is assumed.
+    DemographicsQueryWsResponse:
+      type: object
+      description: Demographics query response content.
+      properties:
+        identityGroupedBySource:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityPerSource'
+        customerSources:
+          type: array
+          items:
+            type: string
+        linkId:
+          type: string
+          description: link ID of the returned identity, or null if not found.
+        identity:
+          $ref: '#/components/schemas/Identity'
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/Domain'
+        customizedIdentities:
+          $ref: '#/components/schemas/ObjectMap'
+    DemographicsSearchWsRequest:
+      type: object
+      description: Request for demographics-based search (multi-match).
+      required:
+        - identity
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        matchScoreThreshold:
+          type: number
+          format: double
+        maxSearchResults:
+          type: integer
+          format: int32
+          minimum: 1
+        responseIdentityFormatNames:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+    DemographicsSearchWsResponse:
+      type: object
+      description: Demographics search response content.
+      properties:
+        searchResults:
+          type: array
+          items:
+            $ref: '#/components/schemas/DemographicsSearchResult'
+    DemographicsSearchResult:
+      type: object
+      required:
+        - sameIdentity
+        - matchScore
+      properties:
+        identityGroupedBySource:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityPerSource'
+        matchScore:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 1
+        customerSources:
+          type: array
+          items:
+            type: string
+        linkId:
+          type: string
+        identity:
+          $ref: '#/components/schemas/Identity'
+        sameIdentity:
+          $ref: '#/components/schemas/YesNoUnknown'
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/Domain'
+        customizedIdentities:
+          $ref: '#/components/schemas/ObjectMap'
+    NativeIdQueryWsRequest:
+      type: object
+      description: Query using source information.
+      required:
+        - source
+      properties:
+        source:
+          $ref: '#/components/schemas/Source'
+        responseIdentityFormatNames:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+    NativeIdQueryWsResponse:
+      type: object
+      description: Source-based query response content.
+      properties:
+        identityGroupedBySource:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityPerSource'
+        customerSources:
+          type: array
+          items:
+            type: string
+        linkId:
+          type: string
+        identity:
+          $ref: '#/components/schemas/Identity'
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/Domain'
+        customizedIdentities:
+          $ref: '#/components/schemas/ObjectMap'
+    IdentityIdQueryWsRequest:
+      type: object
+      description: Query by linkId.
+      required:
+        - linkId
+      properties:
+        linkId:
+          type: string
+        responseIdentityFormatNames:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+    IdentityIdQueryWsResponse:
+      type: object
+      description: Identity-by-linkId response content.
+      properties:
+        identityGroupedBySource:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityPerSource'
+        customerSources:
+          type: array
+          items:
+            type: string
+        linkId:
+          type: string
+          description: The link ID of the returned identity (may differ from requested).
+        identity:
+          $ref: '#/components/schemas/Identity'
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/Domain'
+        requestedLinkId:
+          type: string
+        customizedIdentities:
+          $ref: '#/components/schemas/ObjectMap'
+    PostIdentityWsRequest:
+      type: object
+      description: Adds a new identity to Verato.
+      required:
+        - identity
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity'
+        responseIdentityFormatNames:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+    PostIdentityWsResponse:
+      type: object
+      description: PostIdentity response content.
+      properties:
+        identityGroupedBySource:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentityPerSource'
+        customerSources:
+          type: array
+          items:
+            type: string
+        linkIdentity:
+          $ref: '#/components/schemas/Identity'
+        linkId:
+          type: string
+        identity:
+          $ref: '#/components/schemas/Identity'
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/Domain'
+        customizedIdentities:
+          $ref: '#/components/schemas/ObjectMap'
+        events:
+          type: array
+          items:
+            type: object
+            description: >-
+              Events emitted when an identity is created or updated via
+              postIdentity.
+        incomingIdentity:
+          $ref: '#/components/schemas/Identity'
+    DeleteSourceIdentityWsRequest:
+      type: object
+      description: Hard delete all information associated with a source.
+      required:
+        - source
+      properties:
+        source:
+          $ref: '#/components/schemas/Source'
+    DeleteSourceIdentityWsResponse:
+      type: object
+      description: Hard delete source response content.
+      properties:
+        linkIdsModified:
+          type: array
+          items:
+            type: string
+        linkIdsDeleted:
+          type: array
+          items:
+            type: string
+    SoftDeleteSourceWsRequest:
+      type: object
+      description: Soft-delete a source across all matching entities.
+      required:
+        - sourceToSoftDelete
+      properties:
+        sourceToSoftDelete:
+          $ref: '#/components/schemas/Source'
+    SoftDeleteSourceWsResponse:
+      type: object
+      description: Soft delete source response content.
+      required:
+        - linkIdsSoftDeleted
+        - linkIdsModified
+      properties:
+        linkIdsSoftDeleted:
+          type: array
+          items:
+            type: string
+        linkIdsModified:
+          type: array
+          items:
+            type: string
+    RestoreSourceWsResponse:
+      type: object
+      description: Restore source response content.
+      required:
+        - linkIdsModified
+        - linkIdCreated
+      properties:
+        linkIdsModified:
+          type: array
+          items:
+            type: string
+        linkIdCreated:
+          type: string
+    MergeIdentitiesWsRequest:
+      type: object
+      description: Merge (retire) data from one source into another.
+      required:
+        - toRetireSource
+        - toSurviveSource
+      properties:
+        toSurviveSource:
+          $ref: '#/components/schemas/Source'
+        toRetireSource:
+          $ref: '#/components/schemas/Source'
+    MergeIdentitiesWsResponse:
+      type: object
+      description: Merge identities response content.
+      properties:
+        linkId:
+          type: string
+        toSurviveSource:
+          $ref: '#/components/schemas/Source'
+    UnmergeIdentitiesWsRequest:
+      type: object
+      description: Unmerge a previously merged source into a new identity.
+      required:
+        - unmergeFromSource
+        - unmergeSource
+      properties:
+        unmergeFromSource:
+          $ref: '#/components/schemas/Source'
+        unmergeSource:
+          $ref: '#/components/schemas/Source'
+    UnmergeIdentitiesWsResponse:
+      type: object
+      description: Unmerge identities response content.
+      required:
+        - unmergedId
+        - unmergedFromId
+        - unmergedSource
+        - unmergedFromSource
+      properties:
+        unmergedSource:
+          $ref: '#/components/schemas/Source'
+        unmergedFromSource:
+          $ref: '#/components/schemas/Source'
+        unmergedId:
+          type: string
+        unmergedFromId:
+          type: string
+    LinkIdentitiesWsRequest:
+      type: object
+      description: Link two identities together.
+      required:
+        - source
+        - linkToSource
+      properties:
+        linkToSource:
+          $ref: '#/components/schemas/Source'
+        source:
+          $ref: '#/components/schemas/Source'
+    LinkIdentitiesWsResponse:
+      type: object
+      description: Link identities response content.
+      properties:
+        linkId:
+          type: string
+        linkToSource:
+          $ref: '#/components/schemas/Source'
+    UnlinkIdentitiesWsRequest:
+      type: object
+      description: Unlink data from one identity to create another.
+      required:
+        - unlinkFromSource
+        - source
+      properties:
+        unlinkFromSource:
+          $ref: '#/components/schemas/Source'
+        source:
+          $ref: '#/components/schemas/Source'
+    UnlinkIdentitiesWsResponse:
+      type: object
+      description: Unlink identities response content.
+      required:
+        - unlinkedId
+        - unlinkedFromId
+        - unlinkedSource
+        - unlinkedFromSource
+      properties:
+        unlinkedId:
+          type: string
+        unlinkedSource:
+          $ref: '#/components/schemas/Source'
+        unlinkedFromId:
+          type: string
+        unlinkedFromSource:
+          $ref: '#/components/schemas/Source'
+    RelationshipWs:
+      type: object
+      description: Relationship between two Verato entities.
+      properties:
+        id:
+          type: string
+        relationshipVerb:
+          type: string
+        inverseRelationshipVerb:
+          type: string
+        subjectVeratoId:
+          type: string
+        objectVeratoId:
+          type: string
+        domain:
+          type: string
+        status:
+          type: string
+        trustFactor:
+          type: string
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        details:
+          $ref: '#/components/schemas/ObjectMap'
+    NewRelationshipRequest:
+      type: object
+      description: >-
+        Public fields required to create a new relationship between two Verato
+        entities.
+      properties:
+        id:
+          type: string
+        relationshipVerb:
+          type: string
+        subjectVeratoId:
+          type: string
+        objectVeratoId:
+          type: string
+        domain:
+          type: string
+        status:
+          type: string
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+    AddRelationshipWsRequest:
+      type: object
+      properties:
+        relationship:
+          $ref: '#/components/schemas/NewRelationshipRequest'
+    AddRelationshipWsResponse:
+      type: object
+      properties:
+        relationship:
+          $ref: '#/components/schemas/RelationshipWs'
+    DeleteRelationshipWsRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    DeleteRelationshipWsResponse:
+      type: object
+      properties:
+        id:
+          type: string
+    UpdateRelationshipWsRequest:
+      type: object
+      properties:
+        relationship:
+          $ref: '#/components/schemas/RelationshipWs'
+    UpdateRelationshipWsResponse:
+      type: object
+      properties:
+        relationship:
+          $ref: '#/components/schemas/RelationshipWs'
+    SearchNotificationsWsRequest:
+      type: object
+      description: Query notifications for the customer.
+      required:
+        - pageNumber
+        - pageSize
+        - startDate
+        - endDate
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+    SearchNotificationsWsResponse:
+      type: object
+      properties:
+        customerId:
+          type: string
+        hasNext:
+          type: boolean
+        notifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationData'
+        totalElements:
+          type: integer
+          format: int64
+    NotificationData:
+      type: object
+      properties:
+        partitionKey:
+          type: string
+        service:
+          type: string
+        customerId:
+          type: string
+        notificationLowerCaseBody:
+          $ref: '#/components/schemas/NotificationLowerCaseBody'
+        notificationType:
+          type: string
+        body:
+          type: string
+        ts:
+          type: string
+          format: date-time
+        username:
+          type: string
+    NotificationLowerCaseBody:
+      type: object
+      properties:
+        survivingSource:
+          type: string
+        retiredSource:
+          type: string
+        previousLinkId:
+          type: string
+        survivingNativeId:
+          type: string
+        newLinkId:
+          type: string
+        source:
+          type: string
+        nativeId:
+          type: string
+        retiredNativeId:
+          type: string
+    ServiceRequest_postIdentity:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceRequest'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/PostIdentityWsRequest'
+    ServiceResponse_postIdentity:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceResponse'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/PostIdentityWsResponse'
+    ServiceRequest_demographicsSearch:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceRequest'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/DemographicsSearchWsRequest'
+    ServiceResponse_demographicsSearch:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceResponse'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/DemographicsSearchWsResponse'
+    ServiceRequest_demographicsQuery:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceRequest'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/DemographicsQueryWsRequest'
+    ServiceResponse_demographicsQuery:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceResponse'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/DemographicsQueryWsResponse'
+    ServiceRequest_nativeIdQuery:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceRequest'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/NativeIdQueryWsRequest'
+    ServiceResponse_nativeIdQuery:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceResponse'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/NativeIdQueryWsResponse'
+    ServiceRequest_identityIdQuery:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceRequest'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/IdentityIdQueryWsRequest'
+    ServiceResponse_identityIdQuery:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceResponse'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/IdentityIdQueryWsResponse'
+    ServiceRequest_deleteSourceIdentity:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceRequest'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/DeleteSourceIdentityWsRequest'
+    ServiceResponse_deleteSourceIdentity:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceResponse'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/DeleteSourceIdentityWsResponse'
+    ServiceRequest_softDeleteSource:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceRequest'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/SoftDeleteSourceWsRequest'
+    ServiceResponse_softDeleteSource:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceResponse'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/SoftDeleteSourceWsResponse'
+    ServiceRequest_restoreSource:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceRequest'
+        - type: object
+          properties:
+            content:
+              type: object
+              description: TODO – RestoreSourceWsRequest wrapper (see legacy swagger).
+    ServiceResponse_restoreSource:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceResponse'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/RestoreSourceWsResponse'
+    ServiceRequest_mergeIdentities:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceRequest'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/MergeIdentitiesWsRequest'
+    ServiceResponse_mergeIdentities:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceResponse'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/MergeIdentitiesWsResponse'
+    ServiceRequest_unmergeIdentities:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceRequest'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/UnmergeIdentitiesWsRequest'
+    ServiceResponse_unmergeIdentities:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceResponse'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/UnmergeIdentitiesWsResponse'
+    ServiceRequest_linkIdentities:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceRequest'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/LinkIdentitiesWsRequest'
+    ServiceResponse_linkIdentities:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceResponse'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/LinkIdentitiesWsResponse'
+    ServiceRequest_unlinkIdentities:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceRequest'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/UnlinkIdentitiesWsRequest'
+    ServiceResponse_unlinkIdentities:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceResponse'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/UnlinkIdentitiesWsResponse'
+    ServiceRequest_addRelationshipService:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceRequest'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/AddRelationshipWsRequest'
+    ServiceResponse_addRelationshipService:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceResponse'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/AddRelationshipWsResponse'
+    ServiceRequest_deleteRelationshipService:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceRequest'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/DeleteRelationshipWsRequest'
+    ServiceResponse_deleteRelationshipService:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceResponse'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/DeleteRelationshipWsResponse'
+    ServiceRequest_searchRelationshipsService:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceRequest'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/UpdateRelationshipWsRequest'
+    ServiceResponse_searchRelationshipsService:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceResponse'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/UpdateRelationshipWsResponse'
+    ServiceRequest_searchNotifications:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceRequest'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/SearchNotificationsWsRequest'
+    ServiceResponse_searchNotifications:
+      allOf:
+        - $ref: '#/components/schemas/BaseServiceResponse'
+        - type: object
+          properties:
+            content:
+              $ref: '#/components/schemas/SearchNotificationsWsResponse'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

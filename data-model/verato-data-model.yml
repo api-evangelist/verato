@@ -1,0 +1,100 @@
+generated: '2026-07-21'
+method: derived
+source: >-
+  openapi/verato-person-openapi.yml, openapi/verato-organization-openapi.yml,
+  openapi/verato-provider-openapi.yml; docs data dictionary:
+  https://developer.verato.com/docs/data-dictionary/intro.page
+notes: >-
+  Entity-relationship model for the Verato Universal Identity Platform, derived
+  from the three OpenAPI documents and the developer-portal data dictionary. The
+  platform is organized entity-first (Person, Organization, Provider), each with
+  a shared core plus domain extensions. A resolved cluster of source records is
+  the "golden record" identified by a Verato universal identity id.
+entities:
+- name: Identity
+  description: >-
+    A resolved identity cluster (golden record) — the merged view of one or more
+    source records that Verato has determined represent the same real-world
+    person, organization, or provider. Addressed by a Verato universal identity
+    id (vinId) and/or linkId.
+  key_fields: [vinIds, linkId, identityId]
+- name: SourceIdentity
+  description: >-
+    A single incoming record from a customer source system (created/updated via
+    postIdentity, addressed by native/source id). Multiple source identities
+    link into one Identity.
+  key_fields: [nativeId, sourceId, dataSource]
+- name: CorePerson
+  description: Shared person attributes (name, address, DOB, demographics) — base for the Patient domain.
+  domain_of: Person
+- name: Patient
+  description: Healthcare patient extension of Core Person (encounters, patient-specific demographics).
+  extends: CorePerson
+- name: CoreOrganization
+  description: Shared organization attributes — base of the Organization entity.
+  domain_of: Organization
+- name: Practitioner
+  description: Provider Type-1 individual practitioner identity.
+  domain_of: Provider
+- name: HealthFacility
+  description: Provider Type-2 health facility / organization identity.
+  domain_of: Provider
+- name: Household
+  description: A grouping of related person identities returned by householdQuery.
+- name: Relationship
+  description: A typed relationship between two identities (addRelationship / searchRelationships / deleteRelationship).
+- name: DataSource
+  description: A registered customer source system (createDataSource) that source identities belong to.
+relationships:
+- from: Identity
+  to: SourceIdentity
+  type: has_many
+  via: identityGroupedBySource
+- from: SourceIdentity
+  to: DataSource
+  type: belongs_to
+  via: dataSource
+- from: Person
+  to: CorePerson
+  type: has_one
+  via: domains
+- from: Patient
+  to: CorePerson
+  type: belongs_to
+  via: extends
+- from: Identity
+  to: Household
+  type: has_many
+  via: householdQuery
+- from: Identity
+  to: Relationship
+  type: has_many
+  via: searchRelationships
+- from: Provider
+  to: Practitioner
+  type: has_one
+  via: domains
+- from: Provider
+  to: HealthFacility
+  type: has_one
+  via: domains
+id_conventions:
+  - id: vinId
+    meaning: Verato universal identity id assigned to a resolved identity cluster.
+  - id: linkId
+    meaning: Identifier of a link between source identities forming an identity.
+  - id: nativeId
+    meaning: Customer/source-system native record identifier.
+docs:
+  - title: MDM Cloud Platform Data Model
+    url: https://developer.verato.com/docs/data-dictionary/platform-data-model
+  - title: Core Person Data Model
+    url: https://developer.verato.com/docs/data-dictionary/person/core-person
+  - title: Patient Data Model
+    url: https://developer.verato.com/docs/data-dictionary/person/patient
+  - title: Practitioner (Type-1)
+    url: https://developer.verato.com/docs/data-dictionary/provider/practitioner
+  - title: Health Facility (Type-2)
+    url: https://developer.verato.com/docs/data-dictionary/provider/health-facility
+  - title: Core Organization Data Model
+    url: https://developer.verato.com/docs/data-dictionary/organization/core-organization
