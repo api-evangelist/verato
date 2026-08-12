@@ -260,6 +260,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/verato-organization-overlay.yaml
 - type: AgenticAccess
   url: agentic-access/verato-agentic-access.yml
 - type: Website
