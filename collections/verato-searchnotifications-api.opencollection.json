@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Verato Organization AddRelationshipService SearchNotifications API",
+    "version": "2026.1.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SearchNotifications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Query notifications (searchNotifications)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://yourveratodomain.com/org-link-ws/svc/searchNotifications",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves identity-related notifications for a specific period of time, such as merge events, link/unlink events, or other configured notifications.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

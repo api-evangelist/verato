@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Verato Organization AddRelationshipService SoftDeleteSource API",
+    "version": "2026.1.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SoftDeleteSource",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Soft delete a source from identities (softDeleteSource)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://yourveratodomain.com/org-link-ws/svc/softDeleteSource",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Soft deletes a source from all identities that reference it. The source and its data are marked as deleted but can be restored later. Merge and linkage history is preserved for audit.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

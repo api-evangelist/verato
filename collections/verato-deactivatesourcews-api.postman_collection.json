@@ -1,0 +1,144 @@
+{
+  "item": [
+    {
+      "id": "b2dfc62f-aa4a-44e0-ab5f-22e8943e310c",
+      "name": "DeactivateSourceWs",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f55ff3ae-a462-4599-8fbd-0356b5e289dc",
+          "name": "Deactivate source from identities (deactivateSourceWs)",
+          "request": {
+            "name": "Deactivate source from identities (deactivateSourceWs)",
+            "description": {
+              "content": "Used to deactivate (logically delete) a source record from your instance of Universal Identity.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "deactivateSourceWs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": {\n    \"sourceToDeactivate\": {\n      \"date\": \"<string>\",\n      \"name\": \"<string>\",\n      \"id\": \"<string>\"\n    }\n  },\n  \"trackingId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1b639322-2b62-4a3a-ac24-529f83c1587e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "deactivateSourceWs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": {\n    \"sourceToDeactivate\": {\n      \"date\": \"<string>\",\n      \"name\": \"<string>\",\n      \"id\": \"<string>\"\n    }\n  },\n  \"trackingId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"auditId\": \"string\",\n  \"success\": true,\n  \"warnings\": [\n    \"string\",\n    \"string\"\n  ],\n  \"retryableError\": false,\n  \"message\": \"string\",\n  \"content\": {\n    \"linkIdsModified\": [\n      \"string\",\n      \"string\"\n    ],\n    \"linkIdsDeactivated\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"trackingId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://yourveratodomain.com/org-link-ws/svc",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4030642c-6c98-47ac-a0d6-ff5e98abf0fe",
+    "name": "Verato Organization AddRelationshipService DeactivateSourceWs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Verato Organization API provides comprehensive identity management capabilities for organizations within the Verato LINK platform. This API enables you to:\n\n- **Ingest and manage organization identities**: Add, update, and delete organization records with rich demographic and contact information.\n- **Search and query**: Find organizations using demographic data, native IDs, or link IDs (Verato's golden identifier).\n- **Lifecycle management**: Soft-delete and restore organization records while preserving data history.\n- **Merge and link operations**: Consolidate duplicate organizations, manage master data relationships, and maintain data lineage.\n- **Relationship management**: Define and query relationships between organizations (parent-child, affiliations, etc.).\n- **Notifications**: Track and audit identity changes and events across your organization data.\n\nAll operations follow a standard request/response envelope pattern with audit tracking, error handling, and optional response format customization.\n",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Verato Organization AddRelationshipService LinkIdentities API",
+    "version": "2026.1.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "LinkIdentities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Link two identities (linkIdentities)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://yourveratodomain.com/org-link-ws/svc/linkIdentities",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Links two existing identities together without retiring either source. This is typically used when you determine that two separate source identities belong to the same real-world person, and they should be represented as a single link ID.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

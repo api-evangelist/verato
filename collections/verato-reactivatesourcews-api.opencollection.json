@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Verato Organization AddRelationshipService ReactivateSourceWs API",
+    "version": "2026.1.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ReactivateSourceWs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Reactivate source from identities (reactivateSourceWs)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://yourveratodomain.com/org-link-ws/svc/reactivateSourceWs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Used to reactivate a source record from your instance of Universal Identity, that was previously deactivated."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

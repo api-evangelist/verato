@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Verato Organization AddRelationshipService API",
+    "version": "2026.1.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AddRelationshipService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add a new relationship (addRelationshipService)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://yourveratodomain.com/org-link-ws/svc/addRelationshipService",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a relationship between two identities according to configured\nrelationship definitions.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

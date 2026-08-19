@@ -1,0 +1,144 @@
+{
+  "item": [
+    {
+      "id": "6b185d49-d911-4ed6-9faf-48ed1cb625f2",
+      "name": "SearchRelationshipsService",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0b49f124-df9a-4d05-b6d2-4286931d8e5d",
+          "name": "Searches for relationships (searchRelationshipsService)",
+          "request": {
+            "name": "Searches for relationships (searchRelationshipsService)",
+            "description": {
+              "content": "Searches for relationships\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "searchRelationshipsService"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": {\n    \"relationship\": {\n      \"id\": \"<string>\",\n      \"relationshipVerb\": \"<string>\",\n      \"inverseRelationshipVerb\": \"<string>\",\n      \"subjectVeratoId\": \"<string>\",\n      \"objectVeratoId\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"trustFactor\": \"<string>\",\n      \"details\": {\n        \"key_0\": {},\n        \"key_1\": {}\n      },\n      \"status\": \"<string>\",\n      \"startDate\": \"<dateTime>\",\n      \"endDate\": \"<dateTime>\"\n    }\n  },\n  \"trackingId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "eaeaccc1-7cab-41cd-9989-6469428d822f",
+              "name": "Successful search/update relationship operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "searchRelationshipsService"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": {\n    \"relationship\": {\n      \"id\": \"<string>\",\n      \"relationshipVerb\": \"<string>\",\n      \"inverseRelationshipVerb\": \"<string>\",\n      \"subjectVeratoId\": \"<string>\",\n      \"objectVeratoId\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"trustFactor\": \"<string>\",\n      \"details\": {\n        \"key_0\": {},\n        \"key_1\": {}\n      },\n      \"status\": \"<string>\",\n      \"startDate\": \"<dateTime>\",\n      \"endDate\": \"<dateTime>\"\n    }\n  },\n  \"trackingId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"auditId\": \"string\",\n  \"success\": false,\n  \"warnings\": [\n    \"string\",\n    \"string\"\n  ],\n  \"retryableError\": false,\n  \"message\": \"string\",\n  \"content\": {\n    \"relationship\": {\n      \"id\": \"<string>\",\n      \"relationshipVerb\": \"<string>\",\n      \"inverseRelationshipVerb\": \"<string>\",\n      \"subjectVeratoId\": \"<string>\",\n      \"objectVeratoId\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"trustFactor\": \"<string>\",\n      \"details\": {\n        \"key_0\": {}\n      },\n      \"status\": \"<string>\",\n      \"startDate\": \"<dateTime>\",\n      \"endDate\": \"<dateTime>\"\n    }\n  },\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"trackingId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://yourveratodomain.com/org-link-ws/svc",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7d82ceb4-9b0f-4c5a-9880-18acb98dee49",
+    "name": "Verato Organization AddRelationshipService SearchRelationshipsService API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Verato Organization API provides comprehensive identity management capabilities for organizations within the Verato LINK platform. This API enables you to:\n\n- **Ingest and manage organization identities**: Add, update, and delete organization records with rich demographic and contact information.\n- **Search and query**: Find organizations using demographic data, native IDs, or link IDs (Verato's golden identifier).\n- **Lifecycle management**: Soft-delete and restore organization records while preserving data history.\n- **Merge and link operations**: Consolidate duplicate organizations, manage master data relationships, and maintain data lineage.\n- **Relationship management**: Define and query relationships between organizations (parent-child, affiliations, etc.).\n- **Notifications**: Track and audit identity changes and events across your organization data.\n\nAll operations follow a standard request/response envelope pattern with audit tracking, error handling, and optional response format customization.\n",
+      "type": "text/plain"
+    }
+  }
+}

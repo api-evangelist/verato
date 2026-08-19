@@ -1,0 +1,144 @@
+{
+  "item": [
+    {
+      "id": "28f78de5-9fc5-415c-98b9-26b0b4b7b444",
+      "name": "SearchNotifications",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "df6d6e2b-1d49-4f4f-9204-4e8b0dfbd299",
+          "name": "Query notifications (searchNotifications)",
+          "request": {
+            "name": "Query notifications (searchNotifications)",
+            "description": {
+              "content": "Retrieves identity-related notifications for a specific period of time, such as merge events, link/unlink events, or other configured notifications.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "searchNotifications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": {\n    \"pageNumber\": \"<integer>\",\n    \"pageSize\": \"<integer>\",\n    \"startDate\": \"<dateTime>\",\n    \"endDate\": \"<dateTime>\"\n  },\n  \"trackingId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ea1704ae-14e9-4ad7-9cf0-059629c9f53d",
+              "name": "Successful search notifications operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "searchNotifications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": {\n    \"pageNumber\": \"<integer>\",\n    \"pageSize\": \"<integer>\",\n    \"startDate\": \"<dateTime>\",\n    \"endDate\": \"<dateTime>\"\n  },\n  \"trackingId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"auditId\": \"string\",\n  \"success\": false,\n  \"warnings\": [\n    \"string\",\n    \"string\"\n  ],\n  \"retryableError\": true,\n  \"message\": \"string\",\n  \"content\": {\n    \"customerId\": \"string\",\n    \"hasNext\": true,\n    \"notifications\": [\n      {\n        \"partitionKey\": \"string\",\n        \"service\": \"string\",\n        \"customerId\": \"string\",\n        \"notificationLowerCaseBody\": {\n          \"survivingSource\": \"string\",\n          \"retiredSource\": \"string\",\n          \"previousLinkId\": \"string\",\n          \"survivingNativeId\": \"string\",\n          \"newLinkId\": \"string\",\n          \"source\": \"string\",\n          \"nativeId\": \"string\",\n          \"retiredNativeId\": \"string\"\n        },\n        \"notificationType\": \"string\",\n        \"body\": \"string\",\n        \"ts\": \"1962-01-17T14:49:52.640Z\",\n        \"username\": \"string\"\n      },\n      {\n        \"partitionKey\": \"string\",\n        \"service\": \"string\",\n        \"customerId\": \"string\",\n        \"notificationLowerCaseBody\": {\n          \"survivingSource\": \"string\",\n          \"retiredSource\": \"string\",\n          \"previousLinkId\": \"string\",\n          \"survivingNativeId\": \"string\",\n          \"newLinkId\": \"string\",\n          \"source\": \"string\",\n          \"nativeId\": \"string\",\n          \"retiredNativeId\": \"string\"\n        },\n        \"notificationType\": \"string\",\n        \"body\": \"string\",\n        \"ts\": \"1947-08-26T00:47:44.649Z\",\n        \"username\": \"string\"\n      }\n    ],\n    \"totalElements\": 9154\n  },\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"trackingId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://yourveratodomain.com/org-link-ws/svc",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7669e0f2-00b6-45a8-8669-3bd44a255289",
+    "name": "Verato Organization AddRelationshipService SearchNotifications API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Verato Organization API provides comprehensive identity management capabilities for organizations within the Verato LINK platform. This API enables you to:\n\n- **Ingest and manage organization identities**: Add, update, and delete organization records with rich demographic and contact information.\n- **Search and query**: Find organizations using demographic data, native IDs, or link IDs (Verato's golden identifier).\n- **Lifecycle management**: Soft-delete and restore organization records while preserving data history.\n- **Merge and link operations**: Consolidate duplicate organizations, manage master data relationships, and maintain data lineage.\n- **Relationship management**: Define and query relationships between organizations (parent-child, affiliations, etc.).\n- **Notifications**: Track and audit identity changes and events across your organization data.\n\nAll operations follow a standard request/response envelope pattern with audit tracking, error handling, and optional response format customization.\n",
+      "type": "text/plain"
+    }
+  }
+}

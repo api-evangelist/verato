@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Verato Organization AddRelationshipService DeactivateSourceWs API",
+    "version": "2026.1.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "DeactivateSourceWs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Deactivate source from identities (deactivateSourceWs)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://yourveratodomain.com/org-link-ws/svc/deactivateSourceWs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Used to deactivate (logically delete) a source record from your instance of Universal Identity."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

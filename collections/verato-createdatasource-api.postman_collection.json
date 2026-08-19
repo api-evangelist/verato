@@ -1,0 +1,144 @@
+{
+  "item": [
+    {
+      "id": "553fa721-f313-465b-a6de-d79ebde0bfed",
+      "name": "CreateDataSource",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e0a7764c-de33-4e6f-80ca-13954c8d3b07",
+          "name": "Create Data Sources (createDataSource)",
+          "request": {
+            "name": "Create Data Sources (createDataSource)",
+            "description": {
+              "content": "Creates one or more new data sources in the Universal Identity platform. Up to 10 data sources can be created per call. Newly added sources may take 10–15 minutes to become available. This service only adds data sources — it does not delete or modify existing ones.\n\nSource name constraints: maximum 255 characters, no spaces, and the following characters are not supported: `\" | : '`. Source names are case-sensitive; Verato recommends a consistent capitalization standard (all uppercase or all lowercase) to avoid duplicate records.\n\nFailed additions are reported individually in the response and do not prevent other sources in the same request from being created. Common failure causes include the source already existing or the name matching a reserved Verato source code (e.g. \"Verato\").\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "createDataSource"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": {\n    \"sources\": [\n      \"<string>\"\n    ]\n  },\n  \"trackingId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "71a30dab-3568-4e92-951a-d5e7c9eec962",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "createDataSource"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trackingId\": \"my-tracking-id-001\",\n  \"content\": {\n    \"sources\": [\n      \"EHR_SYSTEM_A\",\n      \"BILLING_SYSTEM_B\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"auditId\": \"3f7a1c00-12ab-4def-8901-23456789abcd\",\n  \"success\": true,\n  \"retryableError\": false,\n  \"message\": null,\n  \"errors\": [],\n  \"trackingId\": \"my-tracking-id-001\",\n  \"content\": {\n    \"datasourceCreationResponses\": [\n      {\n        \"datasource\": \"EHR_SYSTEM_A\",\n        \"status\": \"SUCCESS\",\n        \"error\": null\n      },\n      {\n        \"datasource\": \"BILLING_SYSTEM_B\",\n        \"status\": \"SUCCESS\",\n        \"error\": null\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://yourveratodomain.com/org-link-ws/svc",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "796e2cad-845d-4717-bb79-ca6edf274829",
+    "name": "Verato Organization AddRelationshipService CreateDataSource API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Verato Organization API provides comprehensive identity management capabilities for organizations within the Verato LINK platform. This API enables you to:\n\n- **Ingest and manage organization identities**: Add, update, and delete organization records with rich demographic and contact information.\n- **Search and query**: Find organizations using demographic data, native IDs, or link IDs (Verato's golden identifier).\n- **Lifecycle management**: Soft-delete and restore organization records while preserving data history.\n- **Merge and link operations**: Consolidate duplicate organizations, manage master data relationships, and maintain data lineage.\n- **Relationship management**: Define and query relationships between organizations (parent-child, affiliations, etc.).\n- **Notifications**: Track and audit identity changes and events across your organization data.\n\nAll operations follow a standard request/response envelope pattern with audit tracking, error handling, and optional response format customization.\n",
+      "type": "text/plain"
+    }
+  }
+}

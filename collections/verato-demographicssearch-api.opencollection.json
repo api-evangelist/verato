@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Verato Organization AddRelationshipService DemographicsSearch API",
+    "version": "2026.1.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "DemographicsSearch",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search using demographic information (demographicsSearch)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://yourveratodomain.com/org-link-ws/svc/demographicsSearch",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Searches Verato using the provided demographic and provider attributes. It returns zero or more candidate identities ordered by match score."
+        },
+        {
+          "info": {
+            "name": "Search using demographic information (demographicsSearch)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://yourveratodomain.com/org-link-ws/svc/v2/demographicsSearch",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Searches Verato using the provided demographic attributes. It returns zero or more candidate identities ordered by match score."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

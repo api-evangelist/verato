@@ -1,0 +1,144 @@
+{
+  "item": [
+    {
+      "id": "967483e2-a571-40e3-9fca-ae0364622713",
+      "name": "MergeIdentities",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c673ad45-cd34-4a97-8717-77d52a6cfdbe",
+          "name": "Merge two identities (mergeIdentities)",
+          "request": {
+            "name": "Merge two identities (mergeIdentities)",
+            "description": {
+              "content": "Merges a \"toRetire\" source identity into a \"toSurvive\" source identity. After a merge, the retired source is marked as merged and the surviving identity contains combined data. The response returns the surviving linkId.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "mergeIdentities"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": {\n    \"toRetireSource\": {\n      \"date\": \"<string>\",\n      \"name\": \"<string>\",\n      \"id\": \"<string>\"\n    },\n    \"toSurviveSource\": {\n      \"date\": \"<string>\",\n      \"name\": \"<string>\",\n      \"id\": \"<string>\"\n    }\n  },\n  \"trackingId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b0ee34ae-2636-4629-9b48-7a2168ff3fcd",
+              "name": "Successful merge identities operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mergeIdentities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": {\n    \"toRetireSource\": {\n      \"date\": \"<string>\",\n      \"name\": \"<string>\",\n      \"id\": \"<string>\"\n    },\n    \"toSurviveSource\": {\n      \"date\": \"<string>\",\n      \"name\": \"<string>\",\n      \"id\": \"<string>\"\n    }\n  },\n  \"trackingId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"auditId\": \"string\",\n  \"success\": false,\n  \"warnings\": [\n    \"string\",\n    \"string\"\n  ],\n  \"retryableError\": true,\n  \"message\": \"string\",\n  \"content\": {\n    \"linkId\": \"string\",\n    \"toSurviveSource\": {\n      \"date\": \"<string>\",\n      \"name\": \"<string>\",\n      \"id\": \"<string>\"\n    }\n  },\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"trackingId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://yourveratodomain.com/org-link-ws/svc",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f33eb546-c1c0-483d-989f-f387decc3c4f",
+    "name": "Verato Organization AddRelationshipService MergeIdentities API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Verato Organization API provides comprehensive identity management capabilities for organizations within the Verato LINK platform. This API enables you to:\n\n- **Ingest and manage organization identities**: Add, update, and delete organization records with rich demographic and contact information.\n- **Search and query**: Find organizations using demographic data, native IDs, or link IDs (Verato's golden identifier).\n- **Lifecycle management**: Soft-delete and restore organization records while preserving data history.\n- **Merge and link operations**: Consolidate duplicate organizations, manage master data relationships, and maintain data lineage.\n- **Relationship management**: Define and query relationships between organizations (parent-child, affiliations, etc.).\n- **Notifications**: Track and audit identity changes and events across your organization data.\n\nAll operations follow a standard request/response envelope pattern with audit tracking, error handling, and optional response format customization.\n",
+      "type": "text/plain"
+    }
+  }
+}

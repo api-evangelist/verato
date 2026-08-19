@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Verato Organization AddRelationshipService UnlinkIdentities API",
+    "version": "2026.1.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "UnlinkIdentities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Unlink two identities (unlinkIdentities)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://yourveratodomain.com/org-link-ws/svc/unlinkIdentities",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Unlinks two previously linked identities, splitting them into separate\nentities and returning their linkIds and associated source information.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

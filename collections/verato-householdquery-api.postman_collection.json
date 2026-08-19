@@ -1,0 +1,144 @@
+{
+  "item": [
+    {
+      "id": "5e6d9220-8eba-49cd-9928-00db1d218319",
+      "name": "HouseholdQuery",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c46cae4b-3bc9-4544-a7b8-cdbd7840b89c",
+          "name": "Query for Household (householdQuery)",
+          "request": {
+            "name": "Query for Household (householdQuery)",
+            "description": {
+              "content": "Used to retrieve the collection of Link IDs that have been grouped into a household.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "householdQuery"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": {\n    \"householdId\": \"<string>\",\n    \"linkId\": \"<string>\",\n    \"source\": {\n      \"date\": \"<string>\",\n      \"name\": \"<string>\",\n      \"id\": \"<string>\"\n    }\n  },\n  \"trackingId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2e7a9527-3977-4328-a05b-22bf2b8b8e76",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "householdQuery"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": {\n    \"householdId\": \"<string>\",\n    \"linkId\": \"<string>\",\n    \"source\": {\n      \"date\": \"<string>\",\n      \"name\": \"<string>\",\n      \"id\": \"<string>\"\n    }\n  },\n  \"trackingId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"auditId\": \"string\",\n  \"success\": true,\n  \"warnings\": [\n    \"string\",\n    \"string\"\n  ],\n  \"retryableError\": true,\n  \"message\": \"string\",\n  \"content\": {\n    \"householdId\": \"string\",\n    \"linkIdsInHousehold\": [\n      \"string\"\n    ],\n    \"lastUpdateDate\": \"1999-07-30T05:07:21.306Z\",\n    \"createDate\": \"1989-02-23T02:29:51.580Z\"\n  },\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"trackingId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://yourveratodomain.com/org-link-ws/svc",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a85e228f-9b7d-4355-9bde-9eff019efb14",
+    "name": "Verato Organization AddRelationshipService HouseholdQuery API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Verato Organization API provides comprehensive identity management capabilities for organizations within the Verato LINK platform. This API enables you to:\n\n- **Ingest and manage organization identities**: Add, update, and delete organization records with rich demographic and contact information.\n- **Search and query**: Find organizations using demographic data, native IDs, or link IDs (Verato's golden identifier).\n- **Lifecycle management**: Soft-delete and restore organization records while preserving data history.\n- **Merge and link operations**: Consolidate duplicate organizations, manage master data relationships, and maintain data lineage.\n- **Relationship management**: Define and query relationships between organizations (parent-child, affiliations, etc.).\n- **Notifications**: Track and audit identity changes and events across your organization data.\n\nAll operations follow a standard request/response envelope pattern with audit tracking, error handling, and optional response format customization.\n",
+      "type": "text/plain"
+    }
+  }
+}

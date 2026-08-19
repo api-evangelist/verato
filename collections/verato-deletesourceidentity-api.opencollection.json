@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Verato Organization AddRelationshipService DeleteSourceIdentity API",
+    "version": "2026.1.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "DeleteSourceIdentity",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Hard Delete a Source (deleteSourceIdentity)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://yourveratodomain.com/org-link-ws/svc/deleteSourceIdentity",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Permanently removes all information and history associated with the given\nsource (source name + nativeId) from Verato. This also removes any\nmerge/unmerge history associated with that source.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

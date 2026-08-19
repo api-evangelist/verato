@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Verato Organization AddRelationshipService HouseholdQuery API",
+    "version": "2026.1.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "HouseholdQuery",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Query for Household (householdQuery)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://yourveratodomain.com/org-link-ws/svc/householdQuery",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Used to retrieve the collection of Link IDs that have been grouped into a household."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

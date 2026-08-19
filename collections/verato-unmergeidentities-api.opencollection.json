@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Verato Organization AddRelationshipService UnmergeIdentities API",
+    "version": "2026.1.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "UnmergeIdentities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Unmerge two identities (unmergeIdentities)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://yourveratodomain.com/org-link-ws/svc/unmergeIdentities",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reverses a previous merge operation by extracting a previously merged source identity into its own record. Returns the new link ID and the linkId it was unmerged from.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Verato Organization AddRelationshipService DeleteRelationshipService API",
+    "version": "2026.1.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "DeleteRelationshipService",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Delete a relationship (deleteRelationshipService)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://yourveratodomain.com/org-link-ws/svc/deleteRelationshipService",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deletes a previously defined relationship between two identities.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

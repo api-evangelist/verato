@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Verato Organization AddRelationshipService IdentityIdQuery API",
+    "version": "2026.1.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "IdentityIdQuery",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Query using link ID (identityIdQuery)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://yourveratodomain.com/org-link-ws/svc/identityIdQuery",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Search for an Identity with supplied linkId"
+        },
+        {
+          "info": {
+            "name": "Query using link ID (identityIdQuery)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://yourveratodomain.com/org-link-ws/svc/v2/identityIdQuery",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Search for an Identity with supplied linkId"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

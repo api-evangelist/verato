@@ -1,0 +1,144 @@
+{
+  "item": [
+    {
+      "id": "3bfac828-da76-4be5-a8e5-3b10dcc9187f",
+      "name": "SoftDeleteSource",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fcd535f2-ddc9-47c1-b2b1-f308e03f9dba",
+          "name": "Soft delete a source from identities (softDeleteSource)",
+          "request": {
+            "name": "Soft delete a source from identities (softDeleteSource)",
+            "description": {
+              "content": "Soft deletes a source from all identities that reference it. The source and its data are marked as deleted but can be restored later. Merge and linkage history is preserved for audit.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "softDeleteSource"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": {\n    \"sourceToSoftDelete\": {\n      \"date\": \"<string>\",\n      \"name\": \"<string>\",\n      \"id\": \"<string>\"\n    }\n  },\n  \"trackingId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "29ea83ee-1fac-4217-8569-8ee6ff6d2879",
+              "name": "Successful soft delete source operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "softDeleteSource"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": {\n    \"sourceToSoftDelete\": {\n      \"date\": \"<string>\",\n      \"name\": \"<string>\",\n      \"id\": \"<string>\"\n    }\n  },\n  \"trackingId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"auditId\": \"string\",\n  \"success\": true,\n  \"warnings\": [\n    \"string\",\n    \"string\"\n  ],\n  \"retryableError\": false,\n  \"message\": \"string\",\n  \"content\": {\n    \"linkIdsModified\": [\n      \"string\",\n      \"string\"\n    ],\n    \"linkIdsSoftDeleted\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"trackingId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://yourveratodomain.com/org-link-ws/svc",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "147952af-ea21-4218-a45d-9e997e494dd7",
+    "name": "Verato Organization AddRelationshipService SoftDeleteSource API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Verato Organization API provides comprehensive identity management capabilities for organizations within the Verato LINK platform. This API enables you to:\n\n- **Ingest and manage organization identities**: Add, update, and delete organization records with rich demographic and contact information.\n- **Search and query**: Find organizations using demographic data, native IDs, or link IDs (Verato's golden identifier).\n- **Lifecycle management**: Soft-delete and restore organization records while preserving data history.\n- **Merge and link operations**: Consolidate duplicate organizations, manage master data relationships, and maintain data lineage.\n- **Relationship management**: Define and query relationships between organizations (parent-child, affiliations, etc.).\n- **Notifications**: Track and audit identity changes and events across your organization data.\n\nAll operations follow a standard request/response envelope pattern with audit tracking, error handling, and optional response format customization.\n",
+      "type": "text/plain"
+    }
+  }
+}

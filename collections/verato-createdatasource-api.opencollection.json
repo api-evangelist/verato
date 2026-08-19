@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Verato Organization AddRelationshipService CreateDataSource API",
+    "version": "2026.1.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CreateDataSource",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Data Sources (createDataSource)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://yourveratodomain.com/org-link-ws/svc/createDataSource",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates one or more new data sources in the Universal Identity platform. Up to 10 data sources can be created per call. Newly added sources may take 10–15 minutes to become available. This service only adds data sources — it does not delete or modify existing ones.\n\nSource name constraints: maximum 255 characters, no spaces, and the following characters are not supported: `\" | : '`. Source names are case-sensitive; Verato recommends a consistent capitalization standard (all uppercase or all lowe"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Verato Organization AddRelationshipService RestoreSource API",
+    "version": "2026.1.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "RestoreSource",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Restore a soft-deleted source (restoreSource)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://yourveratodomain.com/org-link-ws/svc/restoreSource",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Restores a previously soft-deleted source across all identities where it was present. A new entity may be created or existing entities modified depending on the current state of the graph.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

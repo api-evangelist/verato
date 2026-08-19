@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Verato Organization AddRelationshipService NativeIdQuery API",
+    "version": "2026.1.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "NativeIdQuery",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Query using native ID (nativeIdQuery)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://yourveratodomain.com/org-link-ws/svc/nativeIdQuery",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Searches Verato for an identity using source name + native ID (the customer's source system identifier)."
+        },
+        {
+          "info": {
+            "name": "Query using native ID (nativeIdQuery)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://yourveratodomain.com/org-link-ws/svc/v2/nativeIdQuery",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Searches Verato for an identity using source name + native ID (the customer's source system identifier)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

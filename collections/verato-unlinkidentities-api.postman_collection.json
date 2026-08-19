@@ -1,0 +1,144 @@
+{
+  "item": [
+    {
+      "id": "1277a9b8-590d-42b8-8feb-e64c5bc48eec",
+      "name": "UnlinkIdentities",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3423734b-3359-4535-9384-dca362685ee2",
+          "name": "Unlink two identities (unlinkIdentities)",
+          "request": {
+            "name": "Unlink two identities (unlinkIdentities)",
+            "description": {
+              "content": "Unlinks two previously linked identities, splitting them into separate\nentities and returning their linkIds and associated source information.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "unlinkIdentities"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": {\n    \"unlinkFromSource\": {\n      \"date\": \"<string>\",\n      \"name\": \"<string>\",\n      \"id\": \"<string>\"\n    },\n    \"source\": {\n      \"date\": \"<string>\",\n      \"name\": \"<string>\",\n      \"id\": \"<string>\"\n    }\n  },\n  \"trackingId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cf2ac705-d7a1-4a38-9e50-9f0d40f16cc1",
+              "name": "Successful unlink identities operation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "unlinkIdentities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": {\n    \"unlinkFromSource\": {\n      \"date\": \"<string>\",\n      \"name\": \"<string>\",\n      \"id\": \"<string>\"\n    },\n    \"source\": {\n      \"date\": \"<string>\",\n      \"name\": \"<string>\",\n      \"id\": \"<string>\"\n    }\n  },\n  \"trackingId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"auditId\": \"string\",\n  \"success\": true,\n  \"warnings\": [\n    \"string\",\n    \"string\"\n  ],\n  \"retryableError\": true,\n  \"message\": \"string\",\n  \"content\": {\n    \"unlinkedId\": \"string\",\n    \"unlinkedFromId\": \"string\",\n    \"unlinkedSource\": {\n      \"date\": \"<string>\",\n      \"name\": \"<string>\",\n      \"id\": \"<string>\"\n    },\n    \"unlinkedFromSource\": {\n      \"date\": \"<string>\",\n      \"name\": \"<string>\",\n      \"id\": \"<string>\"\n    }\n  },\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"trackingId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://yourveratodomain.com/org-link-ws/svc",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "87c485a7-5d7b-47e3-8420-496e8c76f9ba",
+    "name": "Verato Organization AddRelationshipService UnlinkIdentities API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Verato Organization API provides comprehensive identity management capabilities for organizations within the Verato LINK platform. This API enables you to:\n\n- **Ingest and manage organization identities**: Add, update, and delete organization records with rich demographic and contact information.\n- **Search and query**: Find organizations using demographic data, native IDs, or link IDs (Verato's golden identifier).\n- **Lifecycle management**: Soft-delete and restore organization records while preserving data history.\n- **Merge and link operations**: Consolidate duplicate organizations, manage master data relationships, and maintain data lineage.\n- **Relationship management**: Define and query relationships between organizations (parent-child, affiliations, etc.).\n- **Notifications**: Track and audit identity changes and events across your organization data.\n\nAll operations follow a standard request/response envelope pattern with audit tracking, error handling, and optional response format customization.\n",
+      "type": "text/plain"
+    }
+  }
+}
