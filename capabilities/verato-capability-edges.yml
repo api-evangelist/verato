@@ -1,0 +1,147 @@
+slug: verato
+provider: Verato
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Healthcare Providers
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 13
+edges:
+- tag: AddRelationshipService
+  spec_file: verato-addrelationshipservice-api-openapi.yml
+  capability_id: BC-610.20
+  capability_id_l1: BC-610
+  capability_name: Master Data Management
+  confidence: 0.8
+  evidence: '"Merge and link operations: Consolidate duplicate organizations, manage master data relationships,
+    and maintain data lineage"; POST /addRelationshipService addRelationship'
+  reason: Operation defines parent-child/affiliation relationships between organization identity records
+    in an MDM hub with golden 'link ID'. This is master data management of organization entities, not
+    patient MPI (which would apply to the Person API).
+- tag: DemographicsQuery
+  spec_file: verato-demographicsquery-api-openapi.yml
+  capability_id: BC-610.20
+  capability_id_l1: BC-610
+  capability_name: Master Data Management
+  confidence: 0.78
+  evidence: 'POST /demographicsQuery "Query using demographic information"; schemas MergedSourceRecord,
+    alternateIdentifiers, Domain; description: "Find organizations using demographic data, native IDs,
+    or link IDs (Verato''s golden identifier)"'
+  reason: Retrieval of merged golden-record identity data by demographics is master data / identity resolution.
+    Kept at MDM rather than Master Patient Index because this spec's operations are described for organization
+    (not patient) identities.
+- tag: DemographicsSearch
+  spec_file: verato-demographicssearch-api-openapi.yml
+  capability_id: BC-610.20
+  capability_id_l1: BC-610
+  capability_name: Master Data Management
+  confidence: 0.78
+  evidence: POST /demographicsSearch "Search using demographic information"; schema DemographicsSearchWsRequest,
+    MergedSourceRecord
+  reason: Probabilistic/demographic search against the golden-record repository is identity resolution
+    within master data management.
+- tag: LinkIdentities
+  spec_file: verato-linkidentities-api-openapi.yml
+  capability_id: BC-610.20
+  capability_id_l1: BC-610
+  capability_name: Master Data Management
+  confidence: 0.78
+  evidence: 'POST /linkIdentities "Link two identities"; description: "Merge and link operations: Consolidate
+    duplicate organizations, manage master data relationships, and maintain data lineage"'
+  reason: Linking source identities to a single golden record is explicitly described as managing master
+    data relationships and lineage.
+- tag: MergeIdentities
+  spec_file: verato-mergeidentities-api-openapi.yml
+  capability_id: BC-610.20
+  capability_id_l1: BC-610
+  capability_name: Master Data Management
+  confidence: 0.78
+  evidence: 'POST /mergeIdentities "Merge two identities"; description: "Consolidate duplicate organizations,
+    manage master data relationships, and maintain data lineage"'
+  reason: Duplicate consolidation into a golden record is core master data management; the spec scopes
+    this to organization identities rather than a patient index.
+- tag: PostIdentity
+  spec_file: verato-postidentity-api-openapi.yml
+  capability_id: BC-610.20
+  capability_id_l1: BC-610
+  capability_name: Master Data Management
+  confidence: 0.78
+  evidence: 'POST /postIdentity "Add an Identity"; description: "Ingest and manage organization identities:
+    Add, update, and delete organization records"'
+  reason: Ingestion of source identity records into the MDM hub for matching and golden-record creation
+    is master data management.
+- tag: UnlinkIdentities
+  spec_file: verato-unlinkidentities-api-openapi.yml
+  capability_id: BC-610.20
+  capability_id_l1: BC-610
+  capability_name: Master Data Management
+  confidence: 0.78
+  evidence: '"Unlink two identities (unlinkIdentities)"; "Merge and link operations: Consolidate duplicate
+    organizations, manage master data relationships, and maintain data lineage"'
+  reason: Identity link/unlink operations on organization golden records are core master data identity-resolution
+    stewardship.
+- tag: UnmergeIdentities
+  spec_file: verato-unmergeidentities-api-openapi.yml
+  capability_id: BC-610.20
+  capability_id_l1: BC-610
+  capability_name: Master Data Management
+  confidence: 0.78
+  evidence: '"Unmerge two identities (unmergeIdentities)"; "Consolidate duplicate organizations, manage
+    master data relationships"'
+  reason: Unmerging duplicate organization identities is duplicate resolution within master data management.
+    Organization (not patient) scope rules out MPI management.
+- tag: IdentityIdQuery
+  spec_file: verato-identityidquery-api-openapi.yml
+  capability_id: BC-610.20
+  capability_id_l1: BC-610
+  capability_name: Master Data Management
+  confidence: 0.75
+  evidence: 'POST /identityIdQuery "Query using link ID"; description: "link IDs (Verato''s golden identifier)"'
+  reason: Lookup of the golden record by its master identifier — master data management / golden record
+    retrieval.
+- tag: NativeIdQuery
+  spec_file: verato-nativeidquery-api-openapi.yml
+  capability_id: BC-610.20
+  capability_id_l1: BC-610
+  capability_name: Master Data Management
+  confidence: 0.75
+  evidence: 'POST /nativeIdQuery "Query using native ID"; description: "Find organizations using demographic
+    data, native IDs, or link IDs"'
+  reason: Cross-reference lookup from a source-system native key to the golden record is master data cross-referencing.
+- tag: RestoreSource
+  spec_file: verato-restoresource-api-openapi.yml
+  capability_id: BC-610.20
+  capability_id_l1: BC-610
+  capability_name: Master Data Management
+  confidence: 0.72
+  evidence: '"Restore a soft-deleted source (restoreSource)" within "Lifecycle management: Soft-delete
+    and restore organization records while preserving data history"'
+  reason: Operation restores soft-deleted organization identity source records in Verato's master data
+    platform. This is master data record lifecycle stewardship for organizations (not patients), so Master
+    Data Management fits rather than the patient-specific MPI capability.
+- tag: SoftDeleteSource
+  spec_file: verato-softdeletesource-api-openapi.yml
+  capability_id: BC-610.20
+  capability_id_l1: BC-610
+  capability_name: Master Data Management
+  confidence: 0.72
+  evidence: '"Soft delete a source from identities (softDeleteSource)"'
+  reason: Removes a contributing source record from an organization identity in the MDM golden-record
+    platform — master data record lifecycle stewardship.
+- tag: SearchRelationshipsService
+  spec_file: verato-searchrelationshipsservice-api-openapi.yml
+  capability_id: BC-610.20
+  capability_id_l1: BC-610
+  capability_name: Master Data Management
+  confidence: 0.7
+  evidence: '"Searches for relationships (searchRelationshipsService)"; description: "Relationship management:
+    Define and query relationships between organizations (parent-child, affiliations, etc.)"'
+  reason: Querying parent-child/affiliation hierarchies among organization master records is organizational
+    master data (hierarchy) management. Not patient-facing, so MDM rather than a Healthcare Providers
+    capability.

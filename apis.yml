@@ -274,6 +274,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/verato-capability-edges.yml
+  name: Verato Business Capability Map
 - type: Overlay
   url: overlays/verato-organization-overlay.yaml
 - type: AgenticAccess
