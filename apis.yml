@@ -216,7 +216,7 @@ apis:
   humanURL: https://developer.verato.com/apis/person.openapi
   baseURL: https://developer.verato.com
   tags:
-  - Search Notifications
+  - SearchNotifications
   tags_raw:
   - SearchNotifications
   properties:
