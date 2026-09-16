@@ -211,18 +211,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/verato-restoresource-api-openapi.yml
-- aid: verato:verato-searchnotifications-api
-  name: Verato SearchNotifications API
-  description: The SearchNotifications API from Verato — 1 operation(s) for searchnotifications.
-  humanURL: https://developer.verato.com/apis/person.openapi
-  baseURL: https://developer.verato.com
-  tags:
-  - Search Notifications
-  tags_raw:
-  - SearchNotifications
-  properties:
-  - type: OpenAPI
-    url: openapi/verato-searchnotifications-api-openapi.yml
 - aid: verato:verato-searchrelationshipsservice-api
   name: Verato SearchRelationshipsService API
   description: >-
@@ -264,6 +252,16 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/verato-unmergeidentities-api-openapi.yml
+- aid: verato:verato-search-notifications-api
+  name: Verato Search Notifications API
+  description: The Search Notifications API from Verato — 1 operation(s) for search notifications.
+  humanURL: https://developer.verato.com/apis/person.openapi
+  baseURL: https://developer.verato.com
+  tags:
+  - Search Notifications
+  properties:
+  - type: OpenAPI
+    url: openapi/verato-search-notifications-api-openapi.yml
 x-enrichment:
   date: '2026-07-21'
   status: enriched
