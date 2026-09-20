@@ -11,7 +11,7 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 11
+edge_count: 14
 edges:
 - tag: AddRelationshipService
   spec_file: verato-addrelationshipservice-api-openapi.yml
@@ -99,6 +99,28 @@ edges:
   evidence: '"Query using native ID (nativeIdQuery)"; "Find organizations using demographic data, native
     IDs, or link IDs"'
   reason: Cross-reference lookup from a source-system native key to the master record — MDM identity cross-referencing.
+- tag: RestoreSource
+  spec_file: verato-restoresource-api-openapi.yml
+  capability_id: BC-610.20
+  capability_id_l1: BC-610
+  capability_name: Master Data Management
+  confidence: 0.72
+  evidence: '"Restore a soft-deleted source (restoreSource)" within "Lifecycle management: Soft-delete
+    and restore organization records while preserving data history"'
+  reason: Operation restores soft-deleted organization identity source records in Verato's master data
+    platform. This is master data record lifecycle stewardship for organizations (not patients), so Master
+    Data Management fits rather than the patient-specific MPI capability.
+  recovered_from: healthcare-vertical-edges.json
+- tag: SoftDeleteSource
+  spec_file: verato-softdeletesource-api-openapi.yml
+  capability_id: BC-610.20
+  capability_id_l1: BC-610
+  capability_name: Master Data Management
+  confidence: 0.72
+  evidence: '"Soft delete a source from identities (softDeleteSource)"'
+  reason: Removes a contributing source record from an organization identity in the MDM golden-record
+    platform — master data record lifecycle stewardship.
+  recovered_from: healthcare-vertical-edges.json
 - tag: UnlinkIdentities
   spec_file: verato-unlinkidentities-api-openapi.yml
   capability_id: BC-610.20
@@ -120,3 +142,15 @@ edges:
     organizations, manage master data relationships, and maintain data lineage"
   reason: Merge/unmerge of duplicate organization identities is duplicate resolution within a master data
     hub — cross-industry MDM is the correct frame for organization (not patient) records.
+- tag: SearchRelationshipsService
+  spec_file: verato-searchrelationshipsservice-api-openapi.yml
+  capability_id: BC-610.20
+  capability_id_l1: BC-610
+  capability_name: Master Data Management
+  confidence: 0.7
+  evidence: '"Searches for relationships (searchRelationshipsService)"; description: "Relationship management:
+    Define and query relationships between organizations (parent-child, affiliations, etc.)"'
+  reason: Querying parent-child/affiliation hierarchies among organization master records is organizational
+    master data (hierarchy) management. Not patient-facing, so MDM rather than a Healthcare Providers
+    capability.
+  recovered_from: healthcare-vertical-edges.json
