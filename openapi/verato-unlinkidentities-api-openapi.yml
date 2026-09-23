@@ -1,31 +1,13 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Verato Organization AddRelationshipService UnlinkIdentities API
+  title: Verato Unlink Identities API
   version: 2026.1.2
-  description: 'The Verato Organization API provides comprehensive identity management capabilities for organizations within the Verato LINK platform. This API enables you to:
-
-
-    - **Ingest and manage organization identities**: Add, update, and delete organization records with rich demographic and contact information.
-
-    - **Search and query**: Find organizations using demographic data, native IDs, or link IDs (Verato''s golden identifier).
-
-    - **Lifecycle management**: Soft-delete and restore organization records while preserving data history.
-
-    - **Merge and link operations**: Consolidate duplicate organizations, manage master data relationships, and maintain data lineage.
-
-    - **Relationship management**: Define and query relationships between organizations (parent-child, affiliations, etc.).
-
-    - **Notifications**: Track and audit identity changes and events across your organization data.
-
-
-    All operations follow a standard request/response envelope pattern with audit tracking, error handling, and optional response format customization.
-
-    '
+  description: 'Operations tagged UnlinkIdentities across 2 of this provider''s published API definitions: verato-organization-openapi.yml, verato-person-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://yourveratodomain.com/org-link-ws/svc
   description: Production Organization Link API
-- url: https://yourveratodomain.com/org-link-ws/svc
-  description: Sandbox Organization Link API
+- url: https://yourveratodomain.com/link-ws/svc
+  description: Production Link API
 security:
 - basicAuth: []
 tags:
@@ -36,9 +18,7 @@ paths:
       summary: Unlink two identities (unlinkIdentities)
       description: 'Unlinks two previously linked identities, splitting them into separate
 
-        entities and returning their linkIds and associated source information.
-
-        '
+        entities and returning their linkIds and associated source information.'
       operationId: unlinkIdentities
       requestBody:
         required: true
@@ -56,31 +36,28 @@ paths:
                 $ref: '#/components/schemas/ServiceResponse_unlinkIdentities'
       tags:
       - UnlinkIdentities
+    servers:
+    - url: https://yourveratodomain.com/org-link-ws/svc
+      description: Production Organization Link API
+    - url: https://yourveratodomain.com/org-link-ws/svc
+      description: Sandbox Organization Link API
 components:
   schemas:
-    ServiceResponse_unlinkIdentities:
+    UnlinkIdentitiesWsRequest:
       type: object
+      description: 'Request to unlink data from one identity to create a separate identity.
+
+        '
+      required:
+      - unlinkFromSource
+      - source
       properties:
-        auditId:
-          type: string
-        success:
-          type: boolean
-        warnings:
-          type: array
-          items:
-            type: string
-        retryableError:
-          type: boolean
-        message:
-          type: string
-        content:
-          $ref: '#/components/schemas/UnlinkIdentitiesWsResponse'
-        errors:
-          type: array
-          items:
-            type: string
-        trackingId:
-          type: string
+        unlinkFromSource:
+          description: Source info targeting the identity to unlink from.
+          $ref: '#/components/schemas/Source'
+        source:
+          description: Source representing the identity that will be unlinked.
+          $ref: '#/components/schemas/Source'
     Source:
       type: object
       description: Tracks an identity to a particular source system and record ID.
@@ -94,6 +71,13 @@ components:
         id:
           type: string
           description: ID of an identity within the given data source.
+    ServiceRequest_unlinkIdentities:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/UnlinkIdentitiesWsRequest'
+        trackingId:
+          type: string
     UnlinkIdentitiesWsResponse:
       type: object
       description: 'Response to unlink identities request, providing link IDs and source
@@ -119,29 +103,80 @@ components:
         unlinkedFromSource:
           description: Source info for the identity unlinked from.
           $ref: '#/components/schemas/Source'
-    ServiceRequest_unlinkIdentities:
+    ServiceResponse_unlinkIdentities:
       type: object
       properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
         content:
-          $ref: '#/components/schemas/UnlinkIdentitiesWsRequest'
+          $ref: '#/components/schemas/UnlinkIdentitiesWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
         trackingId:
           type: string
-    UnlinkIdentitiesWsRequest:
+    UnlinkIdentitiesWsRequest_2:
       type: object
-      description: 'Request to unlink data from one identity to create a separate identity.
-
-        '
       required:
       - unlinkFromSource
       - source
       properties:
         unlinkFromSource:
-          description: Source info targeting the identity to unlink from.
-          $ref: '#/components/schemas/Source'
+          $ref: '#/components/schemas/Source_2'
+          description: Return the source info that targets the Identity from which we will unlink the source Identity
         source:
-          description: Source representing the identity that will be unlinked.
-          $ref: '#/components/schemas/Source'
+          $ref: '#/components/schemas/Source_2'
+          description: Represents the Identity that will be unlinked
+      description: a request by a customer to unlink ( extract) data from one Identity to create another
+    Source_2:
+      type: object
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-mm-dd).
+        name:
+          type: string
+          description: The name of the data source.  Must be unique across Verato.
+        id:
+          type: string
+          description: The ID of an identity within the given data source.
+      description: Represents the information tracking an identity to a source that contains the identity
+    UnlinkIdentitiesWsResponse_2:
+      type: object
+      properties:
+        unlinkedId:
+          type: string
+          description: Link ID of the Identity that was unlinked
+        unlinkedSource:
+          $ref: '#/components/schemas/Source_2'
+          description: The source information of identity that was unlinked
+        unlinkedFromId:
+          type: string
+          description: Link ID of Identity unlinked from.
+        unlinkedFromSource:
+          $ref: '#/components/schemas/Source_2'
+          description: The source information for unlinked from Identity
+      required:
+      - unlinkedId
+      - unlinkedFromId
+      - unlinkedSource
+      - unlinkedFromSource
+      description: When two identities have been linked by the LinkIdentities WebService, unlink them by extracting the previously linked Identity into its own record.
   securitySchemes:
     basicAuth:
       type: http
       scheme: basic
+x-refined-from:
+- verato-organization-openapi.yml
+- verato-person-openapi.yml

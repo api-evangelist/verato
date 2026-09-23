@@ -1,31 +1,13 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Verato Organization AddRelationshipService DeleteRelationshipService API
+  title: Verato Delete Relationship Service API
   version: 2026.1.2
-  description: 'The Verato Organization API provides comprehensive identity management capabilities for organizations within the Verato LINK platform. This API enables you to:
-
-
-    - **Ingest and manage organization identities**: Add, update, and delete organization records with rich demographic and contact information.
-
-    - **Search and query**: Find organizations using demographic data, native IDs, or link IDs (Verato''s golden identifier).
-
-    - **Lifecycle management**: Soft-delete and restore organization records while preserving data history.
-
-    - **Merge and link operations**: Consolidate duplicate organizations, manage master data relationships, and maintain data lineage.
-
-    - **Relationship management**: Define and query relationships between organizations (parent-child, affiliations, etc.).
-
-    - **Notifications**: Track and audit identity changes and events across your organization data.
-
-
-    All operations follow a standard request/response envelope pattern with audit tracking, error handling, and optional response format customization.
-
-    '
+  description: 'Operations tagged DeleteRelationshipService across 2 of this provider''s published API definitions: verato-organization-openapi.yml, verato-person-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://yourveratodomain.com/org-link-ws/svc
   description: Production Organization Link API
-- url: https://yourveratodomain.com/org-link-ws/svc
-  description: Sandbox Organization Link API
+- url: https://yourveratodomain.com/link-ws/svc
+  description: Production Link API
 security:
 - basicAuth: []
 tags:
@@ -34,9 +16,7 @@ paths:
   /deleteRelationshipService:
     post:
       summary: Delete a relationship (deleteRelationshipService)
-      description: 'Deletes a previously defined relationship between two identities.
-
-        '
+      description: Deletes a previously defined relationship between two identities.
       operationId: deleteRelationship
       requestBody:
         required: true
@@ -54,6 +34,11 @@ paths:
                 $ref: '#/components/schemas/ServiceResponse_deleteRelationshipService'
       tags:
       - DeleteRelationshipService
+    servers:
+    - url: https://yourveratodomain.com/org-link-ws/svc
+      description: Production Organization Link API
+    - url: https://yourveratodomain.com/org-link-ws/svc
+      description: Sandbox Organization Link API
 components:
   schemas:
     ServiceResponse_deleteRelationshipService:
@@ -79,6 +64,16 @@ components:
             type: string
         trackingId:
           type: string
+    DeleteRelationshipWsResponse:
+      type: object
+      properties:
+        id:
+          type: string
+    DeleteRelationshipWsRequest:
+      type: object
+      properties:
+        id:
+          type: string
     ServiceRequest_deleteRelationshipService:
       type: object
       properties:
@@ -86,17 +81,10 @@ components:
           $ref: '#/components/schemas/DeleteRelationshipWsRequest'
         trackingId:
           type: string
-    DeleteRelationshipWsRequest:
-      type: object
-      properties:
-        id:
-          type: string
-    DeleteRelationshipWsResponse:
-      type: object
-      properties:
-        id:
-          type: string
   securitySchemes:
     basicAuth:
       type: http
       scheme: basic
+x-refined-from:
+- verato-organization-openapi.yml
+- verato-person-openapi.yml

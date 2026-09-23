@@ -1,31 +1,12 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Verato Organization AddRelationshipService CreateDataSource API
+  title: Verato Person Create Data Source API
   version: 2026.1.2
-  description: 'The Verato Organization API provides comprehensive identity management capabilities for organizations within the Verato LINK platform. This API enables you to:
-
-
-    - **Ingest and manage organization identities**: Add, update, and delete organization records with rich demographic and contact information.
-
-    - **Search and query**: Find organizations using demographic data, native IDs, or link IDs (Verato''s golden identifier).
-
-    - **Lifecycle management**: Soft-delete and restore organization records while preserving data history.
-
-    - **Merge and link operations**: Consolidate duplicate organizations, manage master data relationships, and maintain data lineage.
-
-    - **Relationship management**: Define and query relationships between organizations (parent-child, affiliations, etc.).
-
-    - **Notifications**: Track and audit identity changes and events across your organization data.
-
-
-    All operations follow a standard request/response envelope pattern with audit tracking, error handling, and optional response format customization.
-
-    '
 servers:
-- url: https://yourveratodomain.com/org-link-ws/svc
-  description: Production Organization Link API
-- url: https://yourveratodomain.com/org-link-ws/svc
-  description: Sandbox Organization Link API
+- url: https://yourveratodomain.com/link-ws/svc
+  description: Production Link API
+- url: https://yourveratodomain.com/link-ws/svc
+  description: Sandbox Link API
 security:
 - basicAuth: []
 tags:
@@ -40,9 +21,7 @@ paths:
         Source name constraints: maximum 255 characters, no spaces, and the following characters are not supported: `" | : ''`. Source names are case-sensitive; Verato recommends a consistent capitalization standard (all uppercase or all lowercase) to avoid duplicate records.
 
 
-        Failed additions are reported individually in the response and do not prevent other sources in the same request from being created. Common failure causes include the source already existing or the name matching a reserved Verato source code (e.g. "Verato").
-
-        '
+        Failed additions are reported individually in the response and do not prevent other sources in the same request from being created. Common failure causes include the source already existing or the name matching a reserved Verato source code (e.g. "Verato").'
       operationId: post_createDataSource
       responses:
         '200':
@@ -89,8 +68,9 @@ components:
           type: string
           description: The data source code from the request.
         error:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Error message if this source failed to be created; null on success.
         status:
           type: string
@@ -118,6 +98,24 @@ components:
             type: string
         trackingId:
           type: string
+    CreateDataSourcesWsResponse:
+      type: object
+      properties:
+        datasourceCreationResponses:
+          type: array
+          items:
+            $ref: '#/components/schemas/DatasourceCreationResponse'
+          description: A list of data source creation results.
+      required:
+      - datasourceCreationResponses
+      description: Create datasource service response
+    ServiceRequest_createDataSource:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/CreateDataSourcesWsRequest'
+        trackingId:
+          type: string
     CreateDataSourcesWsRequest:
       type: object
       properties:
@@ -133,24 +131,6 @@ components:
       required:
       - sources
       description: Request to create one or more new data sources. Up to 10 sources may be submitted per call.
-    ServiceRequest_createDataSource:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/CreateDataSourcesWsRequest'
-        trackingId:
-          type: string
-    CreateDataSourcesWsResponse:
-      type: object
-      properties:
-        datasourceCreationResponses:
-          type: array
-          items:
-            $ref: '#/components/schemas/DatasourceCreationResponse'
-          description: A list of data source creation results.
-      required:
-      - datasourceCreationResponses
-      description: Create datasource service response
   securitySchemes:
     basicAuth:
       type: http

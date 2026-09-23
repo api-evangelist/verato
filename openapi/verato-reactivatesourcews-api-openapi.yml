@@ -1,31 +1,12 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Verato Organization AddRelationshipService ReactivateSourceWs API
+  title: Verato Person Reactivate Source Ws API
   version: 2026.1.2
-  description: 'The Verato Organization API provides comprehensive identity management capabilities for organizations within the Verato LINK platform. This API enables you to:
-
-
-    - **Ingest and manage organization identities**: Add, update, and delete organization records with rich demographic and contact information.
-
-    - **Search and query**: Find organizations using demographic data, native IDs, or link IDs (Verato''s golden identifier).
-
-    - **Lifecycle management**: Soft-delete and restore organization records while preserving data history.
-
-    - **Merge and link operations**: Consolidate duplicate organizations, manage master data relationships, and maintain data lineage.
-
-    - **Relationship management**: Define and query relationships between organizations (parent-child, affiliations, etc.).
-
-    - **Notifications**: Track and audit identity changes and events across your organization data.
-
-
-    All operations follow a standard request/response envelope pattern with audit tracking, error handling, and optional response format customization.
-
-    '
 servers:
-- url: https://yourveratodomain.com/org-link-ws/svc
-  description: Production Organization Link API
-- url: https://yourveratodomain.com/org-link-ws/svc
-  description: Sandbox Organization Link API
+- url: https://yourveratodomain.com/link-ws/svc
+  description: Production Link API
+- url: https://yourveratodomain.com/link-ws/svc
+  description: Sandbox Link API
 security:
 - basicAuth: []
 tags:
@@ -53,20 +34,6 @@ paths:
       - ReactivateSourceWs
 components:
   schemas:
-    ReactivateSourceWsResponse:
-      type: object
-      properties:
-        linkIdsModified:
-          type: array
-          items:
-            type: string
-          description: Entity Ids which got modified
-        linkIdCreated:
-          type: string
-          description: Entity Id which got created
-      required:
-      - linkIdsModified
-      description: Service response for a ReactivateSourceWsResponse
     Source:
       type: object
       properties:
@@ -80,6 +47,21 @@ components:
           type: string
           description: The ID of an identity within the given data source.
       description: Represents the information tracking an identity to a source that contains the identity
+    ReactivateSourceWsRequest:
+      type: object
+      required:
+      - sourceToReactivate
+      properties:
+        sourceToReactivate:
+          $ref: '#/components/schemas/Source'
+          description: The source to reactivate.
+    ServiceRequest_reactivateSourceWs:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/ReactivateSourceWsRequest'
+        trackingId:
+          type: string
     ServiceResponse_reactivateSourceWs:
       type: object
       properties:
@@ -103,21 +85,20 @@ components:
             type: string
         trackingId:
           type: string
-    ReactivateSourceWsRequest:
-      type: object
-      required:
-      - sourceToReactivate
-      properties:
-        sourceToReactivate:
-          $ref: '#/components/schemas/Source'
-          description: The source to reactivate.
-    ServiceRequest_reactivateSourceWs:
+    ReactivateSourceWsResponse:
       type: object
       properties:
-        content:
-          $ref: '#/components/schemas/ReactivateSourceWsRequest'
-        trackingId:
+        linkIdsModified:
+          type: array
+          items:
+            type: string
+          description: Entity Ids which got modified
+        linkIdCreated:
           type: string
+          description: Entity Id which got created
+      required:
+      - linkIdsModified
+      description: Service response for a ReactivateSourceWsResponse
   securitySchemes:
     basicAuth:
       type: http

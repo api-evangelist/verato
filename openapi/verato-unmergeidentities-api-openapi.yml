@@ -1,31 +1,13 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Verato Organization AddRelationshipService UnmergeIdentities API
+  title: Verato Unmerge Identities API
   version: 2026.1.2
-  description: 'The Verato Organization API provides comprehensive identity management capabilities for organizations within the Verato LINK platform. This API enables you to:
-
-
-    - **Ingest and manage organization identities**: Add, update, and delete organization records with rich demographic and contact information.
-
-    - **Search and query**: Find organizations using demographic data, native IDs, or link IDs (Verato''s golden identifier).
-
-    - **Lifecycle management**: Soft-delete and restore organization records while preserving data history.
-
-    - **Merge and link operations**: Consolidate duplicate organizations, manage master data relationships, and maintain data lineage.
-
-    - **Relationship management**: Define and query relationships between organizations (parent-child, affiliations, etc.).
-
-    - **Notifications**: Track and audit identity changes and events across your organization data.
-
-
-    All operations follow a standard request/response envelope pattern with audit tracking, error handling, and optional response format customization.
-
-    '
+  description: 'Operations tagged UnmergeIdentities across 2 of this provider''s published API definitions: verato-organization-openapi.yml, verato-person-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://yourveratodomain.com/org-link-ws/svc
   description: Production Organization Link API
-- url: https://yourveratodomain.com/org-link-ws/svc
-  description: Sandbox Organization Link API
+- url: https://yourveratodomain.com/link-ws/svc
+  description: Production Link API
 security:
 - basicAuth: []
 tags:
@@ -34,9 +16,7 @@ paths:
   /unmergeIdentities:
     post:
       summary: Unmerge two identities (unmergeIdentities)
-      description: 'Reverses a previous merge operation by extracting a previously merged source identity into its own record. Returns the new link ID and the linkId it was unmerged from.
-
-        '
+      description: Reverses a previous merge operation by extracting a previously merged source identity into its own record. Returns the new link ID and the linkId it was unmerged from.
       operationId: unmergeIdentities
       requestBody:
         required: true
@@ -54,8 +34,43 @@ paths:
                 $ref: '#/components/schemas/ServiceResponse_unmergeIdentities'
       tags:
       - UnmergeIdentities
+    servers:
+    - url: https://yourveratodomain.com/org-link-ws/svc
+      description: Production Organization Link API
+    - url: https://yourveratodomain.com/org-link-ws/svc
+      description: Sandbox Organization Link API
 components:
   schemas:
+    ServiceResponse_unmergeIdentities:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/UnmergeIdentitiesWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    ServiceRequest_unmergeIdentities:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/UnmergeIdentitiesWsRequest'
+        trackingId:
+          type: string
     Source:
       type: object
       description: Tracks an identity to a particular source system and record ID.
@@ -86,13 +101,6 @@ components:
         unmergeSource:
           description: Source representing the identity being unmerged.
           $ref: '#/components/schemas/Source'
-    ServiceRequest_unmergeIdentities:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/UnmergeIdentitiesWsRequest'
-        trackingId:
-          type: string
     UnmergeIdentitiesWsResponse:
       type: object
       description: 'Response to unmerge identities request, providing link IDs and source
@@ -118,30 +126,57 @@ components:
         unmergedFromId:
           type: string
           description: link ID of the identity unmerged from.
-    ServiceResponse_unmergeIdentities:
+    Source_2:
       type: object
       properties:
-        auditId:
+        date:
           type: string
-        success:
-          type: boolean
-        warnings:
-          type: array
-          items:
-            type: string
-        retryableError:
-          type: boolean
-        message:
+          description: The date of the source data in ISO format (yyyy-mm-dd).
+        name:
           type: string
-        content:
-          $ref: '#/components/schemas/UnmergeIdentitiesWsResponse'
-        errors:
-          type: array
-          items:
-            type: string
-        trackingId:
+          description: The name of the data source.  Must be unique across Verato.
+        id:
           type: string
+          description: The ID of an identity within the given data source.
+      description: Represents the information tracking an identity to a source that contains the identity
+    UnmergeIdentitiesWsRequest_2:
+      type: object
+      required:
+      - unmergeFromSource
+      - unmergeSource
+      properties:
+        unmergeFromSource:
+          $ref: '#/components/schemas/Source_2'
+          description: Return the source info that targets the Identity from which we will unmerge the source Identity
+        unmergeSource:
+          $ref: '#/components/schemas/Source_2'
+          description: Represents the source that will be unmerged
+      description: a request by a customer to unmerge ( extract) data from retired section of one Identity to create another new Identity
+    UnmergeIdentitiesWsResponse_2:
+      type: object
+      properties:
+        unmergedSource:
+          $ref: '#/components/schemas/Source_2'
+          description: The source information of identity that was unmerged
+        unmergedFromSource:
+          $ref: '#/components/schemas/Source_2'
+          description: The source information for unmerged from Identity
+        unmergedId:
+          type: string
+          description: Link ID of the Identity that was unmerged
+        unmergedFromId:
+          type: string
+          description: Link ID of Identity unmerged from.
+      required:
+      - unmergedId
+      - unmergedFromId
+      - unmergedSource
+      - unmergedFromSource
+      description: "When two identities have been merged by the MergeIdentities WebService , unmerge them by \n extracting the previously merged Identity into its own record."
   securitySchemes:
     basicAuth:
       type: http
       scheme: basic
+x-refined-from:
+- verato-organization-openapi.yml
+- verato-person-openapi.yml

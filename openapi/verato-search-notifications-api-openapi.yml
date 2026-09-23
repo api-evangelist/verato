@@ -1,0 +1,205 @@
+openapi: 3.2.0
+info:
+  title: Verato Search Notifications API
+  version: 2026.1.2
+  description: 'Operations tagged SearchNotifications across 2 of this provider''s published API definitions: verato-organization-openapi.yml, verato-person-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://yourveratodomain.com/org-link-ws/svc
+  description: Production Organization Link API
+- url: https://yourveratodomain.com/link-ws/svc
+  description: Production Link API
+security:
+- basicAuth: []
+tags:
+- name: Search Notifications
+paths:
+  /searchNotifications:
+    post:
+      summary: Query notifications (searchNotifications)
+      description: Retrieves identity-related notifications for a specific period of time, such as merge events, link/unlink events, or other configured notifications.
+      operationId: searchNotifications
+      requestBody:
+        required: true
+        description: The notification search request.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequest_searchNotifications'
+      responses:
+        '200':
+          description: Successful search notifications operation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceResponse_searchNotifications'
+      tags:
+      - Search Notifications
+    servers:
+    - url: https://yourveratodomain.com/org-link-ws/svc
+      description: Production Organization Link API
+    - url: https://yourveratodomain.com/org-link-ws/svc
+      description: Sandbox Organization Link API
+components:
+  schemas:
+    SearchNotificationsWsRequest:
+      type: object
+      description: Query notifications for the customer.
+      required:
+      - pageNumber
+      - pageSize
+      - startDate
+      - endDate
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+          description: Page number.
+        pageSize:
+          type: integer
+          format: int32
+          description: Page size.
+        startDate:
+          type: string
+          format: date-time
+          description: Start date.
+        endDate:
+          type: string
+          format: date-time
+          description: End date.
+    NotificationLowerCaseBody:
+      type: object
+      properties:
+        survivingSource:
+          type: string
+        retiredSource:
+          type: string
+        previousLinkId:
+          type: string
+        survivingNativeId:
+          type: string
+        newLinkId:
+          type: string
+        source:
+          type: string
+        nativeId:
+          type: string
+        retiredNativeId:
+          type: string
+    SearchNotificationsWsResponse:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: Name of the customer for the notifications.
+        hasNext:
+          type: boolean
+          description: Indicates whether more notifications are available.
+        notifications:
+          type: array
+          description: Notifications retrieved.
+          items:
+            $ref: '#/components/schemas/NotificationData'
+        totalElements:
+          type: integer
+          format: int64
+          description: Number of notifications retrieved.
+    ServiceResponse_searchNotifications:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/SearchNotificationsWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    NotificationData:
+      type: object
+      properties:
+        partitionKey:
+          type: string
+        service:
+          type: string
+        customerId:
+          type: string
+        notificationLowerCaseBody:
+          $ref: '#/components/schemas/NotificationLowerCaseBody'
+        notificationType:
+          type: string
+        body:
+          type: string
+        ts:
+          type: string
+          format: date-time
+        username:
+          type: string
+    ServiceRequest_searchNotifications:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/SearchNotificationsWsRequest'
+        trackingId:
+          type: string
+    SearchNotificationsWsRequest_2:
+      type: object
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+          description: Page number
+        endDate:
+          type: string
+          format: date-time
+          description: End date
+        pageSize:
+          type: integer
+          format: int32
+          description: page size
+        startDate:
+          type: string
+          format: date-time
+          description: Start date
+      required:
+      - pageNumber
+      - pageSize
+      - startDate
+      - endDate
+      description: query notificiations for the customer
+    SearchNotificationsWsResponse_2:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: The name of the customer for the notifications
+        hasNext:
+          type: boolean
+          description: Boolean to determinate if there are more elements
+        notifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationData'
+          description: The notifications retrieved
+        totalElements:
+          type: integer
+          format: int64
+          description: The number of notifications retrieved
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+x-refined-from:
+- verato-organization-openapi.yml
+- verato-person-openapi.yml

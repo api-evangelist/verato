@@ -1,31 +1,13 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Verato Organization AddRelationshipService SearchRelationshipsService API
+  title: Verato Search Relationships Service API
   version: 2026.1.2
-  description: 'The Verato Organization API provides comprehensive identity management capabilities for organizations within the Verato LINK platform. This API enables you to:
-
-
-    - **Ingest and manage organization identities**: Add, update, and delete organization records with rich demographic and contact information.
-
-    - **Search and query**: Find organizations using demographic data, native IDs, or link IDs (Verato''s golden identifier).
-
-    - **Lifecycle management**: Soft-delete and restore organization records while preserving data history.
-
-    - **Merge and link operations**: Consolidate duplicate organizations, manage master data relationships, and maintain data lineage.
-
-    - **Relationship management**: Define and query relationships between organizations (parent-child, affiliations, etc.).
-
-    - **Notifications**: Track and audit identity changes and events across your organization data.
-
-
-    All operations follow a standard request/response envelope pattern with audit tracking, error handling, and optional response format customization.
-
-    '
+  description: 'Operations tagged SearchRelationshipsService across 2 of this provider''s published API definitions: verato-organization-openapi.yml, verato-person-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://yourveratodomain.com/org-link-ws/svc
   description: Production Organization Link API
-- url: https://yourveratodomain.com/org-link-ws/svc
-  description: Sandbox Organization Link API
+- url: https://yourveratodomain.com/link-ws/svc
+  description: Production Link API
 security:
 - basicAuth: []
 tags:
@@ -34,9 +16,7 @@ paths:
   /searchRelationshipsService:
     post:
       summary: Searches for relationships (searchRelationshipsService)
-      description: 'Searches for relationships
-
-        '
+      description: Searches for relationships
       operationId: searchRelationships
       requestBody:
         required: false
@@ -54,12 +34,18 @@ paths:
                 $ref: '#/components/schemas/ServiceResponse_searchRelationshipsService'
       tags:
       - SearchRelationshipsService
+    servers:
+    - url: https://yourveratodomain.com/org-link-ws/svc
+      description: Production Organization Link API
+    - url: https://yourveratodomain.com/org-link-ws/svc
+      description: Sandbox Organization Link API
 components:
   schemas:
-    Map_string_Object:
+    UpdateRelationshipWsRequest:
       type: object
-      additionalProperties: {}
-      description: Generic map of string keys to arbitrary values.
+      properties:
+        relationship:
+          $ref: '#/components/schemas/RelationshipWs'
     RelationshipWs:
       type: object
       description: Relationship between two identities.
@@ -88,7 +74,11 @@ components:
         endDate:
           type: string
           format: date-time
-    UpdateRelationshipWsRequest:
+    Map_string_Object:
+      type: object
+      additionalProperties: {}
+      description: Generic map of string keys to arbitrary values.
+    UpdateRelationshipWsResponse:
       type: object
       properties:
         relationship:
@@ -116,11 +106,6 @@ components:
             type: string
         trackingId:
           type: string
-    UpdateRelationshipWsResponse:
-      type: object
-      properties:
-        relationship:
-          $ref: '#/components/schemas/RelationshipWs'
     ServiceRequest_searchRelationshipsService:
       type: object
       properties:
@@ -128,7 +113,91 @@ components:
           $ref: '#/components/schemas/UpdateRelationshipWsRequest'
         trackingId:
           type: string
+    SearchRelationshipsWsRequest:
+      type: object
+      properties:
+        relationshipFilter:
+          $ref: '#/components/schemas/RelationshipWsFilter'
+    RelationshipWs_2:
+      type: object
+      properties:
+        relationshipVerb:
+          type: string
+        endDate:
+          type: string
+          format: date-time
+        objectVeratoId:
+          type: string
+        domain:
+          type: string
+        inverseRelationshipVerb:
+          type: string
+        subjectVeratoId:
+          type: string
+        trustFactor:
+          type: string
+        details:
+          type: object
+          additionalProperties: {}
+        id:
+          type: string
+        startDate:
+          type: string
+          format: date-time
+        status:
+          type: string
+    SearchRelationshipsWsResponse:
+      type: object
+      properties:
+        relationships:
+          type: array
+          items:
+            $ref: '#/components/schemas/RelationshipWs_2'
+    ServiceResponse_searchRelationshipsService_2:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/SearchRelationshipsWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    ServiceRequest_searchRelationshipsService_2:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/SearchRelationshipsWsRequest'
+        trackingId:
+          type: string
+    RelationshipWsFilter:
+      type: object
+      properties:
+        filterBySubjectVeratoId:
+          type: string
+        filterBySubjectOrObjectVeratoId:
+          type: string
+        filterByObjectVeratoId:
+          type: string
+        filterByRelationshipVerb:
+          type: string
   securitySchemes:
     basicAuth:
       type: http
       scheme: basic
+x-refined-from:
+- verato-organization-openapi.yml
+- verato-person-openapi.yml

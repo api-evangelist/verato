@@ -1,26 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Verato Organization AddRelationshipService RestoreSource API
+  title: Verato Organization Restore Source API
   version: 2026.1.2
-  description: 'The Verato Organization API provides comprehensive identity management capabilities for organizations within the Verato LINK platform. This API enables you to:
-
-
-    - **Ingest and manage organization identities**: Add, update, and delete organization records with rich demographic and contact information.
-
-    - **Search and query**: Find organizations using demographic data, native IDs, or link IDs (Verato''s golden identifier).
-
-    - **Lifecycle management**: Soft-delete and restore organization records while preserving data history.
-
-    - **Merge and link operations**: Consolidate duplicate organizations, manage master data relationships, and maintain data lineage.
-
-    - **Relationship management**: Define and query relationships between organizations (parent-child, affiliations, etc.).
-
-    - **Notifications**: Track and audit identity changes and events across your organization data.
-
-
-    All operations follow a standard request/response envelope pattern with audit tracking, error handling, and optional response format customization.
-
-    '
+  description: The Verato Organization API provides comprehensive identity management capabilities for organizations within the Verato LINK platform.
 servers:
 - url: https://yourveratodomain.com/org-link-ws/svc
   description: Production Organization Link API
@@ -34,9 +16,7 @@ paths:
   /restoreSource:
     post:
       summary: Restore a soft-deleted source (restoreSource)
-      description: 'Restores a previously soft-deleted source across all identities where it was present. A new entity may be created or existing entities modified depending on the current state of the graph.
-
-        '
+      description: Restores a previously soft-deleted source across all identities where it was present. A new entity may be created or existing entities modified depending on the current state of the graph.
       operationId: restoreSource
       requestBody:
         required: true
@@ -71,6 +51,14 @@ components:
         linkIdCreated:
           type: string
           description: Entity ID that was created.
+    ServiceRequest_restoreSource:
+      type: object
+      properties:
+        content:
+          type: object
+          description: RestoreSourceWsRequest payload (structure as per internal implementation).
+        trackingId:
+          type: string
     ServiceResponse_restoreSource:
       type: object
       properties:
@@ -92,14 +80,6 @@ components:
           type: array
           items:
             type: string
-        trackingId:
-          type: string
-    ServiceRequest_restoreSource:
-      type: object
-      properties:
-        content:
-          type: object
-          description: RestoreSourceWsRequest payload (structure as per internal implementation).
         trackingId:
           type: string
   securitySchemes:

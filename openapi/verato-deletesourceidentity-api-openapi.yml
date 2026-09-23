@@ -1,31 +1,13 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Verato Organization AddRelationshipService DeleteSourceIdentity API
+  title: Verato Delete Source Identity API
   version: 2026.1.2
-  description: 'The Verato Organization API provides comprehensive identity management capabilities for organizations within the Verato LINK platform. This API enables you to:
-
-
-    - **Ingest and manage organization identities**: Add, update, and delete organization records with rich demographic and contact information.
-
-    - **Search and query**: Find organizations using demographic data, native IDs, or link IDs (Verato''s golden identifier).
-
-    - **Lifecycle management**: Soft-delete and restore organization records while preserving data history.
-
-    - **Merge and link operations**: Consolidate duplicate organizations, manage master data relationships, and maintain data lineage.
-
-    - **Relationship management**: Define and query relationships between organizations (parent-child, affiliations, etc.).
-
-    - **Notifications**: Track and audit identity changes and events across your organization data.
-
-
-    All operations follow a standard request/response envelope pattern with audit tracking, error handling, and optional response format customization.
-
-    '
+  description: 'Operations tagged DeleteSourceIdentity across 2 of this provider''s published API definitions: verato-organization-openapi.yml, verato-person-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://yourveratodomain.com/org-link-ws/svc
   description: Production Organization Link API
-- url: https://yourveratodomain.com/org-link-ws/svc
-  description: Sandbox Organization Link API
+- url: https://yourveratodomain.com/link-ws/svc
+  description: Production Link API
 security:
 - basicAuth: []
 tags:
@@ -38,9 +20,7 @@ paths:
 
         source (source name + nativeId) from Verato. This also removes any
 
-        merge/unmerge history associated with that source.
-
-        '
+        merge/unmerge history associated with that source.'
       operationId: deleteSourceIdentity
       requestBody:
         required: true
@@ -58,6 +38,11 @@ paths:
                 $ref: '#/components/schemas/ServiceResponse_deleteSourceIdentity'
       tags:
       - DeleteSourceIdentity
+    servers:
+    - url: https://yourveratodomain.com/org-link-ws/svc
+      description: Production Organization Link API
+    - url: https://yourveratodomain.com/org-link-ws/svc
+      description: Sandbox Organization Link API
 components:
   schemas:
     Source:
@@ -73,6 +58,33 @@ components:
         id:
           type: string
           description: ID of an identity within the given data source.
+    DeleteSourceIdentityWsResponse:
+      type: object
+      description: 'Service response for a source-based delete. Indicates which linkIds were
+
+        modified and which were deleted.
+
+        '
+      properties:
+        linkIdsModified:
+          type: array
+          description: link IDs with information removed but not deleted.
+          items:
+            type: string
+        linkIdsDeleted:
+          type: array
+          description: link IDs that were deleted.
+          items:
+            type: string
+    DeleteSourceIdentityWsRequest:
+      type: object
+      description: Deletes all information associated with the provided source.
+      required:
+      - source
+      properties:
+        source:
+          description: The source to remove from the database.
+          $ref: '#/components/schemas/Source'
     ServiceResponse_deleteSourceIdentity:
       type: object
       properties:
@@ -96,33 +108,6 @@ components:
             type: string
         trackingId:
           type: string
-    DeleteSourceIdentityWsRequest:
-      type: object
-      description: Deletes all information associated with the provided source.
-      required:
-      - source
-      properties:
-        source:
-          description: The source to remove from the database.
-          $ref: '#/components/schemas/Source'
-    DeleteSourceIdentityWsResponse:
-      type: object
-      description: 'Service response for a source-based delete. Indicates which linkIds were
-
-        modified and which were deleted.
-
-        '
-      properties:
-        linkIdsModified:
-          type: array
-          description: link IDs with information removed but not deleted.
-          items:
-            type: string
-        linkIdsDeleted:
-          type: array
-          description: link IDs that were deleted.
-          items:
-            type: string
     ServiceRequest_deleteSourceIdentity:
       type: object
       properties:
@@ -130,7 +115,46 @@ components:
           $ref: '#/components/schemas/DeleteSourceIdentityWsRequest'
         trackingId:
           type: string
+    Source_2:
+      type: object
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-mm-dd).
+        name:
+          type: string
+          description: The name of the data source.  Must be unique across Verato.
+        id:
+          type: string
+          description: The ID of an identity within the given data source.
+      description: Represents the information tracking an identity to a source that contains the identity
+    DeleteSourceIdentityWsResponse_2:
+      type: object
+      properties:
+        linkIdsModified:
+          type: array
+          items:
+            type: string
+          description: The list of LINK ids that had information removed, but were not deleted
+        linkIdsDeleted:
+          type: array
+          items:
+            type: string
+          description: The list of LINK ids that were deleted
+      description: Service response for a Source-based query
+    DeleteSourceIdentityWsRequest_2:
+      type: object
+      properties:
+        source:
+          $ref: '#/components/schemas/Source_2'
+          description: The source to remove from the database
+      required:
+      - source
+      description: Deletes all information associated with the source provided within
   securitySchemes:
     basicAuth:
       type: http
       scheme: basic
+x-refined-from:
+- verato-organization-openapi.yml
+- verato-person-openapi.yml

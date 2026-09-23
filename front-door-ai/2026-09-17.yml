@@ -1,0 +1,29 @@
+# Front Door AI Index — verato — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: verato
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: verato.com
+  final_host: verato.com
+  ownership: own
+  owner: verato
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 9
+  host_score: 9
+  density: 8.29
+  words: 1085
+  tiers:
+    agentic: 1
+    core: 8
+    model: 0
+  ambiguous: 7
+  top_terms:
+    AI: 7
+    intelligence: 6
+    agentic: 1
+    artificial intelligence: 1
+    smart: 1

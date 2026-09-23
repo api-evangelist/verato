@@ -1,31 +1,13 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Verato Organization AddRelationshipService MergeIdentities API
+  title: Verato Merge Identities API
   version: 2026.1.2
-  description: 'The Verato Organization API provides comprehensive identity management capabilities for organizations within the Verato LINK platform. This API enables you to:
-
-
-    - **Ingest and manage organization identities**: Add, update, and delete organization records with rich demographic and contact information.
-
-    - **Search and query**: Find organizations using demographic data, native IDs, or link IDs (Verato''s golden identifier).
-
-    - **Lifecycle management**: Soft-delete and restore organization records while preserving data history.
-
-    - **Merge and link operations**: Consolidate duplicate organizations, manage master data relationships, and maintain data lineage.
-
-    - **Relationship management**: Define and query relationships between organizations (parent-child, affiliations, etc.).
-
-    - **Notifications**: Track and audit identity changes and events across your organization data.
-
-
-    All operations follow a standard request/response envelope pattern with audit tracking, error handling, and optional response format customization.
-
-    '
+  description: 'Operations tagged MergeIdentities across 2 of this provider''s published API definitions: verato-organization-openapi.yml, verato-person-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://yourveratodomain.com/org-link-ws/svc
   description: Production Organization Link API
-- url: https://yourveratodomain.com/org-link-ws/svc
-  description: Sandbox Organization Link API
+- url: https://yourveratodomain.com/link-ws/svc
+  description: Production Link API
 security:
 - basicAuth: []
 tags:
@@ -34,9 +16,7 @@ paths:
   /mergeIdentities:
     post:
       summary: Merge two identities (mergeIdentities)
-      description: 'Merges a "toRetire" source identity into a "toSurvive" source identity. After a merge, the retired source is marked as merged and the surviving identity contains combined data. The response returns the surviving linkId.
-
-        '
+      description: Merges a "toRetire" source identity into a "toSurvive" source identity. After a merge, the retired source is marked as merged and the surviving identity contains combined data. The response returns the surviving linkId.
       operationId: mergeIdentities
       requestBody:
         required: true
@@ -54,6 +34,11 @@ paths:
                 $ref: '#/components/schemas/ServiceResponse_mergeIdentities'
       tags:
       - MergeIdentities
+    servers:
+    - url: https://yourveratodomain.com/org-link-ws/svc
+      description: Production Organization Link API
+    - url: https://yourveratodomain.com/org-link-ws/svc
+      description: Sandbox Organization Link API
 components:
   schemas:
     Source:
@@ -83,6 +68,29 @@ components:
         toSurviveSource:
           description: Original source information for the surviving identity.
           $ref: '#/components/schemas/Source'
+    ServiceResponse_mergeIdentities:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/MergeIdentitiesWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
     MergeIdentitiesWsRequest:
       type: object
       description: 'Request to merge (retire) one source identity into another, creating a
@@ -107,30 +115,46 @@ components:
           $ref: '#/components/schemas/MergeIdentitiesWsRequest'
         trackingId:
           type: string
-    ServiceResponse_mergeIdentities:
+    Source_2:
       type: object
       properties:
-        auditId:
+        date:
           type: string
-        success:
-          type: boolean
-        warnings:
-          type: array
-          items:
-            type: string
-        retryableError:
-          type: boolean
-        message:
+          description: The date of the source data in ISO format (yyyy-mm-dd).
+        name:
           type: string
-        content:
-          $ref: '#/components/schemas/MergeIdentitiesWsResponse'
-        errors:
-          type: array
-          items:
-            type: string
-        trackingId:
+          description: The name of the data source.  Must be unique across Verato.
+        id:
           type: string
+          description: The ID of an identity within the given data source.
+      description: Represents the information tracking an identity to a source that contains the identity
+    MergeIdentitiesWsResponse_2:
+      type: object
+      properties:
+        linkId:
+          type: string
+          description: Return the link ID of the Identity that received merged/retired data during a MergeIdentity request
+        toSurviveSource:
+          $ref: '#/components/schemas/Source_2'
+          description: Return the original source information for the Identity that was the toSurvive Identity. If the merge fails, this will be null
+      description: When two identities have been merged by the MergeIdentities WebService , return the link ID of the primary Identity
+    MergeIdentitiesWsRequest_2:
+      type: object
+      properties:
+        toSurviveSource:
+          $ref: '#/components/schemas/Source_2'
+          description: Source represents the source/nativeId of the Identity that will survive
+        toRetireSource:
+          $ref: '#/components/schemas/Source_2'
+          description: Source represents the source/nativeId of the Identity that will get retired/merged
+      required:
+      - toRetireSource
+      - toSurviveSource
+      description: Request by a customer to (merge/retire) data from one Source into another
   securitySchemes:
     basicAuth:
       type: http
       scheme: basic
+x-refined-from:
+- verato-organization-openapi.yml
+- verato-person-openapi.yml
