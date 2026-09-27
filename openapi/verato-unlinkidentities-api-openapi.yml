@@ -58,26 +58,6 @@ components:
         source:
           description: Source representing the identity that will be unlinked.
           $ref: '#/components/schemas/Source'
-    Source:
-      type: object
-      description: Tracks an identity to a particular source system and record ID.
-      properties:
-        date:
-          type: string
-          description: The date of the source data in ISO format (yyyy-MM-dd).
-        name:
-          type: string
-          description: Name of the data source. Must be unique across Verato.
-        id:
-          type: string
-          description: ID of an identity within the given data source.
-    ServiceRequest_unlinkIdentities:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/UnlinkIdentitiesWsRequest'
-        trackingId:
-          type: string
     UnlinkIdentitiesWsResponse:
       type: object
       description: 'Response to unlink identities request, providing link IDs and source
@@ -126,6 +106,26 @@ components:
             type: string
         trackingId:
           type: string
+    ServiceRequest_unlinkIdentities:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/UnlinkIdentitiesWsRequest'
+        trackingId:
+          type: string
+    Source:
+      type: object
+      description: Tracks an identity to a particular source system and record ID.
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-MM-dd).
+        name:
+          type: string
+          description: Name of the data source. Must be unique across Verato.
+        id:
+          type: string
+          description: ID of an identity within the given data source.
     UnlinkIdentitiesWsRequest_2:
       type: object
       required:
@@ -139,19 +139,6 @@ components:
           $ref: '#/components/schemas/Source_2'
           description: Represents the Identity that will be unlinked
       description: a request by a customer to unlink ( extract) data from one Identity to create another
-    Source_2:
-      type: object
-      properties:
-        date:
-          type: string
-          description: The date of the source data in ISO format (yyyy-mm-dd).
-        name:
-          type: string
-          description: The name of the data source.  Must be unique across Verato.
-        id:
-          type: string
-          description: The ID of an identity within the given data source.
-      description: Represents the information tracking an identity to a source that contains the identity
     UnlinkIdentitiesWsResponse_2:
       type: object
       properties:
@@ -173,6 +160,19 @@ components:
       - unlinkedSource
       - unlinkedFromSource
       description: When two identities have been linked by the LinkIdentities WebService, unlink them by extracting the previously linked Identity into its own record.
+    Source_2:
+      type: object
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-mm-dd).
+        name:
+          type: string
+          description: The name of the data source.  Must be unique across Verato.
+        id:
+          type: string
+          description: The ID of an identity within the given data source.
+      description: Represents the information tracking an identity to a source that contains the identity
   securitySchemes:
     basicAuth:
       type: http

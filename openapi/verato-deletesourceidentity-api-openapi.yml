@@ -85,6 +85,13 @@ components:
         source:
           description: The source to remove from the database.
           $ref: '#/components/schemas/Source'
+    ServiceRequest_deleteSourceIdentity:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/DeleteSourceIdentityWsRequest'
+        trackingId:
+          type: string
     ServiceResponse_deleteSourceIdentity:
       type: object
       properties:
@@ -106,13 +113,6 @@ components:
           type: array
           items:
             type: string
-        trackingId:
-          type: string
-    ServiceRequest_deleteSourceIdentity:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/DeleteSourceIdentityWsRequest'
         trackingId:
           type: string
     Source_2:

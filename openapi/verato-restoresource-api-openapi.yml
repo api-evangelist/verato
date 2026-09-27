@@ -51,14 +51,6 @@ components:
         linkIdCreated:
           type: string
           description: Entity ID that was created.
-    ServiceRequest_restoreSource:
-      type: object
-      properties:
-        content:
-          type: object
-          description: RestoreSourceWsRequest payload (structure as per internal implementation).
-        trackingId:
-          type: string
     ServiceResponse_restoreSource:
       type: object
       properties:
@@ -80,6 +72,14 @@ components:
           type: array
           items:
             type: string
+        trackingId:
+          type: string
+    ServiceRequest_restoreSource:
+      type: object
+      properties:
+        content:
+          type: object
+          description: RestoreSourceWsRequest payload (structure as per internal implementation).
         trackingId:
           type: string
   securitySchemes:

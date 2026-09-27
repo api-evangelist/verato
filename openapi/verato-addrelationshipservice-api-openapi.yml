@@ -48,6 +48,44 @@ components:
       properties:
         relationship:
           $ref: '#/components/schemas/RelationshipWs'
+    Map_string_Object:
+      type: object
+      additionalProperties: {}
+      description: Generic map of string keys to arbitrary values.
+    ServiceRequest_addRelationshipService:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/AddRelationshipWsRequest'
+        trackingId:
+          type: string
+    NewRelationshipRequest:
+      type: object
+      description: Public fields required to create a new relationship between two identities.
+      properties:
+        id:
+          type: string
+        relationshipVerb:
+          type: string
+        subjectVeratoId:
+          type: string
+        objectVeratoId:
+          type: string
+        domain:
+          type: string
+        status:
+          type: string
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+    AddRelationshipWsRequest:
+      type: object
+      properties:
+        relationship:
+          $ref: '#/components/schemas/NewRelationshipRequest'
     ServiceResponse_addRelationshipService:
       type: object
       properties:
@@ -71,33 +109,6 @@ components:
             type: string
         trackingId:
           type: string
-    AddRelationshipWsRequest:
-      type: object
-      properties:
-        relationship:
-          $ref: '#/components/schemas/NewRelationshipRequest'
-    NewRelationshipRequest:
-      type: object
-      description: Public fields required to create a new relationship between two identities.
-      properties:
-        id:
-          type: string
-        relationshipVerb:
-          type: string
-        subjectVeratoId:
-          type: string
-        objectVeratoId:
-          type: string
-        domain:
-          type: string
-        status:
-          type: string
-        startDate:
-          type: string
-          format: date-time
-        endDate:
-          type: string
-          format: date-time
     RelationshipWs:
       type: object
       description: Relationship between two identities.
@@ -126,17 +137,6 @@ components:
         endDate:
           type: string
           format: date-time
-    Map_string_Object:
-      type: object
-      additionalProperties: {}
-      description: Generic map of string keys to arbitrary values.
-    ServiceRequest_addRelationshipService:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/AddRelationshipWsRequest'
-        trackingId:
-          type: string
     RelationshipWs_2:
       type: object
       properties:

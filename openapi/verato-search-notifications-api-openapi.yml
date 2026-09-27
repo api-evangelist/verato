@@ -66,24 +66,25 @@ components:
           type: string
           format: date-time
           description: End date.
-    NotificationLowerCaseBody:
+    NotificationData:
       type: object
       properties:
-        survivingSource:
+        partitionKey:
           type: string
-        retiredSource:
+        service:
           type: string
-        previousLinkId:
+        customerId:
           type: string
-        survivingNativeId:
+        notificationLowerCaseBody:
+          $ref: '#/components/schemas/NotificationLowerCaseBody'
+        notificationType:
           type: string
-        newLinkId:
+        body:
           type: string
-        source:
+        ts:
           type: string
-        nativeId:
-          type: string
-        retiredNativeId:
+          format: date-time
+        username:
           type: string
     SearchNotificationsWsResponse:
       type: object
@@ -103,6 +104,32 @@ components:
           type: integer
           format: int64
           description: Number of notifications retrieved.
+    ServiceRequest_searchNotifications:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/SearchNotificationsWsRequest'
+        trackingId:
+          type: string
+    NotificationLowerCaseBody:
+      type: object
+      properties:
+        survivingSource:
+          type: string
+        retiredSource:
+          type: string
+        previousLinkId:
+          type: string
+        survivingNativeId:
+          type: string
+        newLinkId:
+          type: string
+        source:
+          type: string
+        nativeId:
+          type: string
+        retiredNativeId:
+          type: string
     ServiceResponse_searchNotifications:
       type: object
       properties:
@@ -124,33 +151,6 @@ components:
           type: array
           items:
             type: string
-        trackingId:
-          type: string
-    NotificationData:
-      type: object
-      properties:
-        partitionKey:
-          type: string
-        service:
-          type: string
-        customerId:
-          type: string
-        notificationLowerCaseBody:
-          $ref: '#/components/schemas/NotificationLowerCaseBody'
-        notificationType:
-          type: string
-        body:
-          type: string
-        ts:
-          type: string
-          format: date-time
-        username:
-          type: string
-    ServiceRequest_searchNotifications:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/SearchNotificationsWsRequest'
         trackingId:
           type: string
     SearchNotificationsWsRequest_2:

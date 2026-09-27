@@ -41,19 +41,6 @@ paths:
       description: Sandbox Organization Link API
 components:
   schemas:
-    Source:
-      type: object
-      description: Tracks an identity to a particular source system and record ID.
-      properties:
-        date:
-          type: string
-          description: The date of the source data in ISO format (yyyy-MM-dd).
-        name:
-          type: string
-          description: Name of the data source. Must be unique across Verato.
-        id:
-          type: string
-          description: ID of an identity within the given data source.
     ServiceResponse_linkIdentities:
       type: object
       properties:
@@ -77,6 +64,13 @@ components:
             type: string
         trackingId:
           type: string
+    ServiceRequest_linkIdentities:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/LinkIdentitiesWsRequest'
+        trackingId:
+          type: string
     LinkIdentitiesWsRequest:
       type: object
       description: 'Represents a request to link data from one identity into another, usually
@@ -94,13 +88,6 @@ components:
         source:
           description: Identity (source name + native ID) that will be linked.
           $ref: '#/components/schemas/Source'
-    ServiceRequest_linkIdentities:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/LinkIdentitiesWsRequest'
-        trackingId:
-          type: string
     LinkIdentitiesWsResponse:
       type: object
       description: 'Response to link identities request, returning the primary link ID and
@@ -115,19 +102,19 @@ components:
         linkToSource:
           description: Original source information for the link-to identity.
           $ref: '#/components/schemas/Source'
-    Source_2:
+    Source:
       type: object
+      description: Tracks an identity to a particular source system and record ID.
       properties:
         date:
           type: string
-          description: The date of the source data in ISO format (yyyy-mm-dd).
+          description: The date of the source data in ISO format (yyyy-MM-dd).
         name:
           type: string
-          description: The name of the data source.  Must be unique across Verato.
+          description: Name of the data source. Must be unique across Verato.
         id:
           type: string
-          description: The ID of an identity within the given data source.
-      description: Represents the information tracking an identity to a source that contains the identity
+          description: ID of an identity within the given data source.
     LinkIdentitiesWsRequest_2:
       type: object
       properties:
@@ -151,6 +138,19 @@ components:
           $ref: '#/components/schemas/Source_2'
           description: The original source information for the Identity that was the linkTo Identity. If the link fails, this will be null.
       description: When two identities have been linked by the LinkIdentities WebService, return the link ID of the primary Identity
+    Source_2:
+      type: object
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-mm-dd).
+        name:
+          type: string
+          description: The name of the data source.  Must be unique across Verato.
+        id:
+          type: string
+          description: The ID of an identity within the given data source.
+      description: Represents the information tracking an identity to a source that contains the identity
   securitySchemes:
     basicAuth:
       type: http

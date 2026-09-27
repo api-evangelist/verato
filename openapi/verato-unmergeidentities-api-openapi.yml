@@ -41,29 +41,6 @@ paths:
       description: Sandbox Organization Link API
 components:
   schemas:
-    ServiceResponse_unmergeIdentities:
-      type: object
-      properties:
-        auditId:
-          type: string
-        success:
-          type: boolean
-        warnings:
-          type: array
-          items:
-            type: string
-        retryableError:
-          type: boolean
-        message:
-          type: string
-        content:
-          $ref: '#/components/schemas/UnmergeIdentitiesWsResponse'
-        errors:
-          type: array
-          items:
-            type: string
-        trackingId:
-          type: string
     ServiceRequest_unmergeIdentities:
       type: object
       properties:
@@ -71,36 +48,6 @@ components:
           $ref: '#/components/schemas/UnmergeIdentitiesWsRequest'
         trackingId:
           type: string
-    Source:
-      type: object
-      description: Tracks an identity to a particular source system and record ID.
-      properties:
-        date:
-          type: string
-          description: The date of the source data in ISO format (yyyy-MM-dd).
-        name:
-          type: string
-          description: Name of the data source. Must be unique across Verato.
-        id:
-          type: string
-          description: ID of an identity within the given data source.
-    UnmergeIdentitiesWsRequest:
-      type: object
-      description: 'Request to unmerge data from the retired section of an identity into a
-
-        new identity.
-
-        '
-      required:
-      - unmergeFromSource
-      - unmergeSource
-      properties:
-        unmergeFromSource:
-          description: Source info targeting the identity from which to unmerge.
-          $ref: '#/components/schemas/Source'
-        unmergeSource:
-          description: Source representing the identity being unmerged.
-          $ref: '#/components/schemas/Source'
     UnmergeIdentitiesWsResponse:
       type: object
       description: 'Response to unmerge identities request, providing link IDs and source
@@ -126,32 +73,59 @@ components:
         unmergedFromId:
           type: string
           description: link ID of the identity unmerged from.
-    Source_2:
+    ServiceResponse_unmergeIdentities:
       type: object
       properties:
-        date:
+        auditId:
           type: string
-          description: The date of the source data in ISO format (yyyy-mm-dd).
-        name:
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
           type: string
-          description: The name of the data source.  Must be unique across Verato.
-        id:
+        content:
+          $ref: '#/components/schemas/UnmergeIdentitiesWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
           type: string
-          description: The ID of an identity within the given data source.
-      description: Represents the information tracking an identity to a source that contains the identity
-    UnmergeIdentitiesWsRequest_2:
+    UnmergeIdentitiesWsRequest:
       type: object
+      description: 'Request to unmerge data from the retired section of an identity into a
+
+        new identity.
+
+        '
       required:
       - unmergeFromSource
       - unmergeSource
       properties:
         unmergeFromSource:
-          $ref: '#/components/schemas/Source_2'
-          description: Return the source info that targets the Identity from which we will unmerge the source Identity
+          description: Source info targeting the identity from which to unmerge.
+          $ref: '#/components/schemas/Source'
         unmergeSource:
-          $ref: '#/components/schemas/Source_2'
-          description: Represents the source that will be unmerged
-      description: a request by a customer to unmerge ( extract) data from retired section of one Identity to create another new Identity
+          description: Source representing the identity being unmerged.
+          $ref: '#/components/schemas/Source'
+    Source:
+      type: object
+      description: Tracks an identity to a particular source system and record ID.
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-MM-dd).
+        name:
+          type: string
+          description: Name of the data source. Must be unique across Verato.
+        id:
+          type: string
+          description: ID of an identity within the given data source.
     UnmergeIdentitiesWsResponse_2:
       type: object
       properties:
@@ -173,6 +147,32 @@ components:
       - unmergedSource
       - unmergedFromSource
       description: "When two identities have been merged by the MergeIdentities WebService , unmerge them by \n extracting the previously merged Identity into its own record."
+    UnmergeIdentitiesWsRequest_2:
+      type: object
+      required:
+      - unmergeFromSource
+      - unmergeSource
+      properties:
+        unmergeFromSource:
+          $ref: '#/components/schemas/Source_2'
+          description: Return the source info that targets the Identity from which we will unmerge the source Identity
+        unmergeSource:
+          $ref: '#/components/schemas/Source_2'
+          description: Represents the source that will be unmerged
+      description: a request by a customer to unmerge ( extract) data from retired section of one Identity to create another new Identity
+    Source_2:
+      type: object
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-mm-dd).
+        name:
+          type: string
+          description: The name of the data source.  Must be unique across Verato.
+        id:
+          type: string
+          description: The ID of an identity within the given data source.
+      description: Represents the information tracking an identity to a source that contains the identity
   securitySchemes:
     basicAuth:
       type: http

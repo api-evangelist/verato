@@ -36,19 +36,39 @@ paths:
       - SoftDeleteSource
 components:
   schemas:
-    Source:
+    SoftDeleteSourceWsResponse:
       type: object
-      description: Tracks an identity to a particular source system and record ID.
+      description: Service response for soft delete.
+      required:
+      - linkIdsModified
+      - linkIdsSoftDeleted
       properties:
-        date:
+        linkIdsSoftDeleted:
+          type: array
+          description: Entity IDs that were fully soft-deleted.
+          items:
+            type: string
+        linkIdsModified:
+          type: array
+          description: Entity IDs that were modified.
+          items:
+            type: string
+    ServiceRequest_softDeleteSource:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/SoftDeleteSourceWsRequest'
+        trackingId:
           type: string
-          description: The date of the source data in ISO format (yyyy-MM-dd).
-        name:
-          type: string
-          description: Name of the data source. Must be unique across Verato.
-        id:
-          type: string
-          description: ID of an identity within the given data source.
+    SoftDeleteSourceWsRequest:
+      type: object
+      description: Request to soft-delete a source.
+      required:
+      - sourceToSoftDelete
+      properties:
+        sourceToSoftDelete:
+          description: Source to soft-delete.
+          $ref: '#/components/schemas/Source'
     ServiceResponse_softDeleteSource:
       type: object
       properties:
@@ -72,39 +92,19 @@ components:
             type: string
         trackingId:
           type: string
-    ServiceRequest_softDeleteSource:
+    Source:
       type: object
+      description: Tracks an identity to a particular source system and record ID.
       properties:
-        content:
-          $ref: '#/components/schemas/SoftDeleteSourceWsRequest'
-        trackingId:
+        date:
           type: string
-    SoftDeleteSourceWsRequest:
-      type: object
-      description: Request to soft-delete a source.
-      required:
-      - sourceToSoftDelete
-      properties:
-        sourceToSoftDelete:
-          description: Source to soft-delete.
-          $ref: '#/components/schemas/Source'
-    SoftDeleteSourceWsResponse:
-      type: object
-      description: Service response for soft delete.
-      required:
-      - linkIdsModified
-      - linkIdsSoftDeleted
-      properties:
-        linkIdsSoftDeleted:
-          type: array
-          description: Entity IDs that were fully soft-deleted.
-          items:
-            type: string
-        linkIdsModified:
-          type: array
-          description: Entity IDs that were modified.
-          items:
-            type: string
+          description: The date of the source data in ISO format (yyyy-MM-dd).
+        name:
+          type: string
+          description: Name of the data source. Must be unique across Verato.
+        id:
+          type: string
+          description: ID of an identity within the given data source.
   securitySchemes:
     basicAuth:
       type: http

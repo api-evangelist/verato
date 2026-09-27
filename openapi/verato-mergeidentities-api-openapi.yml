@@ -41,6 +41,53 @@ paths:
       description: Sandbox Organization Link API
 components:
   schemas:
+    MergeIdentitiesWsRequest:
+      type: object
+      description: 'Request to merge (retire) one source identity into another, creating a
+
+        single surviving identity.
+
+        '
+      required:
+      - toRetireSource
+      - toSurviveSource
+      properties:
+        toSurviveSource:
+          description: Source representing the identity that will survive.
+          $ref: '#/components/schemas/Source'
+        toRetireSource:
+          description: Source representing the identity that will be retired.
+          $ref: '#/components/schemas/Source'
+    ServiceRequest_mergeIdentities:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/MergeIdentitiesWsRequest'
+        trackingId:
+          type: string
+    ServiceResponse_mergeIdentities:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/MergeIdentitiesWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
     Source:
       type: object
       description: Tracks an identity to a particular source system and record ID.
@@ -68,53 +115,19 @@ components:
         toSurviveSource:
           description: Original source information for the surviving identity.
           $ref: '#/components/schemas/Source'
-    ServiceResponse_mergeIdentities:
+    MergeIdentitiesWsRequest_2:
       type: object
       properties:
-        auditId:
-          type: string
-        success:
-          type: boolean
-        warnings:
-          type: array
-          items:
-            type: string
-        retryableError:
-          type: boolean
-        message:
-          type: string
-        content:
-          $ref: '#/components/schemas/MergeIdentitiesWsResponse'
-        errors:
-          type: array
-          items:
-            type: string
-        trackingId:
-          type: string
-    MergeIdentitiesWsRequest:
-      type: object
-      description: 'Request to merge (retire) one source identity into another, creating a
-
-        single surviving identity.
-
-        '
+        toSurviveSource:
+          $ref: '#/components/schemas/Source_2'
+          description: Source represents the source/nativeId of the Identity that will survive
+        toRetireSource:
+          $ref: '#/components/schemas/Source_2'
+          description: Source represents the source/nativeId of the Identity that will get retired/merged
       required:
       - toRetireSource
       - toSurviveSource
-      properties:
-        toSurviveSource:
-          description: Source representing the identity that will survive.
-          $ref: '#/components/schemas/Source'
-        toRetireSource:
-          description: Source representing the identity that will be retired.
-          $ref: '#/components/schemas/Source'
-    ServiceRequest_mergeIdentities:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/MergeIdentitiesWsRequest'
-        trackingId:
-          type: string
+      description: Request by a customer to (merge/retire) data from one Source into another
     Source_2:
       type: object
       properties:
@@ -138,19 +151,6 @@ components:
           $ref: '#/components/schemas/Source_2'
           description: Return the original source information for the Identity that was the toSurvive Identity. If the merge fails, this will be null
       description: When two identities have been merged by the MergeIdentities WebService , return the link ID of the primary Identity
-    MergeIdentitiesWsRequest_2:
-      type: object
-      properties:
-        toSurviveSource:
-          $ref: '#/components/schemas/Source_2'
-          description: Source represents the source/nativeId of the Identity that will survive
-        toRetireSource:
-          $ref: '#/components/schemas/Source_2'
-          description: Source represents the source/nativeId of the Identity that will get retired/merged
-      required:
-      - toRetireSource
-      - toSurviveSource
-      description: Request by a customer to (merge/retire) data from one Source into another
   securitySchemes:
     basicAuth:
       type: http

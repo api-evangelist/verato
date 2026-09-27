@@ -34,6 +34,48 @@ paths:
       - HouseholdQuery
 components:
   schemas:
+    ServiceRequest_householdQuery:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/HouseholdQueryWsRequest'
+        trackingId:
+          type: string
+    HouseholdQueryWsRequest:
+      type: object
+      properties:
+        householdId:
+          type: string
+          description: The householdId to use in the query
+        linkId:
+          type: string
+          description: The link ID to use in the query
+        source:
+          $ref: '#/components/schemas/Source'
+          description: The SourceNative to use in the query
+    ServiceResponse_householdQuery:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/HouseholdQueryWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
     HouseholdQueryWsResponse:
       type: object
       properties:
@@ -68,48 +110,6 @@ components:
           type: string
           description: The ID of an identity within the given data source.
       description: Represents the information tracking an identity to a source that contains the identity
-    ServiceRequest_householdQuery:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/HouseholdQueryWsRequest'
-        trackingId:
-          type: string
-    ServiceResponse_householdQuery:
-      type: object
-      properties:
-        auditId:
-          type: string
-        success:
-          type: boolean
-        warnings:
-          type: array
-          items:
-            type: string
-        retryableError:
-          type: boolean
-        message:
-          type: string
-        content:
-          $ref: '#/components/schemas/HouseholdQueryWsResponse'
-        errors:
-          type: array
-          items:
-            type: string
-        trackingId:
-          type: string
-    HouseholdQueryWsRequest:
-      type: object
-      properties:
-        householdId:
-          type: string
-          description: The householdId to use in the query
-        linkId:
-          type: string
-          description: The link ID to use in the query
-        source:
-          $ref: '#/components/schemas/Source'
-          description: The SourceNative to use in the query
   securitySchemes:
     basicAuth:
       type: http

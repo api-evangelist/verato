@@ -46,6 +46,38 @@ components:
       properties:
         relationship:
           $ref: '#/components/schemas/RelationshipWs'
+    ServiceResponse_searchRelationshipsService:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/UpdateRelationshipWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    UpdateRelationshipWsResponse:
+      type: object
+      properties:
+        relationship:
+          $ref: '#/components/schemas/RelationshipWs'
+    Map_string_Object:
+      type: object
+      additionalProperties: {}
+      description: Generic map of string keys to arbitrary values.
     RelationshipWs:
       type: object
       description: Relationship between two identities.
@@ -74,16 +106,25 @@ components:
         endDate:
           type: string
           format: date-time
-    Map_string_Object:
-      type: object
-      additionalProperties: {}
-      description: Generic map of string keys to arbitrary values.
-    UpdateRelationshipWsResponse:
+    ServiceRequest_searchRelationshipsService:
       type: object
       properties:
-        relationship:
-          $ref: '#/components/schemas/RelationshipWs'
-    ServiceResponse_searchRelationshipsService:
+        content:
+          $ref: '#/components/schemas/UpdateRelationshipWsRequest'
+        trackingId:
+          type: string
+    RelationshipWsFilter:
+      type: object
+      properties:
+        filterBySubjectVeratoId:
+          type: string
+        filterBySubjectOrObjectVeratoId:
+          type: string
+        filterByObjectVeratoId:
+          type: string
+        filterByRelationshipVerb:
+          type: string
+    ServiceResponse_searchRelationshipsService_2:
       type: object
       properties:
         auditId:
@@ -99,18 +140,11 @@ components:
         message:
           type: string
         content:
-          $ref: '#/components/schemas/UpdateRelationshipWsResponse'
+          $ref: '#/components/schemas/SearchRelationshipsWsResponse'
         errors:
           type: array
           items:
             type: string
-        trackingId:
-          type: string
-    ServiceRequest_searchRelationshipsService:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/UpdateRelationshipWsRequest'
         trackingId:
           type: string
     SearchRelationshipsWsRequest:
@@ -118,6 +152,13 @@ components:
       properties:
         relationshipFilter:
           $ref: '#/components/schemas/RelationshipWsFilter'
+    SearchRelationshipsWsResponse:
+      type: object
+      properties:
+        relationships:
+          type: array
+          items:
+            $ref: '#/components/schemas/RelationshipWs_2'
     RelationshipWs_2:
       type: object
       properties:
@@ -146,53 +187,12 @@ components:
           format: date-time
         status:
           type: string
-    SearchRelationshipsWsResponse:
-      type: object
-      properties:
-        relationships:
-          type: array
-          items:
-            $ref: '#/components/schemas/RelationshipWs_2'
-    ServiceResponse_searchRelationshipsService_2:
-      type: object
-      properties:
-        auditId:
-          type: string
-        success:
-          type: boolean
-        warnings:
-          type: array
-          items:
-            type: string
-        retryableError:
-          type: boolean
-        message:
-          type: string
-        content:
-          $ref: '#/components/schemas/SearchRelationshipsWsResponse'
-        errors:
-          type: array
-          items:
-            type: string
-        trackingId:
-          type: string
     ServiceRequest_searchRelationshipsService_2:
       type: object
       properties:
         content:
           $ref: '#/components/schemas/SearchRelationshipsWsRequest'
         trackingId:
-          type: string
-    RelationshipWsFilter:
-      type: object
-      properties:
-        filterBySubjectVeratoId:
-          type: string
-        filterBySubjectOrObjectVeratoId:
-          type: string
-        filterByObjectVeratoId:
-          type: string
-        filterByRelationshipVerb:
           type: string
   securitySchemes:
     basicAuth:
