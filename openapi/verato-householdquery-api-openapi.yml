@@ -34,6 +34,40 @@ paths:
       - HouseholdQuery
 components:
   schemas:
+    Source:
+      type: object
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-mm-dd).
+        name:
+          type: string
+          description: The name of the data source.  Must be unique across Verato.
+        id:
+          type: string
+          description: The ID of an identity within the given data source.
+      description: Represents the information tracking an identity to a source that contains the identity
+    HouseholdQueryWsResponse:
+      type: object
+      properties:
+        householdId:
+          type: string
+          description: The householdId.
+        lastUpdateDate:
+          type: string
+          format: date-time
+        linkIdsInHousehold:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+          description: Current linkIds in the household.
+        createDate:
+          type: string
+          format: date-time
+      required:
+      - householdId
+      - linkIdsInHousehold
     ServiceRequest_householdQuery:
       type: object
       properties:
@@ -41,18 +75,6 @@ components:
           $ref: '#/components/schemas/HouseholdQueryWsRequest'
         trackingId:
           type: string
-    HouseholdQueryWsRequest:
-      type: object
-      properties:
-        householdId:
-          type: string
-          description: The householdId to use in the query
-        linkId:
-          type: string
-          description: The link ID to use in the query
-        source:
-          $ref: '#/components/schemas/Source'
-          description: The SourceNative to use in the query
     ServiceResponse_householdQuery:
       type: object
       properties:
@@ -76,40 +98,18 @@ components:
             type: string
         trackingId:
           type: string
-    HouseholdQueryWsResponse:
+    HouseholdQueryWsRequest:
       type: object
       properties:
         householdId:
           type: string
-          description: The householdId.
-        lastUpdateDate:
+          description: The householdId to use in the query
+        linkId:
           type: string
-          format: date-time
-        linkIdsInHousehold:
-          type: array
-          items:
-            type: string
-          uniqueItems: true
-          description: Current linkIds in the household.
-        createDate:
-          type: string
-          format: date-time
-      required:
-      - householdId
-      - linkIdsInHousehold
-    Source:
-      type: object
-      properties:
-        date:
-          type: string
-          description: The date of the source data in ISO format (yyyy-mm-dd).
-        name:
-          type: string
-          description: The name of the data source.  Must be unique across Verato.
-        id:
-          type: string
-          description: The ID of an identity within the given data source.
-      description: Represents the information tracking an identity to a source that contains the identity
+          description: The link ID to use in the query
+        source:
+          $ref: '#/components/schemas/Source'
+          description: The SourceNative to use in the query
   securitySchemes:
     basicAuth:
       type: http

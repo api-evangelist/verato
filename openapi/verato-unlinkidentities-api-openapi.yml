@@ -83,6 +83,26 @@ components:
         unlinkedFromSource:
           description: Source info for the identity unlinked from.
           $ref: '#/components/schemas/Source'
+    Source:
+      type: object
+      description: Tracks an identity to a particular source system and record ID.
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-MM-dd).
+        name:
+          type: string
+          description: Name of the data source. Must be unique across Verato.
+        id:
+          type: string
+          description: ID of an identity within the given data source.
+    ServiceRequest_unlinkIdentities:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/UnlinkIdentitiesWsRequest'
+        trackingId:
+          type: string
     ServiceResponse_unlinkIdentities:
       type: object
       properties:
@@ -106,26 +126,6 @@ components:
             type: string
         trackingId:
           type: string
-    ServiceRequest_unlinkIdentities:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/UnlinkIdentitiesWsRequest'
-        trackingId:
-          type: string
-    Source:
-      type: object
-      description: Tracks an identity to a particular source system and record ID.
-      properties:
-        date:
-          type: string
-          description: The date of the source data in ISO format (yyyy-MM-dd).
-        name:
-          type: string
-          description: Name of the data source. Must be unique across Verato.
-        id:
-          type: string
-          description: ID of an identity within the given data source.
     UnlinkIdentitiesWsRequest_2:
       type: object
       required:

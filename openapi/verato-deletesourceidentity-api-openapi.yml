@@ -45,19 +45,6 @@ paths:
       description: Sandbox Organization Link API
 components:
   schemas:
-    Source:
-      type: object
-      description: Tracks an identity to a particular source system and record ID.
-      properties:
-        date:
-          type: string
-          description: The date of the source data in ISO format (yyyy-MM-dd).
-        name:
-          type: string
-          description: Name of the data source. Must be unique across Verato.
-        id:
-          type: string
-          description: ID of an identity within the given data source.
     DeleteSourceIdentityWsResponse:
       type: object
       description: 'Service response for a source-based delete. Indicates which linkIds were
@@ -76,22 +63,19 @@ components:
           description: link IDs that were deleted.
           items:
             type: string
-    DeleteSourceIdentityWsRequest:
+    Source:
       type: object
-      description: Deletes all information associated with the provided source.
-      required:
-      - source
+      description: Tracks an identity to a particular source system and record ID.
       properties:
-        source:
-          description: The source to remove from the database.
-          $ref: '#/components/schemas/Source'
-    ServiceRequest_deleteSourceIdentity:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/DeleteSourceIdentityWsRequest'
-        trackingId:
+        date:
           type: string
+          description: The date of the source data in ISO format (yyyy-MM-dd).
+        name:
+          type: string
+          description: Name of the data source. Must be unique across Verato.
+        id:
+          type: string
+          description: ID of an identity within the given data source.
     ServiceResponse_deleteSourceIdentity:
       type: object
       properties:
@@ -115,19 +99,22 @@ components:
             type: string
         trackingId:
           type: string
-    Source_2:
+    ServiceRequest_deleteSourceIdentity:
       type: object
       properties:
-        date:
+        content:
+          $ref: '#/components/schemas/DeleteSourceIdentityWsRequest'
+        trackingId:
           type: string
-          description: The date of the source data in ISO format (yyyy-mm-dd).
-        name:
-          type: string
-          description: The name of the data source.  Must be unique across Verato.
-        id:
-          type: string
-          description: The ID of an identity within the given data source.
-      description: Represents the information tracking an identity to a source that contains the identity
+    DeleteSourceIdentityWsRequest:
+      type: object
+      description: Deletes all information associated with the provided source.
+      required:
+      - source
+      properties:
+        source:
+          description: The source to remove from the database.
+          $ref: '#/components/schemas/Source'
     DeleteSourceIdentityWsResponse_2:
       type: object
       properties:
@@ -142,6 +129,19 @@ components:
             type: string
           description: The list of LINK ids that were deleted
       description: Service response for a Source-based query
+    Source_2:
+      type: object
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-mm-dd).
+        name:
+          type: string
+          description: The name of the data source.  Must be unique across Verato.
+        id:
+          type: string
+          description: The ID of an identity within the given data source.
+      description: Represents the information tracking an identity to a source that contains the identity
     DeleteSourceIdentityWsRequest_2:
       type: object
       properties:

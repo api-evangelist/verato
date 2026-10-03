@@ -36,23 +36,6 @@ paths:
       - SoftDeleteSource
 components:
   schemas:
-    SoftDeleteSourceWsResponse:
-      type: object
-      description: Service response for soft delete.
-      required:
-      - linkIdsModified
-      - linkIdsSoftDeleted
-      properties:
-        linkIdsSoftDeleted:
-          type: array
-          description: Entity IDs that were fully soft-deleted.
-          items:
-            type: string
-        linkIdsModified:
-          type: array
-          description: Entity IDs that were modified.
-          items:
-            type: string
     ServiceRequest_softDeleteSource:
       type: object
       properties:
@@ -60,6 +43,19 @@ components:
           $ref: '#/components/schemas/SoftDeleteSourceWsRequest'
         trackingId:
           type: string
+    Source:
+      type: object
+      description: Tracks an identity to a particular source system and record ID.
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-MM-dd).
+        name:
+          type: string
+          description: Name of the data source. Must be unique across Verato.
+        id:
+          type: string
+          description: ID of an identity within the given data source.
     SoftDeleteSourceWsRequest:
       type: object
       description: Request to soft-delete a source.
@@ -92,19 +88,23 @@ components:
             type: string
         trackingId:
           type: string
-    Source:
+    SoftDeleteSourceWsResponse:
       type: object
-      description: Tracks an identity to a particular source system and record ID.
+      description: Service response for soft delete.
+      required:
+      - linkIdsModified
+      - linkIdsSoftDeleted
       properties:
-        date:
-          type: string
-          description: The date of the source data in ISO format (yyyy-MM-dd).
-        name:
-          type: string
-          description: Name of the data source. Must be unique across Verato.
-        id:
-          type: string
-          description: ID of an identity within the given data source.
+        linkIdsSoftDeleted:
+          type: array
+          description: Entity IDs that were fully soft-deleted.
+          items:
+            type: string
+        linkIdsModified:
+          type: array
+          description: Entity IDs that were modified.
+          items:
+            type: string
   securitySchemes:
     basicAuth:
       type: http

@@ -41,7 +41,7 @@ paths:
       description: Sandbox Organization Link API
 components:
   schemas:
-    DeleteRelationshipWsRequest:
+    DeleteRelationshipWsResponse:
       type: object
       properties:
         id:
@@ -52,11 +52,6 @@ components:
         content:
           $ref: '#/components/schemas/DeleteRelationshipWsRequest'
         trackingId:
-          type: string
-    DeleteRelationshipWsResponse:
-      type: object
-      properties:
-        id:
           type: string
     ServiceResponse_deleteRelationshipService:
       type: object
@@ -80,6 +75,11 @@ components:
           items:
             type: string
         trackingId:
+          type: string
+    DeleteRelationshipWsRequest:
+      type: object
+      properties:
+        id:
           type: string
   securitySchemes:
     basicAuth:

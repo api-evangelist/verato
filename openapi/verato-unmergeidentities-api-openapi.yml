@@ -48,6 +48,36 @@ components:
           $ref: '#/components/schemas/UnmergeIdentitiesWsRequest'
         trackingId:
           type: string
+    UnmergeIdentitiesWsRequest:
+      type: object
+      description: 'Request to unmerge data from the retired section of an identity into a
+
+        new identity.
+
+        '
+      required:
+      - unmergeFromSource
+      - unmergeSource
+      properties:
+        unmergeFromSource:
+          description: Source info targeting the identity from which to unmerge.
+          $ref: '#/components/schemas/Source'
+        unmergeSource:
+          description: Source representing the identity being unmerged.
+          $ref: '#/components/schemas/Source'
+    Source:
+      type: object
+      description: Tracks an identity to a particular source system and record ID.
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-MM-dd).
+        name:
+          type: string
+          description: Name of the data source. Must be unique across Verato.
+        id:
+          type: string
+          description: ID of an identity within the given data source.
     UnmergeIdentitiesWsResponse:
       type: object
       description: 'Response to unmerge identities request, providing link IDs and source
@@ -96,57 +126,6 @@ components:
             type: string
         trackingId:
           type: string
-    UnmergeIdentitiesWsRequest:
-      type: object
-      description: 'Request to unmerge data from the retired section of an identity into a
-
-        new identity.
-
-        '
-      required:
-      - unmergeFromSource
-      - unmergeSource
-      properties:
-        unmergeFromSource:
-          description: Source info targeting the identity from which to unmerge.
-          $ref: '#/components/schemas/Source'
-        unmergeSource:
-          description: Source representing the identity being unmerged.
-          $ref: '#/components/schemas/Source'
-    Source:
-      type: object
-      description: Tracks an identity to a particular source system and record ID.
-      properties:
-        date:
-          type: string
-          description: The date of the source data in ISO format (yyyy-MM-dd).
-        name:
-          type: string
-          description: Name of the data source. Must be unique across Verato.
-        id:
-          type: string
-          description: ID of an identity within the given data source.
-    UnmergeIdentitiesWsResponse_2:
-      type: object
-      properties:
-        unmergedSource:
-          $ref: '#/components/schemas/Source_2'
-          description: The source information of identity that was unmerged
-        unmergedFromSource:
-          $ref: '#/components/schemas/Source_2'
-          description: The source information for unmerged from Identity
-        unmergedId:
-          type: string
-          description: Link ID of the Identity that was unmerged
-        unmergedFromId:
-          type: string
-          description: Link ID of Identity unmerged from.
-      required:
-      - unmergedId
-      - unmergedFromId
-      - unmergedSource
-      - unmergedFromSource
-      description: "When two identities have been merged by the MergeIdentities WebService , unmerge them by \n extracting the previously merged Identity into its own record."
     UnmergeIdentitiesWsRequest_2:
       type: object
       required:
@@ -173,6 +152,27 @@ components:
           type: string
           description: The ID of an identity within the given data source.
       description: Represents the information tracking an identity to a source that contains the identity
+    UnmergeIdentitiesWsResponse_2:
+      type: object
+      properties:
+        unmergedSource:
+          $ref: '#/components/schemas/Source_2'
+          description: The source information of identity that was unmerged
+        unmergedFromSource:
+          $ref: '#/components/schemas/Source_2'
+          description: The source information for unmerged from Identity
+        unmergedId:
+          type: string
+          description: Link ID of the Identity that was unmerged
+        unmergedFromId:
+          type: string
+          description: Link ID of Identity unmerged from.
+      required:
+      - unmergedId
+      - unmergedFromId
+      - unmergedSource
+      - unmergedFromSource
+      description: "When two identities have been merged by the MergeIdentities WebService , unmerge them by \n extracting the previously merged Identity into its own record."
   securitySchemes:
     basicAuth:
       type: http

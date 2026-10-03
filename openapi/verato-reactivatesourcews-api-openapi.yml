@@ -34,13 +34,6 @@ paths:
       - ReactivateSourceWs
 components:
   schemas:
-    ServiceRequest_reactivateSourceWs:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/ReactivateSourceWsRequest'
-        trackingId:
-          type: string
     Source:
       type: object
       properties:
@@ -54,6 +47,13 @@ components:
           type: string
           description: The ID of an identity within the given data source.
       description: Represents the information tracking an identity to a source that contains the identity
+    ServiceRequest_reactivateSourceWs:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/ReactivateSourceWsRequest'
+        trackingId:
+          type: string
     ServiceResponse_reactivateSourceWs:
       type: object
       properties:
@@ -77,14 +77,6 @@ components:
             type: string
         trackingId:
           type: string
-    ReactivateSourceWsRequest:
-      type: object
-      required:
-      - sourceToReactivate
-      properties:
-        sourceToReactivate:
-          $ref: '#/components/schemas/Source'
-          description: The source to reactivate.
     ReactivateSourceWsResponse:
       type: object
       properties:
@@ -99,6 +91,14 @@ components:
       required:
       - linkIdsModified
       description: Service response for a ReactivateSourceWsResponse
+    ReactivateSourceWsRequest:
+      type: object
+      required:
+      - sourceToReactivate
+      properties:
+        sourceToReactivate:
+          $ref: '#/components/schemas/Source'
+          description: The source to reactivate.
   securitySchemes:
     basicAuth:
       type: http

@@ -41,23 +41,6 @@ paths:
       description: Sandbox Organization Link API
 components:
   schemas:
-    MergeIdentitiesWsRequest:
-      type: object
-      description: 'Request to merge (retire) one source identity into another, creating a
-
-        single surviving identity.
-
-        '
-      required:
-      - toRetireSource
-      - toSurviveSource
-      properties:
-        toSurviveSource:
-          description: Source representing the identity that will survive.
-          $ref: '#/components/schemas/Source'
-        toRetireSource:
-          description: Source representing the identity that will be retired.
-          $ref: '#/components/schemas/Source'
     ServiceRequest_mergeIdentities:
       type: object
       properties:
@@ -65,6 +48,19 @@ components:
           $ref: '#/components/schemas/MergeIdentitiesWsRequest'
         trackingId:
           type: string
+    Source:
+      type: object
+      description: Tracks an identity to a particular source system and record ID.
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-MM-dd).
+        name:
+          type: string
+          description: Name of the data source. Must be unique across Verato.
+        id:
+          type: string
+          description: ID of an identity within the given data source.
     ServiceResponse_mergeIdentities:
       type: object
       properties:
@@ -88,19 +84,23 @@ components:
             type: string
         trackingId:
           type: string
-    Source:
+    MergeIdentitiesWsRequest:
       type: object
-      description: Tracks an identity to a particular source system and record ID.
+      description: 'Request to merge (retire) one source identity into another, creating a
+
+        single surviving identity.
+
+        '
+      required:
+      - toRetireSource
+      - toSurviveSource
       properties:
-        date:
-          type: string
-          description: The date of the source data in ISO format (yyyy-MM-dd).
-        name:
-          type: string
-          description: Name of the data source. Must be unique across Verato.
-        id:
-          type: string
-          description: ID of an identity within the given data source.
+        toSurviveSource:
+          description: Source representing the identity that will survive.
+          $ref: '#/components/schemas/Source'
+        toRetireSource:
+          description: Source representing the identity that will be retired.
+          $ref: '#/components/schemas/Source'
     MergeIdentitiesWsResponse:
       type: object
       description: 'Response to a merge identities request, returning the surviving link ID
@@ -115,19 +115,6 @@ components:
         toSurviveSource:
           description: Original source information for the surviving identity.
           $ref: '#/components/schemas/Source'
-    MergeIdentitiesWsRequest_2:
-      type: object
-      properties:
-        toSurviveSource:
-          $ref: '#/components/schemas/Source_2'
-          description: Source represents the source/nativeId of the Identity that will survive
-        toRetireSource:
-          $ref: '#/components/schemas/Source_2'
-          description: Source represents the source/nativeId of the Identity that will get retired/merged
-      required:
-      - toRetireSource
-      - toSurviveSource
-      description: Request by a customer to (merge/retire) data from one Source into another
     Source_2:
       type: object
       properties:
@@ -141,6 +128,19 @@ components:
           type: string
           description: The ID of an identity within the given data source.
       description: Represents the information tracking an identity to a source that contains the identity
+    MergeIdentitiesWsRequest_2:
+      type: object
+      properties:
+        toSurviveSource:
+          $ref: '#/components/schemas/Source_2'
+          description: Source represents the source/nativeId of the Identity that will survive
+        toRetireSource:
+          $ref: '#/components/schemas/Source_2'
+          description: Source represents the source/nativeId of the Identity that will get retired/merged
+      required:
+      - toRetireSource
+      - toSurviveSource
+      description: Request by a customer to (merge/retire) data from one Source into another
     MergeIdentitiesWsResponse_2:
       type: object
       properties:

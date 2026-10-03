@@ -66,25 +66,12 @@ components:
           type: string
           format: date-time
           description: End date.
-    NotificationData:
+    ServiceRequest_searchNotifications:
       type: object
       properties:
-        partitionKey:
-          type: string
-        service:
-          type: string
-        customerId:
-          type: string
-        notificationLowerCaseBody:
-          $ref: '#/components/schemas/NotificationLowerCaseBody'
-        notificationType:
-          type: string
-        body:
-          type: string
-        ts:
-          type: string
-          format: date-time
-        username:
+        content:
+          $ref: '#/components/schemas/SearchNotificationsWsRequest'
+        trackingId:
           type: string
     SearchNotificationsWsResponse:
       type: object
@@ -104,31 +91,25 @@ components:
           type: integer
           format: int64
           description: Number of notifications retrieved.
-    ServiceRequest_searchNotifications:
+    NotificationData:
       type: object
       properties:
-        content:
-          $ref: '#/components/schemas/SearchNotificationsWsRequest'
-        trackingId:
+        partitionKey:
           type: string
-    NotificationLowerCaseBody:
-      type: object
-      properties:
-        survivingSource:
+        service:
           type: string
-        retiredSource:
+        customerId:
           type: string
-        previousLinkId:
+        notificationLowerCaseBody:
+          $ref: '#/components/schemas/NotificationLowerCaseBody'
+        notificationType:
           type: string
-        survivingNativeId:
+        body:
           type: string
-        newLinkId:
+        ts:
           type: string
-        source:
-          type: string
-        nativeId:
-          type: string
-        retiredNativeId:
+          format: date-time
+        username:
           type: string
     ServiceResponse_searchNotifications:
       type: object
@@ -152,6 +133,25 @@ components:
           items:
             type: string
         trackingId:
+          type: string
+    NotificationLowerCaseBody:
+      type: object
+      properties:
+        survivingSource:
+          type: string
+        retiredSource:
+          type: string
+        previousLinkId:
+          type: string
+        survivingNativeId:
+          type: string
+        newLinkId:
+          type: string
+        source:
+          type: string
+        nativeId:
+          type: string
+        retiredNativeId:
           type: string
     SearchNotificationsWsRequest_2:
       type: object

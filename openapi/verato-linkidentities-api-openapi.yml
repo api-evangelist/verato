@@ -41,53 +41,6 @@ paths:
       description: Sandbox Organization Link API
 components:
   schemas:
-    ServiceResponse_linkIdentities:
-      type: object
-      properties:
-        auditId:
-          type: string
-        success:
-          type: boolean
-        warnings:
-          type: array
-          items:
-            type: string
-        retryableError:
-          type: boolean
-        message:
-          type: string
-        content:
-          $ref: '#/components/schemas/LinkIdentitiesWsResponse'
-        errors:
-          type: array
-          items:
-            type: string
-        trackingId:
-          type: string
-    ServiceRequest_linkIdentities:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/LinkIdentitiesWsRequest'
-        trackingId:
-          type: string
-    LinkIdentitiesWsRequest:
-      type: object
-      description: 'Represents a request to link data from one identity into another, usually
-
-        across sources.
-
-        '
-      required:
-      - source
-      - linkToSource
-      properties:
-        linkToSource:
-          description: Target identity (source name + native ID) to link to.
-          $ref: '#/components/schemas/Source'
-        source:
-          description: Identity (source name + native ID) that will be linked.
-          $ref: '#/components/schemas/Source'
     LinkIdentitiesWsResponse:
       type: object
       description: 'Response to link identities request, returning the primary link ID and
@@ -115,19 +68,53 @@ components:
         id:
           type: string
           description: ID of an identity within the given data source.
-    LinkIdentitiesWsRequest_2:
+    ServiceResponse_linkIdentities:
       type: object
       properties:
-        linkToSource:
-          $ref: '#/components/schemas/Source_2'
-          description: The source name + native ID of the target Identity that will be linked to the Identity identified by the source.
-        source:
-          $ref: '#/components/schemas/Source_2'
-          description: The source name + native ID of the Identity that will be linked to the Identity identified by the link-to source.
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/LinkIdentitiesWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    LinkIdentitiesWsRequest:
+      type: object
+      description: 'Represents a request to link data from one identity into another, usually
+
+        across sources.
+
+        '
       required:
       - source
       - linkToSource
-      description: Represents a request by a customer to link data from one Identity into another. Generally, this means linking two source name + native ID combinations from different sources.
+      properties:
+        linkToSource:
+          description: Target identity (source name + native ID) to link to.
+          $ref: '#/components/schemas/Source'
+        source:
+          description: Identity (source name + native ID) that will be linked.
+          $ref: '#/components/schemas/Source'
+    ServiceRequest_linkIdentities:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/LinkIdentitiesWsRequest'
+        trackingId:
+          type: string
     LinkIdentitiesWsResponse_2:
       type: object
       properties:
@@ -151,6 +138,19 @@ components:
           type: string
           description: The ID of an identity within the given data source.
       description: Represents the information tracking an identity to a source that contains the identity
+    LinkIdentitiesWsRequest_2:
+      type: object
+      properties:
+        linkToSource:
+          $ref: '#/components/schemas/Source_2'
+          description: The source name + native ID of the target Identity that will be linked to the Identity identified by the source.
+        source:
+          $ref: '#/components/schemas/Source_2'
+          description: The source name + native ID of the Identity that will be linked to the Identity identified by the link-to source.
+      required:
+      - source
+      - linkToSource
+      description: Represents a request by a customer to link data from one Identity into another. Generally, this means linking two source name + native ID combinations from different sources.
   securitySchemes:
     basicAuth:
       type: http
