@@ -34,19 +34,18 @@ paths:
       - HouseholdQuery
 components:
   schemas:
-    Source:
+    HouseholdQueryWsRequest:
       type: object
       properties:
-        date:
+        householdId:
           type: string
-          description: The date of the source data in ISO format (yyyy-mm-dd).
-        name:
+          description: The householdId to use in the query
+        linkId:
           type: string
-          description: The name of the data source.  Must be unique across Verato.
-        id:
-          type: string
-          description: The ID of an identity within the given data source.
-      description: Represents the information tracking an identity to a source that contains the identity
+          description: The link ID to use in the query
+        source:
+          $ref: '#/components/schemas/Source'
+          description: The SourceNative to use in the query
     HouseholdQueryWsResponse:
       type: object
       properties:
@@ -98,18 +97,19 @@ components:
             type: string
         trackingId:
           type: string
-    HouseholdQueryWsRequest:
+    Source:
       type: object
       properties:
-        householdId:
+        date:
           type: string
-          description: The householdId to use in the query
-        linkId:
+          description: The date of the source data in ISO format (yyyy-mm-dd).
+        name:
           type: string
-          description: The link ID to use in the query
-        source:
-          $ref: '#/components/schemas/Source'
-          description: The SourceNative to use in the query
+          description: The name of the data source.  Must be unique across Verato.
+        id:
+          type: string
+          description: The ID of an identity within the given data source.
+      description: Represents the information tracking an identity to a source that contains the identity
   securitySchemes:
     basicAuth:
       type: http

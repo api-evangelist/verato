@@ -43,11 +43,13 @@ paths:
       description: Sandbox Organization Link API
 components:
   schemas:
-    AddRelationshipWsRequest:
+    ServiceRequest_addRelationshipService:
       type: object
       properties:
-        relationship:
-          $ref: '#/components/schemas/NewRelationshipRequest'
+        content:
+          $ref: '#/components/schemas/AddRelationshipWsRequest'
+        trackingId:
+          type: string
     ServiceResponse_addRelationshipService:
       type: object
       properties:
@@ -75,40 +77,11 @@ components:
       type: object
       additionalProperties: {}
       description: Generic map of string keys to arbitrary values.
-    AddRelationshipWsResponse:
+    AddRelationshipWsRequest:
       type: object
       properties:
         relationship:
-          $ref: '#/components/schemas/RelationshipWs'
-    NewRelationshipRequest:
-      type: object
-      description: Public fields required to create a new relationship between two identities.
-      properties:
-        id:
-          type: string
-        relationshipVerb:
-          type: string
-        subjectVeratoId:
-          type: string
-        objectVeratoId:
-          type: string
-        domain:
-          type: string
-        status:
-          type: string
-        startDate:
-          type: string
-          format: date-time
-        endDate:
-          type: string
-          format: date-time
-    ServiceRequest_addRelationshipService:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/AddRelationshipWsRequest'
-        trackingId:
-          type: string
+          $ref: '#/components/schemas/NewRelationshipRequest'
     RelationshipWs:
       type: object
       description: Relationship between two identities.
@@ -137,6 +110,33 @@ components:
         endDate:
           type: string
           format: date-time
+    NewRelationshipRequest:
+      type: object
+      description: Public fields required to create a new relationship between two identities.
+      properties:
+        id:
+          type: string
+        relationshipVerb:
+          type: string
+        subjectVeratoId:
+          type: string
+        objectVeratoId:
+          type: string
+        domain:
+          type: string
+        status:
+          type: string
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+    AddRelationshipWsResponse:
+      type: object
+      properties:
+        relationship:
+          $ref: '#/components/schemas/RelationshipWs'
     RelationshipWs_2:
       type: object
       properties:

@@ -61,36 +61,6 @@ paths:
       - CreateDataSource
 components:
   schemas:
-    ServiceRequest_createDataSource:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/CreateDataSourcesWsRequest'
-        trackingId:
-          type: string
-    ServiceResponse_createDataSource:
-      type: object
-      properties:
-        auditId:
-          type: string
-        success:
-          type: boolean
-        warnings:
-          type: array
-          items:
-            type: string
-        retryableError:
-          type: boolean
-        message:
-          type: string
-        content:
-          $ref: '#/components/schemas/CreateDataSourcesWsResponse'
-        errors:
-          type: array
-          items:
-            type: string
-        trackingId:
-          type: string
     CreateDataSourcesWsResponse:
       type: object
       properties:
@@ -102,6 +72,13 @@ components:
       required:
       - datasourceCreationResponses
       description: Create datasource service response
+    ServiceRequest_createDataSource:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/CreateDataSourcesWsRequest'
+        trackingId:
+          type: string
     DatasourceCreationResponse:
       type: object
       properties:
@@ -131,6 +108,29 @@ components:
       required:
       - sources
       description: Request to create one or more new data sources. Up to 10 sources may be submitted per call.
+    ServiceResponse_createDataSource:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/CreateDataSourcesWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
   securitySchemes:
     basicAuth:
       type: http

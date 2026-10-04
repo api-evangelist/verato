@@ -41,6 +41,27 @@ paths:
       description: Sandbox Organization Link API
 components:
   schemas:
+    UpdateRelationshipWsRequest:
+      type: object
+      properties:
+        relationship:
+          $ref: '#/components/schemas/RelationshipWs'
+    ServiceRequest_searchRelationshipsService:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/UpdateRelationshipWsRequest'
+        trackingId:
+          type: string
+    Map_string_Object:
+      type: object
+      additionalProperties: {}
+      description: Generic map of string keys to arbitrary values.
+    UpdateRelationshipWsResponse:
+      type: object
+      properties:
+        relationship:
+          $ref: '#/components/schemas/RelationshipWs'
     ServiceResponse_searchRelationshipsService:
       type: object
       properties:
@@ -64,27 +85,6 @@ components:
             type: string
         trackingId:
           type: string
-    Map_string_Object:
-      type: object
-      additionalProperties: {}
-      description: Generic map of string keys to arbitrary values.
-    ServiceRequest_searchRelationshipsService:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/UpdateRelationshipWsRequest'
-        trackingId:
-          type: string
-    UpdateRelationshipWsRequest:
-      type: object
-      properties:
-        relationship:
-          $ref: '#/components/schemas/RelationshipWs'
-    UpdateRelationshipWsResponse:
-      type: object
-      properties:
-        relationship:
-          $ref: '#/components/schemas/RelationshipWs'
     RelationshipWs:
       type: object
       description: Relationship between two identities.
@@ -113,6 +113,36 @@ components:
         endDate:
           type: string
           format: date-time
+    RelationshipWsFilter:
+      type: object
+      properties:
+        filterBySubjectVeratoId:
+          type: string
+        filterBySubjectOrObjectVeratoId:
+          type: string
+        filterByObjectVeratoId:
+          type: string
+        filterByRelationshipVerb:
+          type: string
+    ServiceRequest_searchRelationshipsService_2:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/SearchRelationshipsWsRequest'
+        trackingId:
+          type: string
+    SearchRelationshipsWsRequest:
+      type: object
+      properties:
+        relationshipFilter:
+          $ref: '#/components/schemas/RelationshipWsFilter'
+    SearchRelationshipsWsResponse:
+      type: object
+      properties:
+        relationships:
+          type: array
+          items:
+            $ref: '#/components/schemas/RelationshipWs_2'
     ServiceResponse_searchRelationshipsService_2:
       type: object
       properties:
@@ -135,36 +165,6 @@ components:
           items:
             type: string
         trackingId:
-          type: string
-    ServiceRequest_searchRelationshipsService_2:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/SearchRelationshipsWsRequest'
-        trackingId:
-          type: string
-    SearchRelationshipsWsRequest:
-      type: object
-      properties:
-        relationshipFilter:
-          $ref: '#/components/schemas/RelationshipWsFilter'
-    SearchRelationshipsWsResponse:
-      type: object
-      properties:
-        relationships:
-          type: array
-          items:
-            $ref: '#/components/schemas/RelationshipWs_2'
-    RelationshipWsFilter:
-      type: object
-      properties:
-        filterBySubjectVeratoId:
-          type: string
-        filterBySubjectOrObjectVeratoId:
-          type: string
-        filterByObjectVeratoId:
-          type: string
-        filterByRelationshipVerb:
           type: string
     RelationshipWs_2:
       type: object

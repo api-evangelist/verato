@@ -36,29 +36,6 @@ paths:
       - RestoreSource
 components:
   schemas:
-    ServiceResponse_restoreSource:
-      type: object
-      properties:
-        auditId:
-          type: string
-        success:
-          type: boolean
-        warnings:
-          type: array
-          items:
-            type: string
-        retryableError:
-          type: boolean
-        message:
-          type: string
-        content:
-          $ref: '#/components/schemas/RestoreSourceWsResponse'
-        errors:
-          type: array
-          items:
-            type: string
-        trackingId:
-          type: string
     RestoreSourceWsResponse:
       type: object
       description: Service response for restoring a source.
@@ -80,6 +57,29 @@ components:
         content:
           type: object
           description: RestoreSourceWsRequest payload (structure as per internal implementation).
+        trackingId:
+          type: string
+    ServiceResponse_restoreSource:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/RestoreSourceWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
         trackingId:
           type: string
   securitySchemes:

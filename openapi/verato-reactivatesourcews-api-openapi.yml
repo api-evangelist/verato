@@ -34,19 +34,20 @@ paths:
       - ReactivateSourceWs
 components:
   schemas:
-    Source:
+    ReactivateSourceWsResponse:
       type: object
       properties:
-        date:
+        linkIdsModified:
+          type: array
+          items:
+            type: string
+          description: Entity Ids which got modified
+        linkIdCreated:
           type: string
-          description: The date of the source data in ISO format (yyyy-mm-dd).
-        name:
-          type: string
-          description: The name of the data source.  Must be unique across Verato.
-        id:
-          type: string
-          description: The ID of an identity within the given data source.
-      description: Represents the information tracking an identity to a source that contains the identity
+          description: Entity Id which got created
+      required:
+      - linkIdsModified
+      description: Service response for a ReactivateSourceWsResponse
     ServiceRequest_reactivateSourceWs:
       type: object
       properties:
@@ -77,20 +78,6 @@ components:
             type: string
         trackingId:
           type: string
-    ReactivateSourceWsResponse:
-      type: object
-      properties:
-        linkIdsModified:
-          type: array
-          items:
-            type: string
-          description: Entity Ids which got modified
-        linkIdCreated:
-          type: string
-          description: Entity Id which got created
-      required:
-      - linkIdsModified
-      description: Service response for a ReactivateSourceWsResponse
     ReactivateSourceWsRequest:
       type: object
       required:
@@ -99,6 +86,19 @@ components:
         sourceToReactivate:
           $ref: '#/components/schemas/Source'
           description: The source to reactivate.
+    Source:
+      type: object
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-mm-dd).
+        name:
+          type: string
+          description: The name of the data source.  Must be unique across Verato.
+        id:
+          type: string
+          description: The ID of an identity within the given data source.
+      description: Represents the information tracking an identity to a source that contains the identity
   securitySchemes:
     basicAuth:
       type: http

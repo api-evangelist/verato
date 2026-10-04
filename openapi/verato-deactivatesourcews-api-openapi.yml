@@ -34,51 +34,6 @@ paths:
       - DeactivateSourceWs
 components:
   schemas:
-    DeactivateSourceWsResponse:
-      type: object
-      properties:
-        linkIdsModified:
-          type: array
-          items:
-            type: string
-          description: Entity Ids which got modified
-        linkIdsDeactivated:
-          type: array
-          items:
-            type: string
-          description: Entity Ids which got fully deactivated
-      required:
-      - linkIdsModified
-      - linkIdsDeactivated
-      description: Service response for a DeactivateSourceWsResponse
-    ServiceRequest_deactivateSourceWs:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/DeactivateSourceWsRequest'
-        trackingId:
-          type: string
-    Source:
-      type: object
-      properties:
-        date:
-          type: string
-          description: The date of the source data in ISO format (yyyy-mm-dd).
-        name:
-          type: string
-          description: The name of the data source.  Must be unique across Verato.
-        id:
-          type: string
-          description: The ID of an identity within the given data source.
-      description: Represents the information tracking an identity to a source that contains the identity
-    DeactivateSourceWsRequest:
-      type: object
-      required:
-      - sourceToDeactivate
-      properties:
-        sourceToDeactivate:
-          $ref: '#/components/schemas/Source'
-          description: The source to deactivate.
     ServiceResponse_deactivateSourceWs:
       type: object
       properties:
@@ -102,6 +57,51 @@ components:
             type: string
         trackingId:
           type: string
+    ServiceRequest_deactivateSourceWs:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/DeactivateSourceWsRequest'
+        trackingId:
+          type: string
+    DeactivateSourceWsResponse:
+      type: object
+      properties:
+        linkIdsModified:
+          type: array
+          items:
+            type: string
+          description: Entity Ids which got modified
+        linkIdsDeactivated:
+          type: array
+          items:
+            type: string
+          description: Entity Ids which got fully deactivated
+      required:
+      - linkIdsModified
+      - linkIdsDeactivated
+      description: Service response for a DeactivateSourceWsResponse
+    DeactivateSourceWsRequest:
+      type: object
+      required:
+      - sourceToDeactivate
+      properties:
+        sourceToDeactivate:
+          $ref: '#/components/schemas/Source'
+          description: The source to deactivate.
+    Source:
+      type: object
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-mm-dd).
+        name:
+          type: string
+          description: The name of the data source.  Must be unique across Verato.
+        id:
+          type: string
+          description: The ID of an identity within the given data source.
+      description: Represents the information tracking an identity to a source that contains the identity
   securitySchemes:
     basicAuth:
       type: http
