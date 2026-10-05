@@ -1,0 +1,12 @@
+{
+ "url": "https://developer.verato.com/_bundle/apis/person.openapi.json?download",
+ "requested_url": "https://developer.verato.com/_bundle/apis/person.openapi.json?download",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 188111,
+ "sha256": "c78f5cdce32ea39daebf9f5d9f085fb6b98bfda01d8c0efefd76bcc858bcf80e",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
