@@ -72,42 +72,6 @@ components:
       required:
       - datasourceCreationResponses
       description: Create datasource service response
-    ServiceRequest_createDataSource:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/CreateDataSourcesWsRequest'
-        trackingId:
-          type: string
-    DatasourceCreationResponse:
-      type: object
-      properties:
-        datasource:
-          type: string
-          description: The data source code from the request.
-        error:
-          type:
-          - string
-          - 'null'
-          description: Error message if this source failed to be created; null on success.
-        status:
-          type: string
-          description: Result for this data source. Indicates whether the source was created successfully or why it failed (e.g. already exists, reserved source code).
-    CreateDataSourcesWsRequest:
-      type: object
-      properties:
-        sources:
-          type: array
-          items:
-            type: string
-            maxLength: 255
-            description: 'A data source code. Must not contain spaces or the characters " | : ''. Case-sensitive; use a consistent capitalization standard to avoid duplicates.'
-          minItems: 1
-          maxItems: 10
-          description: List of data source codes to create. Maximum 10 per request.
-      required:
-      - sources
-      description: Request to create one or more new data sources. Up to 10 sources may be submitted per call.
     ServiceResponse_createDataSource:
       type: object
       properties:
@@ -131,6 +95,42 @@ components:
             type: string
         trackingId:
           type: string
+    DatasourceCreationResponse:
+      type: object
+      properties:
+        datasource:
+          type: string
+          description: The data source code from the request.
+        error:
+          type:
+          - string
+          - 'null'
+          description: Error message if this source failed to be created; null on success.
+        status:
+          type: string
+          description: Result for this data source. Indicates whether the source was created successfully or why it failed (e.g. already exists, reserved source code).
+    ServiceRequest_createDataSource:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/CreateDataSourcesWsRequest'
+        trackingId:
+          type: string
+    CreateDataSourcesWsRequest:
+      type: object
+      properties:
+        sources:
+          type: array
+          items:
+            type: string
+            maxLength: 255
+            description: 'A data source code. Must not contain spaces or the characters " | : ''. Case-sensitive; use a consistent capitalization standard to avoid duplicates.'
+          minItems: 1
+          maxItems: 10
+          description: List of data source codes to create. Maximum 10 per request.
+      required:
+      - sources
+      description: Request to create one or more new data sources. Up to 10 sources may be submitted per call.
   securitySchemes:
     basicAuth:
       type: http

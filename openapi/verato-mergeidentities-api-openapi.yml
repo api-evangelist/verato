@@ -41,6 +41,36 @@ paths:
       description: Sandbox Organization Link API
 components:
   schemas:
+    MergeIdentitiesWsRequest:
+      type: object
+      description: 'Request to merge (retire) one source identity into another, creating a
+
+        single surviving identity.
+
+        '
+      required:
+      - toRetireSource
+      - toSurviveSource
+      properties:
+        toSurviveSource:
+          description: Source representing the identity that will survive.
+          $ref: '#/components/schemas/Source'
+        toRetireSource:
+          description: Source representing the identity that will be retired.
+          $ref: '#/components/schemas/Source'
+    Source:
+      type: object
+      description: Tracks an identity to a particular source system and record ID.
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-MM-dd).
+        name:
+          type: string
+          description: Name of the data source. Must be unique across Verato.
+        id:
+          type: string
+          description: ID of an identity within the given data source.
     MergeIdentitiesWsResponse:
       type: object
       description: 'Response to a merge identities request, returning the surviving link ID
@@ -78,23 +108,6 @@ components:
             type: string
         trackingId:
           type: string
-    MergeIdentitiesWsRequest:
-      type: object
-      description: 'Request to merge (retire) one source identity into another, creating a
-
-        single surviving identity.
-
-        '
-      required:
-      - toRetireSource
-      - toSurviveSource
-      properties:
-        toSurviveSource:
-          description: Source representing the identity that will survive.
-          $ref: '#/components/schemas/Source'
-        toRetireSource:
-          description: Source representing the identity that will be retired.
-          $ref: '#/components/schemas/Source'
     ServiceRequest_mergeIdentities:
       type: object
       properties:
@@ -102,29 +115,6 @@ components:
           $ref: '#/components/schemas/MergeIdentitiesWsRequest'
         trackingId:
           type: string
-    Source:
-      type: object
-      description: Tracks an identity to a particular source system and record ID.
-      properties:
-        date:
-          type: string
-          description: The date of the source data in ISO format (yyyy-MM-dd).
-        name:
-          type: string
-          description: Name of the data source. Must be unique across Verato.
-        id:
-          type: string
-          description: ID of an identity within the given data source.
-    MergeIdentitiesWsResponse_2:
-      type: object
-      properties:
-        linkId:
-          type: string
-          description: Return the link ID of the Identity that received merged/retired data during a MergeIdentity request
-        toSurviveSource:
-          $ref: '#/components/schemas/Source_2'
-          description: Return the original source information for the Identity that was the toSurvive Identity. If the merge fails, this will be null
-      description: When two identities have been merged by the MergeIdentities WebService , return the link ID of the primary Identity
     MergeIdentitiesWsRequest_2:
       type: object
       properties:
@@ -151,6 +141,16 @@ components:
           type: string
           description: The ID of an identity within the given data source.
       description: Represents the information tracking an identity to a source that contains the identity
+    MergeIdentitiesWsResponse_2:
+      type: object
+      properties:
+        linkId:
+          type: string
+          description: Return the link ID of the Identity that received merged/retired data during a MergeIdentity request
+        toSurviveSource:
+          $ref: '#/components/schemas/Source_2'
+          description: Return the original source information for the Identity that was the toSurvive Identity. If the merge fails, this will be null
+      description: When two identities have been merged by the MergeIdentities WebService , return the link ID of the primary Identity
   securitySchemes:
     basicAuth:
       type: http

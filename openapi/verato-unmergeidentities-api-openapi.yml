@@ -41,11 +41,27 @@ paths:
       description: Sandbox Organization Link API
 components:
   schemas:
-    ServiceRequest_unmergeIdentities:
+    ServiceResponse_unmergeIdentities:
       type: object
       properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
         content:
-          $ref: '#/components/schemas/UnmergeIdentitiesWsRequest'
+          $ref: '#/components/schemas/UnmergeIdentitiesWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
         trackingId:
           type: string
     UnmergeIdentitiesWsResponse:
@@ -73,29 +89,19 @@ components:
         unmergedFromId:
           type: string
           description: link ID of the identity unmerged from.
-    ServiceResponse_unmergeIdentities:
+    Source:
       type: object
+      description: Tracks an identity to a particular source system and record ID.
       properties:
-        auditId:
+        date:
           type: string
-        success:
-          type: boolean
-        warnings:
-          type: array
-          items:
-            type: string
-        retryableError:
-          type: boolean
-        message:
+          description: The date of the source data in ISO format (yyyy-MM-dd).
+        name:
           type: string
-        content:
-          $ref: '#/components/schemas/UnmergeIdentitiesWsResponse'
-        errors:
-          type: array
-          items:
-            type: string
-        trackingId:
+          description: Name of the data source. Must be unique across Verato.
+        id:
           type: string
+          description: ID of an identity within the given data source.
     UnmergeIdentitiesWsRequest:
       type: object
       description: 'Request to unmerge data from the retired section of an identity into a
@@ -113,19 +119,13 @@ components:
         unmergeSource:
           description: Source representing the identity being unmerged.
           $ref: '#/components/schemas/Source'
-    Source:
+    ServiceRequest_unmergeIdentities:
       type: object
-      description: Tracks an identity to a particular source system and record ID.
       properties:
-        date:
+        content:
+          $ref: '#/components/schemas/UnmergeIdentitiesWsRequest'
+        trackingId:
           type: string
-          description: The date of the source data in ISO format (yyyy-MM-dd).
-        name:
-          type: string
-          description: Name of the data source. Must be unique across Verato.
-        id:
-          type: string
-          description: ID of an identity within the given data source.
     UnmergeIdentitiesWsResponse_2:
       type: object
       properties:
@@ -147,19 +147,6 @@ components:
       - unmergedSource
       - unmergedFromSource
       description: "When two identities have been merged by the MergeIdentities WebService , unmerge them by \n extracting the previously merged Identity into its own record."
-    UnmergeIdentitiesWsRequest_2:
-      type: object
-      required:
-      - unmergeFromSource
-      - unmergeSource
-      properties:
-        unmergeFromSource:
-          $ref: '#/components/schemas/Source_2'
-          description: Return the source info that targets the Identity from which we will unmerge the source Identity
-        unmergeSource:
-          $ref: '#/components/schemas/Source_2'
-          description: Represents the source that will be unmerged
-      description: a request by a customer to unmerge ( extract) data from retired section of one Identity to create another new Identity
     Source_2:
       type: object
       properties:
@@ -173,6 +160,19 @@ components:
           type: string
           description: The ID of an identity within the given data source.
       description: Represents the information tracking an identity to a source that contains the identity
+    UnmergeIdentitiesWsRequest_2:
+      type: object
+      required:
+      - unmergeFromSource
+      - unmergeSource
+      properties:
+        unmergeFromSource:
+          $ref: '#/components/schemas/Source_2'
+          description: Return the source info that targets the Identity from which we will unmerge the source Identity
+        unmergeSource:
+          $ref: '#/components/schemas/Source_2'
+          description: Represents the source that will be unmerged
+      description: a request by a customer to unmerge ( extract) data from retired section of one Identity to create another new Identity
   securitySchemes:
     basicAuth:
       type: http

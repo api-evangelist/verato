@@ -45,6 +45,19 @@ components:
         sourceToSoftDelete:
           description: Source to soft-delete.
           $ref: '#/components/schemas/Source'
+    Source:
+      type: object
+      description: Tracks an identity to a particular source system and record ID.
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-MM-dd).
+        name:
+          type: string
+          description: Name of the data source. Must be unique across Verato.
+        id:
+          type: string
+          description: ID of an identity within the given data source.
     ServiceResponse_softDeleteSource:
       type: object
       properties:
@@ -92,19 +105,6 @@ components:
           $ref: '#/components/schemas/SoftDeleteSourceWsRequest'
         trackingId:
           type: string
-    Source:
-      type: object
-      description: Tracks an identity to a particular source system and record ID.
-      properties:
-        date:
-          type: string
-          description: The date of the source data in ISO format (yyyy-MM-dd).
-        name:
-          type: string
-          description: Name of the data source. Must be unique across Verato.
-        id:
-          type: string
-          description: ID of an identity within the given data source.
   securitySchemes:
     basicAuth:
       type: http

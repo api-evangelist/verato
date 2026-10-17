@@ -66,40 +66,9 @@ paths:
       description: Sandbox Link API
 components:
   schemas:
-    ServiceResponse_demographicsQuery:
-      type: object
-      properties:
-        auditId:
-          type: string
-        success:
-          type: boolean
-        warnings:
-          type: array
-          items:
-            type: string
-        retryableError:
-          type: boolean
-        message:
-          type: string
-        content:
-          $ref: '#/components/schemas/DemographicsQueryWsResponse'
-        errors:
-          type: array
-          items:
-            type: string
-        trackingId:
-          type: string
-    organizationNames:
-      type: object
-      properties:
-        legalBusinessName:
-          $ref: '#/components/schemas/TEXT'
-        otherOrgName:
-          $ref: '#/components/schemas/TEXT'
-        tradingName:
-          $ref: '#/components/schemas/TEXT'
-        parentOrgName:
-          $ref: '#/components/schemas/TEXT'
+    NUMBER:
+      type: string
+      description: NUMBER data type, see documentation for more details.
     Source:
       type: object
       description: Tracks an identity to a particular source system and record ID.
@@ -113,140 +82,40 @@ components:
         id:
           type: string
           description: ID of an identity within the given data source.
-    CODE-SET:
-      type: string
-      description: CODE-SET data type, see documentation for more details.
-    bestTimeToContact:
+    contactInformation:
       type: object
       properties:
-        day:
-          $ref: '#/components/schemas/CODE-SET'
-        startTime:
-          $ref: '#/components/schemas/TIME'
-        endTime:
-          $ref: '#/components/schemas/TIME'
-        allDay:
-          $ref: '#/components/schemas/BOOLEAN'
-    BOOLEAN:
-      type: boolean
-      description: BOOLEAN data type, see documentation for more details.
-    foundedDate:
-      type: object
-      properties:
-        foundedDate:
-          $ref: '#/components/schemas/DATE'
-    legalStatus:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CODE-SET'
-        source:
-          $ref: '#/components/schemas/TEXT'
-        effectiveDate:
-          $ref: '#/components/schemas/DATE'
-        verificationDate:
-          $ref: '#/components/schemas/DATE'
-        jurisdiction:
-          $ref: '#/components/schemas/TEXT'
-        registrationCountry:
-          $ref: '#/components/schemas/CODE-SET'
-    phoneNumbers:
-      type: object
-      properties:
-        number:
-          $ref: '#/components/schemas/NUMBER'
-        type:
-          $ref: '#/components/schemas/CODE-SET'
-        validFrom:
-          $ref: '#/components/schemas/DATE'
-        validTo:
-          $ref: '#/components/schemas/DATE'
+        address:
+          $ref: '#/components/schemas/addresses'
+        phoneList:
+          type: array
+          items:
+            $ref: '#/components/schemas/phoneNumbers'
+        faxList:
+          type: array
+          items:
+            $ref: '#/components/schemas/faxNumbers'
         bestTimeToContact:
           $ref: '#/components/schemas/bestTimeToContact'
       example:
-        number: '5551234567'
-        type: WORK
-        validFrom: '2024-01-01'
-        validTo: '2024-12-31'
+        address:
+          line1: 123 Main St
+          city: Springfield
+          state: VA
+          postalCode: '22150'
+        phoneList:
+        - number: '5551234567'
+          type: WORK
+          bestTimeToContact:
+            day: MON
+            startTime: 09:00
+            endTime: '17:00'
+            allDay: false
         bestTimeToContact:
           day: MON
           startTime: 09:00
           endTime: '17:00'
           allDay: false
-    addresses:
-      type: object
-      properties:
-        addressName:
-          $ref: '#/components/schemas/TEXT'
-        addressType:
-          $ref: '#/components/schemas/CODE-SET'
-        line1:
-          $ref: '#/components/schemas/TEXT'
-        line2:
-          $ref: '#/components/schemas/TEXT'
-        city:
-          $ref: '#/components/schemas/TEXT'
-        district:
-          $ref: '#/components/schemas/TEXT'
-        state:
-          $ref: '#/components/schemas/TEXT'
-        postalCode:
-          $ref: '#/components/schemas/TEXT'
-        country:
-          $ref: '#/components/schemas/TEXT'
-        latitude:
-          $ref: '#/components/schemas/NUMBER'
-        longitude:
-          $ref: '#/components/schemas/NUMBER'
-        validFrom:
-          $ref: '#/components/schemas/DATE'
-        validTo:
-          $ref: '#/components/schemas/DATE'
-    externalUniqueIdentifier:
-      type: object
-      properties:
-        issuer:
-          $ref: '#/components/schemas/TEXT'
-        value:
-          $ref: '#/components/schemas/TEXT'
-        status:
-          $ref: '#/components/schemas/TEXT'
-        startDate:
-          $ref: '#/components/schemas/DATE'
-        endDate:
-          $ref: '#/components/schemas/DATE'
-    product:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/TEXT'
-        code:
-          $ref: '#/components/schemas/TEXT'
-        type:
-          $ref: '#/components/schemas/CODE-SET'
-        category:
-          $ref: '#/components/schemas/TEXT'
-        price:
-          $ref: '#/components/schemas/NUMBER'
-        status:
-          $ref: '#/components/schemas/TEXT'
-        description:
-          $ref: '#/components/schemas/TEXT'
-        launchDate:
-          $ref: '#/components/schemas/DATE'
-        market:
-          $ref: '#/components/schemas/TEXT'
-        lineOfBusiness:
-          $ref: '#/components/schemas/TEXT'
-        serviceLines:
-          type: array
-          items:
-            type: object
-            properties:
-              serviceLine:
-                $ref: '#/components/schemas/TEXT'
-              subServiceLine:
-                $ref: '#/components/schemas/TEXT'
     Identity:
       type: object
       description: 'Logical identity in the Verato platform. Contains domain-specific
@@ -335,56 +204,69 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/legalStatus'
-    contactInformation:
+    CODE-SET:
+      type: string
+      description: CODE-SET data type, see documentation for more details.
+    organizationNames:
       type: object
       properties:
-        address:
-          $ref: '#/components/schemas/addresses'
-        phoneList:
-          type: array
-          items:
-            $ref: '#/components/schemas/phoneNumbers'
-        faxList:
-          type: array
-          items:
-            $ref: '#/components/schemas/faxNumbers'
+        legalBusinessName:
+          $ref: '#/components/schemas/TEXT'
+        otherOrgName:
+          $ref: '#/components/schemas/TEXT'
+        tradingName:
+          $ref: '#/components/schemas/TEXT'
+        parentOrgName:
+          $ref: '#/components/schemas/TEXT'
+    phoneNumbers:
+      type: object
+      properties:
+        number:
+          $ref: '#/components/schemas/NUMBER'
+        type:
+          $ref: '#/components/schemas/CODE-SET'
+        validFrom:
+          $ref: '#/components/schemas/DATE'
+        validTo:
+          $ref: '#/components/schemas/DATE'
         bestTimeToContact:
           $ref: '#/components/schemas/bestTimeToContact'
       example:
-        address:
-          line1: 123 Main St
-          city: Springfield
-          state: VA
-          postalCode: '22150'
-        phoneList:
-        - number: '5551234567'
-          type: WORK
-          bestTimeToContact:
-            day: MON
-            startTime: 09:00
-            endTime: '17:00'
-            allDay: false
+        number: '5551234567'
+        type: WORK
+        validFrom: '2024-01-01'
+        validTo: '2024-12-31'
         bestTimeToContact:
           day: MON
           startTime: 09:00
           endTime: '17:00'
           allDay: false
-    TEXT:
+    BOOLEAN:
+      type: boolean
+      description: BOOLEAN data type, see documentation for more details.
+    TIME:
       type: string
-      description: TEXT data type, see documentation for more details.
-    ServiceRequest_demographicsQuery:
+      description: TIME data type, see documentation for more details.
+    annualRevenue:
       type: object
       properties:
-        content:
-          $ref: '#/components/schemas/DemographicsQueryWsRequest'
-        trackingId:
-          type: string
-    IdentityPerSource:
+        annualRevenue:
+          $ref: '#/components/schemas/NUMBER'
+        year:
+          $ref: '#/components/schemas/NUMBER'
+    naicsClassifications:
       type: object
-      description: Identity view with attributes grouped by the single source that provided them.
       properties:
-        source:
-          $ref: '#/components/schemas/Source'
+        sector:
+          $ref: '#/components/schemas/CODE-SET'
+        subSector:
+          $ref: '#/components/schemas/CODE-SET'
+        industryGroup:
+          $ref: '#/components/schemas/CODE-SET'
+        industry:
+          $ref: '#/components/schemas/CODE-SET'
+        nationalIndustry:
+          $ref: '#/components/schemas/CODE-SET'
     qualifications:
       type: object
       properties:
@@ -401,30 +283,6 @@ components:
         validFrom:
           $ref: '#/components/schemas/DATE'
         validTo:
-          $ref: '#/components/schemas/DATE'
-    sicClassifications:
-      type: object
-      properties:
-        code:
-          $ref: '#/components/schemas/CODE-SET'
-    alternateIdentifiers:
-      type: object
-      properties:
-        description:
-          $ref: '#/components/schemas/TEXT'
-        type:
-          $ref: '#/components/schemas/CODE-SET'
-        value:
-          $ref: '#/components/schemas/TEXT'
-        status:
-          $ref: '#/components/schemas/BOOLEAN'
-        issuer:
-          $ref: '#/components/schemas/TEXT'
-        issueDate:
-          $ref: '#/components/schemas/DATE'
-        startDate:
-          $ref: '#/components/schemas/DATE'
-        endDate:
           $ref: '#/components/schemas/DATE'
     authorizedOfficials:
       type: object
@@ -445,48 +303,56 @@ components:
           $ref: '#/components/schemas/TEXT'
         phoneNumber:
           $ref: '#/components/schemas/TEXT'
-    DATE:
-      type: string
-      format: date
-      description: DATE data type (yyyy-MM-dd), see documentation for more details.
-    emails:
+    legalStatus:
       type: object
       properties:
-        email:
-          $ref: '#/components/schemas/TEXT'
         type:
           $ref: '#/components/schemas/CODE-SET'
-        validFrom:
+        source:
+          $ref: '#/components/schemas/TEXT'
+        effectiveDate:
           $ref: '#/components/schemas/DATE'
-        validTo:
+        verificationDate:
           $ref: '#/components/schemas/DATE'
-    Domain:
+        jurisdiction:
+          $ref: '#/components/schemas/TEXT'
+        registrationCountry:
+          $ref: '#/components/schemas/CODE-SET'
+    ServiceRequest_demographicsQuery:
       type: object
       properties:
-        name:
+        content:
+          $ref: '#/components/schemas/DemographicsQueryWsRequest'
+        trackingId:
           type: string
-        id:
+    ServiceResponse_demographicsQuery:
+      type: object
+      properties:
+        auditId:
           type: string
-    naicsClassifications:
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/DemographicsQueryWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    foundedDate:
       type: object
       properties:
-        sector:
-          $ref: '#/components/schemas/CODE-SET'
-        subSector:
-          $ref: '#/components/schemas/CODE-SET'
-        industryGroup:
-          $ref: '#/components/schemas/CODE-SET'
-        industry:
-          $ref: '#/components/schemas/CODE-SET'
-        nationalIndustry:
-          $ref: '#/components/schemas/CODE-SET'
-    annualRevenue:
-      type: object
-      properties:
-        annualRevenue:
-          $ref: '#/components/schemas/NUMBER'
-        year:
-          $ref: '#/components/schemas/NUMBER'
+        foundedDate:
+          $ref: '#/components/schemas/DATE'
     DemographicsQueryWsRequest:
       type: object
       description: Request object for demographics query.
@@ -502,9 +368,175 @@ components:
           description: Response identity formats. DEFAULT if omitted.
           items:
             type: string
-    NUMBER:
+    numberOfEmployees:
+      type: object
+      properties:
+        numberOfEmployees:
+          $ref: '#/components/schemas/NUMBER'
+    externalUniqueIdentifier:
+      type: object
+      properties:
+        issuer:
+          $ref: '#/components/schemas/TEXT'
+        value:
+          $ref: '#/components/schemas/TEXT'
+        status:
+          $ref: '#/components/schemas/TEXT'
+        startDate:
+          $ref: '#/components/schemas/DATE'
+        endDate:
+          $ref: '#/components/schemas/DATE'
+    TEXT:
       type: string
-      description: NUMBER data type, see documentation for more details.
+      description: TEXT data type, see documentation for more details.
+    sicClassifications:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/CODE-SET'
+    addresses:
+      type: object
+      properties:
+        addressName:
+          $ref: '#/components/schemas/TEXT'
+        addressType:
+          $ref: '#/components/schemas/CODE-SET'
+        line1:
+          $ref: '#/components/schemas/TEXT'
+        line2:
+          $ref: '#/components/schemas/TEXT'
+        city:
+          $ref: '#/components/schemas/TEXT'
+        district:
+          $ref: '#/components/schemas/TEXT'
+        state:
+          $ref: '#/components/schemas/TEXT'
+        postalCode:
+          $ref: '#/components/schemas/TEXT'
+        country:
+          $ref: '#/components/schemas/TEXT'
+        latitude:
+          $ref: '#/components/schemas/NUMBER'
+        longitude:
+          $ref: '#/components/schemas/NUMBER'
+        validFrom:
+          $ref: '#/components/schemas/DATE'
+        validTo:
+          $ref: '#/components/schemas/DATE'
+    IdentityPerSource:
+      type: object
+      description: Identity view with attributes grouped by the single source that provided them.
+      properties:
+        source:
+          $ref: '#/components/schemas/Source'
+    bestTimeToContact:
+      type: object
+      properties:
+        day:
+          $ref: '#/components/schemas/CODE-SET'
+        startTime:
+          $ref: '#/components/schemas/TIME'
+        endTime:
+          $ref: '#/components/schemas/TIME'
+        allDay:
+          $ref: '#/components/schemas/BOOLEAN'
+    faxNumbers:
+      type: object
+      properties:
+        number:
+          $ref: '#/components/schemas/TEXT'
+        type:
+          $ref: '#/components/schemas/CODE-SET'
+        validFrom:
+          $ref: '#/components/schemas/DATE'
+        validTo:
+          $ref: '#/components/schemas/DATE'
+    DATE:
+      type: string
+      format: date
+      description: DATE data type (yyyy-MM-dd), see documentation for more details.
+    product:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/TEXT'
+        code:
+          $ref: '#/components/schemas/TEXT'
+        type:
+          $ref: '#/components/schemas/CODE-SET'
+        category:
+          $ref: '#/components/schemas/TEXT'
+        price:
+          $ref: '#/components/schemas/NUMBER'
+        status:
+          $ref: '#/components/schemas/TEXT'
+        description:
+          $ref: '#/components/schemas/TEXT'
+        launchDate:
+          $ref: '#/components/schemas/DATE'
+        market:
+          $ref: '#/components/schemas/TEXT'
+        lineOfBusiness:
+          $ref: '#/components/schemas/TEXT'
+        serviceLines:
+          type: array
+          items:
+            type: object
+            properties:
+              serviceLine:
+                $ref: '#/components/schemas/TEXT'
+              subServiceLine:
+                $ref: '#/components/schemas/TEXT'
+    Domain:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+    contactOther:
+      type: object
+      properties:
+        system:
+          $ref: '#/components/schemas/CODE-SET'
+        type:
+          $ref: '#/components/schemas/CODE-SET'
+        value:
+          $ref: '#/components/schemas/TEXT'
+        validFrom:
+          $ref: '#/components/schemas/DATE'
+        validTo:
+          $ref: '#/components/schemas/DATE'
+    emails:
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/TEXT'
+        type:
+          $ref: '#/components/schemas/CODE-SET'
+        validFrom:
+          $ref: '#/components/schemas/DATE'
+        validTo:
+          $ref: '#/components/schemas/DATE'
+    alternateIdentifiers:
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/TEXT'
+        type:
+          $ref: '#/components/schemas/CODE-SET'
+        value:
+          $ref: '#/components/schemas/TEXT'
+        status:
+          $ref: '#/components/schemas/BOOLEAN'
+        issuer:
+          $ref: '#/components/schemas/TEXT'
+        issueDate:
+          $ref: '#/components/schemas/DATE'
+        startDate:
+          $ref: '#/components/schemas/DATE'
+        endDate:
+          $ref: '#/components/schemas/DATE'
     DemographicsQueryWsResponse:
       type: object
       description: Response object for demographics query.
@@ -530,25 +562,6 @@ components:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/Identity'
-    faxNumbers:
-      type: object
-      properties:
-        number:
-          $ref: '#/components/schemas/TEXT'
-        type:
-          $ref: '#/components/schemas/CODE-SET'
-        validFrom:
-          $ref: '#/components/schemas/DATE'
-        validTo:
-          $ref: '#/components/schemas/DATE'
-    numberOfEmployees:
-      type: object
-      properties:
-        numberOfEmployees:
-          $ref: '#/components/schemas/NUMBER'
-    TIME:
-      type: string
-      description: TIME data type, see documentation for more details.
     types:
       type: object
       properties:
@@ -571,83 +584,9 @@ components:
           $ref: '#/components/schemas/DATE'
         validTo:
           $ref: '#/components/schemas/DATE'
-    contactOther:
-      type: object
-      properties:
-        system:
-          $ref: '#/components/schemas/CODE-SET'
-        type:
-          $ref: '#/components/schemas/CODE-SET'
-        value:
-          $ref: '#/components/schemas/TEXT'
-        validFrom:
-          $ref: '#/components/schemas/DATE'
-        validTo:
-          $ref: '#/components/schemas/DATE'
-    multipleBirthIndicator:
-      type: object
-      properties:
-        multipleBirthIndicator:
-          $ref: '#/components/schemas/BOOLEAN_2'
-        multipleBirthInteger:
-          $ref: '#/components/schemas/NUMBER_2'
-        birthPlurality:
-          $ref: '#/components/schemas/NUMBER_2'
-    genders:
-      type: object
-      properties:
-        gender:
-          $ref: '#/components/schemas/CODE-SET_2'
-    VerifiedAddressMetaData:
-      type: object
-      properties:
-        verifiedAddress:
-          type: string
-        rdi:
-          type: string
-        countyFips:
-          type: string
-        cmra:
-          type: boolean
-        latitude:
-          type: number
-          format: double
-        precision:
-          type: string
-        congressionalDistrict:
-          type: string
-        vacant:
-          type: boolean
-        verificationCode:
-          type: string
-        longitude:
-          type: number
-          format: double
-        countyName:
-          type: string
-    ethnicities:
-      type: object
-      properties:
-        ethnicity:
-          $ref: '#/components/schemas/CODE-SET_2'
-    Source_2:
-      type: object
-      properties:
-        date:
-          type: string
-          description: The date of the source data in ISO format (yyyy-mm-dd).
-        name:
-          type: string
-          description: The name of the data source.  Must be unique across Verato.
-        id:
-          type: string
-          description: The ID of an identity within the given data source.
-      description: Represents the information tracking an identity to a source that contains the identity
-    citizenships:
-      type: object
-      properties:
-        citizenship:
-          $ref: '#/components/schemas/CODE-SET_2'
+    NUMBER_2:
+      type: string
+      description: NUMBER data type, see documentation for more details
     DeathDetails:
       type: object
       properties:
@@ -671,156 +610,7 @@ components:
           - INACTIVE
           description: The current clusterStatus
       description: API address model
-    CODE-SET_2:
-      type: string
-      description: CODE-SET data type, see documentation for more details
-    healthInsuranceCoverage:
-      type: object
-      properties:
-        payerName:
-          $ref: '#/components/schemas/TEXT_2'
-        status:
-          $ref: '#/components/schemas/CODE-SET_2'
-        insuranceType:
-          $ref: '#/components/schemas/CODE-SET_2'
-        planType:
-          $ref: '#/components/schemas/CODE-SET_2'
-        subscriberId:
-          $ref: '#/components/schemas/TEXT_2'
-        relationship:
-          $ref: '#/components/schemas/CODE-SET_2'
-        groupNumber:
-          $ref: '#/components/schemas/TEXT_2'
-        idNumber:
-          $ref: '#/components/schemas/TEXT_2'
-        sequenceNumber:
-          $ref: '#/components/schemas/TEXT_2'
-        effectiveDate:
-          $ref: '#/components/schemas/TEXT_2'
-        endDate:
-          $ref: '#/components/schemas/DATE_2'
-    consents:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/TEXT_2'
-        type:
-          $ref: '#/components/schemas/CODE-SET_2'
-        status:
-          $ref: '#/components/schemas/CODE-SET_2'
-        isRequired:
-          $ref: '#/components/schemas/BOOLEAN_2'
-        decision:
-          $ref: '#/components/schemas/CODE-SET_2'
-        validFrom:
-          $ref: '#/components/schemas/DATE_2'
-        validTo:
-          $ref: '#/components/schemas/DATE_2'
-        source:
-          $ref: '#/components/schemas/TEXT_2'
-        regulatoryBasis:
-          $ref: '#/components/schemas/CODE-SET_2'
-    races:
-      type: object
-      properties:
-        race:
-          $ref: '#/components/schemas/CODE-SET_2'
-    BOOLEAN_2:
-      type: boolean
-      description: BOOLEAN data type, see documentation for more details
-    ssns:
-      type: object
-      properties:
-        ssn:
-          $ref: '#/components/schemas/TEXT_2'
-    DeathDetailsPerSource:
-      type: object
-      properties:
-        identityCluster:
-          $ref: '#/components/schemas/DeathDetails'
-        firstAsserted:
-          type: string
-          description: The date the source first saw this property value.
-        lastAssertedMetaData:
-          $ref: '#/components/schemas/CustomerMetaData'
-          description: Metadata specified when record data was last asserted
-        deathDetails:
-          $ref: '#/components/schemas/DeathDetails'
-          description: The DeathDetails provided by this source
-        lastAsserted:
-          type: string
-          description: The date the source last saw this property value.
-        firstAssertedMetaData:
-          $ref: '#/components/schemas/CustomerMetaData'
-          description: Metadata specified when record data was first asserted
-      description: ''
-    GenderPerSource:
-      type: object
-      properties:
-        identityCluster:
-          $ref: '#/components/schemas/Gender'
-        firstAsserted:
-          type: string
-          description: The date the source first saw this property value.
-        gender:
-          $ref: '#/components/schemas/Gender'
-          description: The Gender provided by this source
-        lastAssertedMetaData:
-          $ref: '#/components/schemas/CustomerMetaData'
-          description: Metadata specified when record data was last asserted
-        lastAsserted:
-          type: string
-          description: The date the source last saw this property value.
-        firstAssertedMetaData:
-          $ref: '#/components/schemas/CustomerMetaData'
-          description: Metadata specified when record data was first asserted
-      description: ''
-    Address:
-      type: object
-      properties:
-        type:
-          type: string
-        line1:
-          type: string
-        line2:
-          type: string
-        city:
-          type: string
-        district:
-          type: string
-        state:
-          type: string
-        postalCode:
-          type: string
-        country:
-          type: string
-        latitude:
-          type: number
-        longitude:
-          type: number
-        validFrom:
-          type: string
-          format: date
-        validTo:
-          type: string
-          format: date
-        verifiedAddress:
-          $ref: '#/components/schemas/VerifiedAddress'
-        sources:
-          type: array
-          items:
-            $ref: '#/components/schemas/Source_2'
-          description: The source for this cluster
-        verifiedAddressMetaData:
-          $ref: '#/components/schemas/VerifiedAddressMetaData'
-        clusterStatus:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-          description: The current clusterStatus
-      description: API address model
-    MergedSourceRecord:
+    Source_2:
       type: object
       properties:
         date:
@@ -832,151 +622,11 @@ components:
         id:
           type: string
           description: The ID of an identity within the given data source.
-        activeNativeId:
-          type: string
-          description: The surviving (active) native id.
-        activeSource:
-          type: string
-          description: The surviving (active) source name.
-        timestamp:
-          type: string
-          description: The merge timestamp (UTC, ISO_LOCAL_DATE_TIME).
-      description: A retired source record enriched with linkage metadata.
-    guarantor:
+      description: Represents the information tracking an identity to a source that contains the identity
+    genders:
       type: object
       properties:
-        relationship:
-          $ref: '#/components/schemas/CODE-SET_2'
-        firstName:
-          $ref: '#/components/schemas/TEXT_2'
-        middleName:
-          $ref: '#/components/schemas/TEXT_2'
-        lastName:
-          $ref: '#/components/schemas/TEXT_2'
-        suffix:
-          $ref: '#/components/schemas/TEXT_2'
-        dob:
-          $ref: '#/components/schemas/DATE_2'
-        ssn:
-          $ref: '#/components/schemas/TEXT_2'
-        addressLine1:
-          $ref: '#/components/schemas/TEXT_2'
-        addressLine2:
-          $ref: '#/components/schemas/TEXT_2'
-        city:
-          $ref: '#/components/schemas/TEXT_2'
-        state:
-          $ref: '#/components/schemas/TEXT_2'
-        zip:
-          $ref: '#/components/schemas/TEXT_2'
-        phone:
-          $ref: '#/components/schemas/TEXT_2'
-        onHold:
-          $ref: '#/components/schemas/BOOLEAN_2'
-        startDate:
-          $ref: '#/components/schemas/DATE_2'
-        endDate:
-          $ref: '#/components/schemas/DATE_2'
-    photos:
-      type: object
-      properties:
-        url:
-          $ref: '#/components/schemas/TEXT_2'
-    phoneNumbers_2:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CODE-SET_2'
-        countryCode:
-          $ref: '#/components/schemas/TEXT_2'
-        areaCode:
-          $ref: '#/components/schemas/TEXT_2'
-        number:
-          $ref: '#/components/schemas/TEXT_2'
-        extension:
-          $ref: '#/components/schemas/TEXT_2'
-        validTo:
-          $ref: '#/components/schemas/DATE_2'
-        validFrom:
-          $ref: '#/components/schemas/DATE_2'
-        bestTimeToContact:
-          type: array
-          items:
-            type: object
-            properties:
-              day:
-                $ref: '#/components/schemas/CODE-SET_2'
-              startTime:
-                $ref: '#/components/schemas/TIME_2'
-              endTime:
-                $ref: '#/components/schemas/TIME_2'
-              allDay:
-                $ref: '#/components/schemas/BOOLEAN_2'
-    addresses_2:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/CODE-SET_2'
-        line1:
-          $ref: '#/components/schemas/TEXT_2'
-        line2:
-          $ref: '#/components/schemas/TEXT_2'
-        city:
-          $ref: '#/components/schemas/TEXT_2'
-        district:
-          $ref: '#/components/schemas/TEXT_2'
-        state:
-          $ref: '#/components/schemas/TEXT_2'
-        postalCode:
-          $ref: '#/components/schemas/TEXT_2'
-        country:
-          $ref: '#/components/schemas/TEXT_2'
-        latitude:
-          $ref: '#/components/schemas/NUMBER_2'
-        longitude:
-          $ref: '#/components/schemas/NUMBER_2'
-        validFrom:
-          $ref: '#/components/schemas/DATE_2'
-        validTo:
-          $ref: '#/components/schemas/DATE_2'
-    upcomingAppointment:
-      type: object
-      properties:
-        description:
-          $ref: '#/components/schemas/TEXT_2'
-        status:
-          $ref: '#/components/schemas/CODE-SET_2'
-        cancellationDate:
-          $ref: '#/components/schemas/DATE_2'
-        cancellationReason:
-          $ref: '#/components/schemas/CODE-SET_2'
-        serviceCategory:
-          $ref: '#/components/schemas/CODE-SET_2'
-        serviceType:
-          $ref: '#/components/schemas/CODE-SET_2'
-        practitionerSpecialty:
-          $ref: '#/components/schemas/CODE-SET_2'
-        start:
-          $ref: '#/components/schemas/DATE_2'
-        end:
-          $ref: '#/components/schemas/DATE_2'
-        type:
-          $ref: '#/components/schemas/CODE-SET_2'
-        reason:
-          $ref: '#/components/schemas/TEXT_2'
-        priority:
-          $ref: '#/components/schemas/CODE-SET_2'
-        note:
-          $ref: '#/components/schemas/TEXT_2'
-    sexualOrientations:
-      type: object
-      properties:
-        sexualOrientation:
-          $ref: '#/components/schemas/CODE-SET_2'
-    maritalStatuses:
-      type: object
-      properties:
-        maritalStatus:
+        gender:
           $ref: '#/components/schemas/CODE-SET_2'
     Identity_2:
       type: object
@@ -1090,9 +740,799 @@ components:
           items:
             $ref: '#/components/schemas/recentEncounter'
       description: API object representing a Patient identity
+    genderIdentities:
+      type: object
+      properties:
+        genderIdentity:
+          $ref: '#/components/schemas/CODE-SET_2'
+    names:
+      type: object
+      properties:
+        use:
+          $ref: '#/components/schemas/CODE-SET_2'
+        prefix:
+          $ref: '#/components/schemas/TEXT_2'
+        first:
+          $ref: '#/components/schemas/TEXT_2'
+        middle:
+          $ref: '#/components/schemas/TEXT_2'
+        last:
+          $ref: '#/components/schemas/TEXT_2'
+        suffix:
+          $ref: '#/components/schemas/TEXT_2'
+        credential:
+          $ref: '#/components/schemas/TEXT_2'
+    CustomerMetaData:
+      type: object
+      properties:
+        transactionType:
+          type: string
+        sourceLoginName:
+          type: string
+        sourceUserName:
+          type: string
+        transactionDateTime:
+          type: string
+        sourceTransactionDateTime:
+          type: string
+        customMetaData:
+          type: object
+          additionalProperties:
+            type: string
+        location:
+          type: string
+    DeathDetailsPerSource:
+      type: object
+      properties:
+        identityCluster:
+          $ref: '#/components/schemas/DeathDetails'
+        firstAsserted:
+          type: string
+          description: The date the source first saw this property value.
+        lastAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was last asserted
+        deathDetails:
+          $ref: '#/components/schemas/DeathDetails'
+          description: The DeathDetails provided by this source
+        lastAsserted:
+          type: string
+          description: The date the source last saw this property value.
+        firstAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was first asserted
+      description: ''
+    multipleBirthIndicator:
+      type: object
+      properties:
+        multipleBirthIndicator:
+          $ref: '#/components/schemas/BOOLEAN_2'
+        multipleBirthInteger:
+          $ref: '#/components/schemas/NUMBER_2'
+        birthPlurality:
+          $ref: '#/components/schemas/NUMBER_2'
+    NamePerSource:
+      type: object
+      properties:
+        identityCluster:
+          $ref: '#/components/schemas/Name'
+        firstAsserted:
+          type: string
+          description: The date the source first saw this property value.
+        lastAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was last asserted
+        name:
+          $ref: '#/components/schemas/Name'
+          description: The Name provided by this source
+        lastAsserted:
+          type: string
+          description: The date the source last saw this property value.
+        firstAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was first asserted
+      description: ''
+    CODE-SET_2:
+      type: string
+      description: CODE-SET data type, see documentation for more details
+    guarantor:
+      type: object
+      properties:
+        relationship:
+          $ref: '#/components/schemas/CODE-SET_2'
+        firstName:
+          $ref: '#/components/schemas/TEXT_2'
+        middleName:
+          $ref: '#/components/schemas/TEXT_2'
+        lastName:
+          $ref: '#/components/schemas/TEXT_2'
+        suffix:
+          $ref: '#/components/schemas/TEXT_2'
+        dob:
+          $ref: '#/components/schemas/DATE_2'
+        ssn:
+          $ref: '#/components/schemas/TEXT_2'
+        addressLine1:
+          $ref: '#/components/schemas/TEXT_2'
+        addressLine2:
+          $ref: '#/components/schemas/TEXT_2'
+        city:
+          $ref: '#/components/schemas/TEXT_2'
+        state:
+          $ref: '#/components/schemas/TEXT_2'
+        zip:
+          $ref: '#/components/schemas/TEXT_2'
+        phone:
+          $ref: '#/components/schemas/TEXT_2'
+        onHold:
+          $ref: '#/components/schemas/BOOLEAN_2'
+        startDate:
+          $ref: '#/components/schemas/DATE_2'
+        endDate:
+          $ref: '#/components/schemas/DATE_2'
+    ethnicities:
+      type: object
+      properties:
+        ethnicity:
+          $ref: '#/components/schemas/CODE-SET_2'
+    recentEncounter:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/CODE-SET_2'
+        class:
+          $ref: '#/components/schemas/CODE-SET_2'
+        priority:
+          $ref: '#/components/schemas/CODE-SET_2'
+        type:
+          $ref: '#/components/schemas/CODE-SET_2'
+        serviceType:
+          $ref: '#/components/schemas/CODE-SET_2'
+        start:
+          $ref: '#/components/schemas/DATE_2'
+        end:
+          $ref: '#/components/schemas/DATE_2'
+        reason:
+          $ref: '#/components/schemas/TEXT_2'
+        diagnosis:
+          $ref: '#/components/schemas/TEXT_2'
+        specialArrangement:
+          $ref: '#/components/schemas/CODE-SET_2'
+        specialCourtesy:
+          $ref: '#/components/schemas/CODE-SET_2'
+    phoneNumbers_2:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CODE-SET_2'
+        countryCode:
+          $ref: '#/components/schemas/TEXT_2'
+        areaCode:
+          $ref: '#/components/schemas/TEXT_2'
+        number:
+          $ref: '#/components/schemas/TEXT_2'
+        extension:
+          $ref: '#/components/schemas/TEXT_2'
+        validTo:
+          $ref: '#/components/schemas/DATE_2'
+        validFrom:
+          $ref: '#/components/schemas/DATE_2'
+        bestTimeToContact:
+          type: array
+          items:
+            type: object
+            properties:
+              day:
+                $ref: '#/components/schemas/CODE-SET_2'
+              startTime:
+                $ref: '#/components/schemas/TIME_2'
+              endTime:
+                $ref: '#/components/schemas/TIME_2'
+              allDay:
+                $ref: '#/components/schemas/BOOLEAN_2'
+    races:
+      type: object
+      properties:
+        race:
+          $ref: '#/components/schemas/CODE-SET_2'
+    BOOLEAN_2:
+      type: boolean
+      description: BOOLEAN data type, see documentation for more details
+    SocialSecurityNumberPerSource:
+      type: object
+      properties:
+        identityCluster:
+          $ref: '#/components/schemas/SSN'
+        firstAsserted:
+          type: string
+          description: The date the source first saw this property value.
+        lastAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was last asserted
+        ssn:
+          $ref: '#/components/schemas/SSN'
+          description: The Social Security Number provided by this source
+        lastAsserted:
+          type: string
+          description: The date the source last saw this property value.
+        firstAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was first asserted
+      description: ''
+    PhoneNumberPerSource:
+      type: object
+      properties:
+        identityCluster:
+          $ref: '#/components/schemas/Phone'
+        firstAsserted:
+          type: string
+          description: The date the source first saw this property value.
+        phoneNumber:
+          $ref: '#/components/schemas/Phone'
+          description: The Phone Number provided by this source
+        lastAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was last asserted
+        lastAsserted:
+          type: string
+          description: The date the source last saw this property value.
+        firstAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was first asserted
+      description: ''
+    Name:
+      type: object
+      properties:
+        use:
+          type: string
+        prefix:
+          type: string
+        first:
+          type: string
+        middle:
+          type: string
+        last:
+          type: string
+        suffix:
+          type: string
+        credential:
+          type: string
+        clusterStatus:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          description: The current clusterStatus
+      description: Represents a person's name
+    TIME_2:
+      type: string
+      description: TIME data type, see documentation for more details
+    VerifiedAddressMetaData:
+      type: object
+      properties:
+        verifiedAddress:
+          type: string
+        rdi:
+          type: string
+        countyFips:
+          type: string
+        cmra:
+          type: boolean
+        latitude:
+          type: number
+          format: double
+        precision:
+          type: string
+        congressionalDistrict:
+          type: string
+        vacant:
+          type: boolean
+        verificationCode:
+          type: string
+        longitude:
+          type: number
+          format: double
+        countyName:
+          type: string
+    maritalStatuses:
+      type: object
+      properties:
+        maritalStatus:
+          $ref: '#/components/schemas/CODE-SET_2'
+    GenderPerSource:
+      type: object
+      properties:
+        identityCluster:
+          $ref: '#/components/schemas/Gender'
+        firstAsserted:
+          type: string
+          description: The date the source first saw this property value.
+        gender:
+          $ref: '#/components/schemas/Gender'
+          description: The Gender provided by this source
+        lastAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was last asserted
+        lastAsserted:
+          type: string
+          description: The date the source last saw this property value.
+        firstAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was first asserted
+      description: ''
+    deathDetails:
+      type: object
+      properties:
+        deceased:
+          $ref: '#/components/schemas/CODE-SET_2'
+        dateOfDeath:
+          $ref: '#/components/schemas/DATE_2'
+        city:
+          $ref: '#/components/schemas/TEXT_2'
+        county:
+          $ref: '#/components/schemas/TEXT_2'
+        state:
+          $ref: '#/components/schemas/TEXT_2'
+        country:
+          $ref: '#/components/schemas/TEXT_2'
+    AddressPerSource:
+      type: object
+      properties:
+        identityCluster:
+          $ref: '#/components/schemas/Address'
+        firstAsserted:
+          type: string
+          description: The date the source first saw this property value.
+        address:
+          $ref: '#/components/schemas/Address'
+          description: The Address provided by this source
+        lastAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was last asserted
+        lastAsserted:
+          type: string
+          description: The date the source last saw this property value.
+        firstAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was first asserted
+      description: ''
+    AddressDetails:
+      type: object
+      properties:
+        country:
+          type: string
+        streetType:
+          type: string
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source_2'
+          description: The source for this cluster
+        city:
+          type: string
+        zipcode4:
+          type: string
+        addressType:
+          type: string
+        houseNumber:
+          type: string
+        streetPostDirection:
+          type: string
+        unitNumber:
+          type: string
+        attributesMap:
+          type: object
+          additionalProperties: {}
+        streetDirection:
+          type: string
+        unitType:
+          type: string
+        zipcode:
+          type: string
+        streetName:
+          type: string
+        state:
+          type: string
+        line2:
+          type: string
+        clusterStatus:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          description: The current clusterStatus
+    DatesOfBirthPerSource:
+      type: object
+      properties:
+        identityCluster:
+          $ref: '#/components/schemas/DateOfBirth'
+        firstAsserted:
+          type: string
+          description: The date the source first saw this property value.
+        lastAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was last asserted
+        dateOfBirth:
+          $ref: '#/components/schemas/DateOfBirth'
+          description: The Date Of Birth provided by this source
+        lastAsserted:
+          type: string
+          description: The date the source last saw this property value.
+        firstAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was first asserted
+      description: ''
+    Gender:
+      type: object
+      properties:
+        gender:
+          type: string
+          description: The person's gender
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source_2'
+          description: The source for this cluster
+        clusterStatus:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          description: The current clusterStatus
+    qualifications_2:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CODE-SET_2'
+        qualification:
+          $ref: '#/components/schemas/CODE-SET_2'
+        status:
+          $ref: '#/components/schemas/CODE-SET_2'
+        issuer:
+          $ref: '#/components/schemas/TEXT_2'
+        issueDate:
+          $ref: '#/components/schemas/DATE_2'
+        validFrom:
+          $ref: '#/components/schemas/DATE_2'
+        validTo:
+          $ref: '#/components/schemas/DATE_2'
+    Phone:
+      type: object
+      properties:
+        type:
+          type: string
+        countryCode:
+          type: string
+        areaCode:
+          type: string
+        number:
+          type: string
+        extension:
+          type: string
+        validTo:
+          type: string
+          format: date
+        validFrom:
+          type: string
+          format: date
+        bestTimeToContact:
+          type: object
+          properties:
+            day:
+              type: string
+            startTime:
+              type: string
+              format: time
+            endTime:
+              type: string
+              format: time
+            allDay:
+              type: boolean
+        clusterStatus:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          description: The current clusterStatus
+      description: Represents a phone number
+    ServiceRequest_v2__demographicsQuery:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/DemographicsQueryWsRequest_2'
+        trackingId:
+          type: string
+    SSN:
+      type: object
+      properties:
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source_2'
+          description: The source for this cluster
+        attributesMap:
+          type: object
+          additionalProperties: {}
+        clusterStatus:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          description: The current clusterStatus
+        ssn:
+          type: string
+          description: The social security number
+    DateOfBirth:
+      type: object
+      properties:
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source_2'
+          description: The source for this cluster
+        dateOfBirth:
+          type: string
+          description: The date of birth
+        clusterStatus:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          description: The current clusterStatus
+    communicationLanguages:
+      type: object
+      properties:
+        language:
+          $ref: '#/components/schemas/CODE-SET_2'
+        preferred:
+          $ref: '#/components/schemas/BOOLEAN_2'
+    upcomingAppointment:
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/TEXT_2'
+        status:
+          $ref: '#/components/schemas/CODE-SET_2'
+        cancellationDate:
+          $ref: '#/components/schemas/DATE_2'
+        cancellationReason:
+          $ref: '#/components/schemas/CODE-SET_2'
+        serviceCategory:
+          $ref: '#/components/schemas/CODE-SET_2'
+        serviceType:
+          $ref: '#/components/schemas/CODE-SET_2'
+        practitionerSpecialty:
+          $ref: '#/components/schemas/CODE-SET_2'
+        start:
+          $ref: '#/components/schemas/DATE_2'
+        end:
+          $ref: '#/components/schemas/DATE_2'
+        type:
+          $ref: '#/components/schemas/CODE-SET_2'
+        reason:
+          $ref: '#/components/schemas/TEXT_2'
+        priority:
+          $ref: '#/components/schemas/CODE-SET_2'
+        note:
+          $ref: '#/components/schemas/TEXT_2'
+    sexualOrientations:
+      type: object
+      properties:
+        sexualOrientation:
+          $ref: '#/components/schemas/CODE-SET_2'
+    datesOfBirth:
+      type: object
+      properties:
+        dateOfBirth:
+          $ref: '#/components/schemas/DATE_2'
+    AddressDetailsPerSource:
+      type: object
+      properties:
+        identityCluster:
+          $ref: '#/components/schemas/AddressDetails'
+        firstAsserted:
+          type: string
+          description: The date the source first saw this property value.
+        lastAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was last asserted
+        addressDetails:
+          $ref: '#/components/schemas/AddressDetails'
+          description: The Address provided by this source
+        lastAsserted:
+          type: string
+          description: The date the source last saw this property value.
+        firstAssertedMetaData:
+          $ref: '#/components/schemas/CustomerMetaData'
+          description: Metadata specified when record data was first asserted
+      description: ''
+    DemographicsQueryWsRequest_2:
+      type: object
+      properties:
+        identity:
+          $ref: '#/components/schemas/Identity_2'
+          description: Identity containing demographic search values
+        responseIdentityFormatNames:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+          description: A set of values that indicates the different formats of the Identity to be sent back in the response. If no values are specified, "DEFAULT" is assumed.
+      required:
+      - identity
+      description: Request object for demographics query
+    healthInsuranceCoverage:
+      type: object
+      properties:
+        payerName:
+          $ref: '#/components/schemas/TEXT_2'
+        status:
+          $ref: '#/components/schemas/CODE-SET_2'
+        insuranceType:
+          $ref: '#/components/schemas/CODE-SET_2'
+        planType:
+          $ref: '#/components/schemas/CODE-SET_2'
+        subscriberId:
+          $ref: '#/components/schemas/TEXT_2'
+        relationship:
+          $ref: '#/components/schemas/CODE-SET_2'
+        groupNumber:
+          $ref: '#/components/schemas/TEXT_2'
+        idNumber:
+          $ref: '#/components/schemas/TEXT_2'
+        sequenceNumber:
+          $ref: '#/components/schemas/TEXT_2'
+        effectiveDate:
+          $ref: '#/components/schemas/TEXT_2'
+        endDate:
+          $ref: '#/components/schemas/DATE_2'
     TEXT_2:
       type: string
       description: TEXT data type, see documentation for more details
+    ssns:
+      type: object
+      properties:
+        ssn:
+          $ref: '#/components/schemas/TEXT_2'
+    Address:
+      type: object
+      properties:
+        type:
+          type: string
+        line1:
+          type: string
+        line2:
+          type: string
+        city:
+          type: string
+        district:
+          type: string
+        state:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+        validFrom:
+          type: string
+          format: date
+        validTo:
+          type: string
+          format: date
+        verifiedAddress:
+          $ref: '#/components/schemas/VerifiedAddress'
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source_2'
+          description: The source for this cluster
+        verifiedAddressMetaData:
+          $ref: '#/components/schemas/VerifiedAddressMetaData'
+        clusterStatus:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          description: The current clusterStatus
+      description: API address model
+    addresses_2:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CODE-SET_2'
+        line1:
+          $ref: '#/components/schemas/TEXT_2'
+        line2:
+          $ref: '#/components/schemas/TEXT_2'
+        city:
+          $ref: '#/components/schemas/TEXT_2'
+        district:
+          $ref: '#/components/schemas/TEXT_2'
+        state:
+          $ref: '#/components/schemas/TEXT_2'
+        postalCode:
+          $ref: '#/components/schemas/TEXT_2'
+        country:
+          $ref: '#/components/schemas/TEXT_2'
+        latitude:
+          $ref: '#/components/schemas/NUMBER_2'
+        longitude:
+          $ref: '#/components/schemas/NUMBER_2'
+        validFrom:
+          $ref: '#/components/schemas/DATE_2'
+        validTo:
+          $ref: '#/components/schemas/DATE_2'
+    Email:
+      type: object
+      properties:
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/Source_2'
+          description: The source for this cluster
+        type:
+          type: string
+        email:
+          type: string
+        validFrom:
+          type: string
+          format: date
+        validTo:
+          type: string
+          format: date
+        clusterStatus:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+          description: The current clusterStatus
+    MergedSourceRecord:
+      type: object
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-mm-dd).
+        name:
+          type: string
+          description: The name of the data source.  Must be unique across Verato.
+        id:
+          type: string
+          description: The ID of an identity within the given data source.
+        activeNativeId:
+          type: string
+          description: The surviving (active) native id.
+        activeSource:
+          type: string
+          description: The surviving (active) source name.
+        timestamp:
+          type: string
+          description: The merge timestamp (UTC, ISO_LOCAL_DATE_TIME).
+      description: A retired source record enriched with linkage metadata.
+    consents:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/TEXT_2'
+        type:
+          $ref: '#/components/schemas/CODE-SET_2'
+        status:
+          $ref: '#/components/schemas/CODE-SET_2'
+        isRequired:
+          $ref: '#/components/schemas/BOOLEAN_2'
+        decision:
+          $ref: '#/components/schemas/CODE-SET_2'
+        validFrom:
+          $ref: '#/components/schemas/DATE_2'
+        validTo:
+          $ref: '#/components/schemas/DATE_2'
+        source:
+          $ref: '#/components/schemas/TEXT_2'
+        regulatoryBasis:
+          $ref: '#/components/schemas/CODE-SET_2'
     IdentityPerSource_2:
       type: object
       properties:
@@ -1157,68 +1597,76 @@ components:
           $ref: '#/components/schemas/Source_2'
           description: A source that has been deactivated in this identity.
       description: API object representing an identity, with information grouped by the single source that provided that information (this may include multiple updates, as expressed in the "lastAsserted" and "firstAsserted" properties).
-    ServiceRequest_v2__demographicsQuery:
+    VerifiedAddress:
       type: object
       properties:
-        content:
-          $ref: '#/components/schemas/DemographicsQueryWsRequest_2'
-        trackingId:
+        pmbDesignator:
           type: string
-    names:
+        zip:
+          type: string
+        secondaryNumber:
+          type: string
+        deliveryPoint:
+          type: string
+        country:
+          type: string
+        extraSecondaryDesignator:
+          type: string
+        streetPredirection:
+          type: string
+        city:
+          type: string
+        extraSecondaryNumber:
+          type: string
+        secondaryDesignator:
+          type: string
+        zip4:
+          type: string
+        urbanization:
+          type: string
+        primaryNumber:
+          type: string
+        streetName:
+          type: string
+        deliveryPointCheckDigit:
+          type: string
+        streetSuffix:
+          type: string
+        state:
+          type: string
+        cityAka:
+          type: string
+        streetPostdirection:
+          type: string
+        pmbNumber:
+          type: string
+    DATE_2:
+      type: string
+      description: DATE data type, see documentation for more details
+    citizenships:
       type: object
       properties:
-        use:
+        citizenship:
           $ref: '#/components/schemas/CODE-SET_2'
-        prefix:
-          $ref: '#/components/schemas/TEXT_2'
-        first:
-          $ref: '#/components/schemas/TEXT_2'
-        middle:
-          $ref: '#/components/schemas/TEXT_2'
-        last:
-          $ref: '#/components/schemas/TEXT_2'
-        suffix:
-          $ref: '#/components/schemas/TEXT_2'
-        credential:
-          $ref: '#/components/schemas/TEXT_2'
-    Name:
+    photos:
       type: object
       properties:
-        use:
-          type: string
-        prefix:
-          type: string
-        first:
-          type: string
-        middle:
-          type: string
-        last:
-          type: string
-        suffix:
-          type: string
-        credential:
-          type: string
-        clusterStatus:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-          description: The current clusterStatus
-      description: Represents a person's name
-    SocialSecurityNumberPerSource:
+        url:
+          $ref: '#/components/schemas/TEXT_2'
+    EmailPerSource:
       type: object
       properties:
         identityCluster:
-          $ref: '#/components/schemas/SSN'
+          $ref: '#/components/schemas/Email'
         firstAsserted:
           type: string
           description: The date the source first saw this property value.
         lastAssertedMetaData:
           $ref: '#/components/schemas/CustomerMetaData'
           description: Metadata specified when record data was last asserted
-        ssn:
-          $ref: '#/components/schemas/SSN'
-          description: The Social Security Number provided by this source
+        email:
+          $ref: '#/components/schemas/Email'
+          description: The Email provided by this source
         lastAsserted:
           type: string
           description: The date the source last saw this property value.
@@ -1226,65 +1674,21 @@ components:
           $ref: '#/components/schemas/CustomerMetaData'
           description: Metadata specified when record data was first asserted
       description: ''
-    qualifications_2:
+    preferences:
       type: object
       properties:
-        type:
-          $ref: '#/components/schemas/CODE-SET_2'
-        qualification:
-          $ref: '#/components/schemas/CODE-SET_2'
-        status:
-          $ref: '#/components/schemas/CODE-SET_2'
-        issuer:
-          $ref: '#/components/schemas/TEXT_2'
-        issueDate:
-          $ref: '#/components/schemas/DATE_2'
-        validFrom:
-          $ref: '#/components/schemas/DATE_2'
-        validTo:
-          $ref: '#/components/schemas/DATE_2'
-    NamePerSource:
-      type: object
-      properties:
-        identityCluster:
-          $ref: '#/components/schemas/Name'
-        firstAsserted:
-          type: string
-          description: The date the source first saw this property value.
-        lastAssertedMetaData:
-          $ref: '#/components/schemas/CustomerMetaData'
-          description: Metadata specified when record data was last asserted
         name:
-          $ref: '#/components/schemas/Name'
-          description: The Name provided by this source
-        lastAsserted:
-          type: string
-          description: The date the source last saw this property value.
-        firstAssertedMetaData:
-          $ref: '#/components/schemas/CustomerMetaData'
-          description: Metadata specified when record data was first asserted
-      description: ''
-    AddressDetailsPerSource:
+          $ref: '#/components/schemas/TEXT_2'
+        type:
+          $ref: '#/components/schemas/TEXT_2'
+        channels:
+          type: array
+          items: {}
+    religiousAffiliations:
       type: object
       properties:
-        identityCluster:
-          $ref: '#/components/schemas/AddressDetails'
-        firstAsserted:
-          type: string
-          description: The date the source first saw this property value.
-        lastAssertedMetaData:
-          $ref: '#/components/schemas/CustomerMetaData'
-          description: Metadata specified when record data was last asserted
-        addressDetails:
-          $ref: '#/components/schemas/AddressDetails'
-          description: The Address provided by this source
-        lastAsserted:
-          type: string
-          description: The date the source last saw this property value.
-        firstAssertedMetaData:
-          $ref: '#/components/schemas/CustomerMetaData'
-          description: Metadata specified when record data was first asserted
-      description: ''
+        religiousAffiliation:
+          $ref: '#/components/schemas/CODE-SET_2'
     alternateIdentifiers_2:
       type: object
       properties:
@@ -1304,133 +1708,6 @@ components:
           $ref: '#/components/schemas/DATE_2'
         endDate:
           $ref: '#/components/schemas/DATE_2'
-    DatesOfBirthPerSource:
-      type: object
-      properties:
-        identityCluster:
-          $ref: '#/components/schemas/DateOfBirth'
-        firstAsserted:
-          type: string
-          description: The date the source first saw this property value.
-        lastAssertedMetaData:
-          $ref: '#/components/schemas/CustomerMetaData'
-          description: Metadata specified when record data was last asserted
-        dateOfBirth:
-          $ref: '#/components/schemas/DateOfBirth'
-          description: The Date Of Birth provided by this source
-        lastAsserted:
-          type: string
-          description: The date the source last saw this property value.
-        firstAssertedMetaData:
-          $ref: '#/components/schemas/CustomerMetaData'
-          description: Metadata specified when record data was first asserted
-      description: ''
-    DATE_2:
-      type: string
-      description: DATE data type, see documentation for more details
-    SSN:
-      type: object
-      properties:
-        sources:
-          type: array
-          items:
-            $ref: '#/components/schemas/Source_2'
-          description: The source for this cluster
-        attributesMap:
-          type: object
-          additionalProperties: {}
-        clusterStatus:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-          description: The current clusterStatus
-        ssn:
-          type: string
-          description: The social security number
-    AddressPerSource:
-      type: object
-      properties:
-        identityCluster:
-          $ref: '#/components/schemas/Address'
-        firstAsserted:
-          type: string
-          description: The date the source first saw this property value.
-        address:
-          $ref: '#/components/schemas/Address'
-          description: The Address provided by this source
-        lastAssertedMetaData:
-          $ref: '#/components/schemas/CustomerMetaData'
-          description: Metadata specified when record data was last asserted
-        lastAsserted:
-          type: string
-          description: The date the source last saw this property value.
-        firstAssertedMetaData:
-          $ref: '#/components/schemas/CustomerMetaData'
-          description: Metadata specified when record data was first asserted
-      description: ''
-    Phone:
-      type: object
-      properties:
-        type:
-          type: string
-        countryCode:
-          type: string
-        areaCode:
-          type: string
-        number:
-          type: string
-        extension:
-          type: string
-        validTo:
-          type: string
-          format: date
-        validFrom:
-          type: string
-          format: date
-        bestTimeToContact:
-          type: object
-          properties:
-            day:
-              type: string
-            startTime:
-              type: string
-              format: time
-            endTime:
-              type: string
-              format: time
-            allDay:
-              type: boolean
-        clusterStatus:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-          description: The current clusterStatus
-      description: Represents a phone number
-    DemographicsQueryWsRequest_2:
-      type: object
-      properties:
-        identity:
-          $ref: '#/components/schemas/Identity_2'
-          description: Identity containing demographic search values
-        responseIdentityFormatNames:
-          type: array
-          items:
-            type: string
-          uniqueItems: true
-          description: A set of values that indicates the different formats of the Identity to be sent back in the response. If no values are specified, "DEFAULT" is assumed.
-      required:
-      - identity
-      description: Request object for demographics query
-    religiousAffiliations:
-      type: object
-      properties:
-        religiousAffiliation:
-          $ref: '#/components/schemas/CODE-SET_2'
-    NUMBER_2:
-      type: string
-      description: NUMBER data type, see documentation for more details
     DemographicsQueryWsResponse_2:
       type: object
       properties:
@@ -1477,236 +1754,6 @@ components:
           - EnrichedDetails
           description: Enriched details for an Identity that is augmented from the enrich stack
       description: Response object for demographics query
-    datesOfBirth:
-      type: object
-      properties:
-        dateOfBirth:
-          $ref: '#/components/schemas/DATE_2'
-    CustomerMetaData:
-      type: object
-      properties:
-        transactionType:
-          type: string
-        sourceLoginName:
-          type: string
-        sourceUserName:
-          type: string
-        transactionDateTime:
-          type: string
-        sourceTransactionDateTime:
-          type: string
-        customMetaData:
-          type: object
-          additionalProperties:
-            type: string
-        location:
-          type: string
-    EmailPerSource:
-      type: object
-      properties:
-        identityCluster:
-          $ref: '#/components/schemas/Email'
-        firstAsserted:
-          type: string
-          description: The date the source first saw this property value.
-        lastAssertedMetaData:
-          $ref: '#/components/schemas/CustomerMetaData'
-          description: Metadata specified when record data was last asserted
-        email:
-          $ref: '#/components/schemas/Email'
-          description: The Email provided by this source
-        lastAsserted:
-          type: string
-          description: The date the source last saw this property value.
-        firstAssertedMetaData:
-          $ref: '#/components/schemas/CustomerMetaData'
-          description: Metadata specified when record data was first asserted
-      description: ''
-    AddressDetails:
-      type: object
-      properties:
-        country:
-          type: string
-        streetType:
-          type: string
-        sources:
-          type: array
-          items:
-            $ref: '#/components/schemas/Source_2'
-          description: The source for this cluster
-        city:
-          type: string
-        zipcode4:
-          type: string
-        addressType:
-          type: string
-        houseNumber:
-          type: string
-        streetPostDirection:
-          type: string
-        unitNumber:
-          type: string
-        attributesMap:
-          type: object
-          additionalProperties: {}
-        streetDirection:
-          type: string
-        unitType:
-          type: string
-        zipcode:
-          type: string
-        streetName:
-          type: string
-        state:
-          type: string
-        line2:
-          type: string
-        clusterStatus:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-          description: The current clusterStatus
-    preferences:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/TEXT_2'
-        type:
-          $ref: '#/components/schemas/TEXT_2'
-        channels:
-          type: array
-          items: {}
-    communicationLanguages:
-      type: object
-      properties:
-        language:
-          $ref: '#/components/schemas/CODE-SET_2'
-        preferred:
-          $ref: '#/components/schemas/BOOLEAN_2'
-    DateOfBirth:
-      type: object
-      properties:
-        sources:
-          type: array
-          items:
-            $ref: '#/components/schemas/Source_2'
-          description: The source for this cluster
-        dateOfBirth:
-          type: string
-          description: The date of birth
-        clusterStatus:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-          description: The current clusterStatus
-    VerifiedAddress:
-      type: object
-      properties:
-        pmbDesignator:
-          type: string
-        zip:
-          type: string
-        secondaryNumber:
-          type: string
-        deliveryPoint:
-          type: string
-        country:
-          type: string
-        extraSecondaryDesignator:
-          type: string
-        streetPredirection:
-          type: string
-        city:
-          type: string
-        extraSecondaryNumber:
-          type: string
-        secondaryDesignator:
-          type: string
-        zip4:
-          type: string
-        urbanization:
-          type: string
-        primaryNumber:
-          type: string
-        streetName:
-          type: string
-        deliveryPointCheckDigit:
-          type: string
-        streetSuffix:
-          type: string
-        state:
-          type: string
-        cityAka:
-          type: string
-        streetPostdirection:
-          type: string
-        pmbNumber:
-          type: string
-    PhoneNumberPerSource:
-      type: object
-      properties:
-        identityCluster:
-          $ref: '#/components/schemas/Phone'
-        firstAsserted:
-          type: string
-          description: The date the source first saw this property value.
-        phoneNumber:
-          $ref: '#/components/schemas/Phone'
-          description: The Phone Number provided by this source
-        lastAssertedMetaData:
-          $ref: '#/components/schemas/CustomerMetaData'
-          description: Metadata specified when record data was last asserted
-        lastAsserted:
-          type: string
-          description: The date the source last saw this property value.
-        firstAssertedMetaData:
-          $ref: '#/components/schemas/CustomerMetaData'
-          description: Metadata specified when record data was first asserted
-      description: ''
-    deathDetails:
-      type: object
-      properties:
-        deceased:
-          $ref: '#/components/schemas/CODE-SET_2'
-        dateOfDeath:
-          $ref: '#/components/schemas/DATE_2'
-        city:
-          $ref: '#/components/schemas/TEXT_2'
-        county:
-          $ref: '#/components/schemas/TEXT_2'
-        state:
-          $ref: '#/components/schemas/TEXT_2'
-        country:
-          $ref: '#/components/schemas/TEXT_2'
-    TIME_2:
-      type: string
-      description: TIME data type, see documentation for more details
-    Email:
-      type: object
-      properties:
-        sources:
-          type: array
-          items:
-            $ref: '#/components/schemas/Source_2'
-          description: The source for this cluster
-        type:
-          type: string
-        email:
-          type: string
-        validFrom:
-          type: string
-          format: date
-        validTo:
-          type: string
-          format: date
-        clusterStatus:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-          description: The current clusterStatus
     ServiceResponse_v2__demographicsQuery:
       type: object
       properties:
@@ -1730,53 +1777,6 @@ components:
             type: string
         trackingId:
           type: string
-    Gender:
-      type: object
-      properties:
-        gender:
-          type: string
-          description: The person's gender
-        sources:
-          type: array
-          items:
-            $ref: '#/components/schemas/Source_2'
-          description: The source for this cluster
-        clusterStatus:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-          description: The current clusterStatus
-    genderIdentities:
-      type: object
-      properties:
-        genderIdentity:
-          $ref: '#/components/schemas/CODE-SET_2'
-    recentEncounter:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/CODE-SET_2'
-        class:
-          $ref: '#/components/schemas/CODE-SET_2'
-        priority:
-          $ref: '#/components/schemas/CODE-SET_2'
-        type:
-          $ref: '#/components/schemas/CODE-SET_2'
-        serviceType:
-          $ref: '#/components/schemas/CODE-SET_2'
-        start:
-          $ref: '#/components/schemas/DATE_2'
-        end:
-          $ref: '#/components/schemas/DATE_2'
-        reason:
-          $ref: '#/components/schemas/TEXT_2'
-        diagnosis:
-          $ref: '#/components/schemas/TEXT_2'
-        specialArrangement:
-          $ref: '#/components/schemas/CODE-SET_2'
-        specialCourtesy:
-          $ref: '#/components/schemas/CODE-SET_2'
   securitySchemes:
     basicAuth:
       type: http

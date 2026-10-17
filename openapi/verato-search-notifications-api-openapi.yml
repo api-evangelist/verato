@@ -41,36 +41,6 @@ paths:
       description: Sandbox Organization Link API
 components:
   schemas:
-    ServiceResponse_searchNotifications:
-      type: object
-      properties:
-        auditId:
-          type: string
-        success:
-          type: boolean
-        warnings:
-          type: array
-          items:
-            type: string
-        retryableError:
-          type: boolean
-        message:
-          type: string
-        content:
-          $ref: '#/components/schemas/SearchNotificationsWsResponse'
-        errors:
-          type: array
-          items:
-            type: string
-        trackingId:
-          type: string
-    ServiceRequest_searchNotifications:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/SearchNotificationsWsRequest'
-        trackingId:
-          type: string
     NotificationData:
       type: object
       properties:
@@ -91,31 +61,6 @@ components:
           format: date-time
         username:
           type: string
-    SearchNotificationsWsRequest:
-      type: object
-      description: Query notifications for the customer.
-      required:
-      - pageNumber
-      - pageSize
-      - startDate
-      - endDate
-      properties:
-        pageNumber:
-          type: integer
-          format: int32
-          description: Page number.
-        pageSize:
-          type: integer
-          format: int32
-          description: Page size.
-        startDate:
-          type: string
-          format: date-time
-          description: Start date.
-        endDate:
-          type: string
-          format: date-time
-          description: End date.
     NotificationLowerCaseBody:
       type: object
       properties:
@@ -153,6 +98,79 @@ components:
           type: integer
           format: int64
           description: Number of notifications retrieved.
+    ServiceRequest_searchNotifications:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/SearchNotificationsWsRequest'
+        trackingId:
+          type: string
+    ServiceResponse_searchNotifications:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/SearchNotificationsWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    SearchNotificationsWsRequest:
+      type: object
+      description: Query notifications for the customer.
+      required:
+      - pageNumber
+      - pageSize
+      - startDate
+      - endDate
+      properties:
+        pageNumber:
+          type: integer
+          format: int32
+          description: Page number.
+        pageSize:
+          type: integer
+          format: int32
+          description: Page size.
+        startDate:
+          type: string
+          format: date-time
+          description: Start date.
+        endDate:
+          type: string
+          format: date-time
+          description: End date.
+    SearchNotificationsWsResponse_2:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: The name of the customer for the notifications
+        hasNext:
+          type: boolean
+          description: Boolean to determinate if there are more elements
+        notifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationData'
+          description: The notifications retrieved
+        totalElements:
+          type: integer
+          format: int64
+          description: The number of notifications retrieved
     SearchNotificationsWsRequest_2:
       type: object
       properties:
@@ -178,24 +196,6 @@ components:
       - startDate
       - endDate
       description: query notificiations for the customer
-    SearchNotificationsWsResponse_2:
-      type: object
-      properties:
-        customerId:
-          type: string
-          description: The name of the customer for the notifications
-        hasNext:
-          type: boolean
-          description: Boolean to determinate if there are more elements
-        notifications:
-          type: array
-          items:
-            $ref: '#/components/schemas/NotificationData'
-          description: The notifications retrieved
-        totalElements:
-          type: integer
-          format: int64
-          description: The number of notifications retrieved
   securitySchemes:
     basicAuth:
       type: http

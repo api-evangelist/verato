@@ -43,45 +43,15 @@ paths:
       description: Sandbox Organization Link API
 components:
   schemas:
-    ServiceRequest_addRelationshipService:
+    AddRelationshipWsResponse:
       type: object
       properties:
-        content:
-          $ref: '#/components/schemas/AddRelationshipWsRequest'
-        trackingId:
-          type: string
-    ServiceResponse_addRelationshipService:
-      type: object
-      properties:
-        auditId:
-          type: string
-        success:
-          type: boolean
-        warnings:
-          type: array
-          items:
-            type: string
-        retryableError:
-          type: boolean
-        message:
-          type: string
-        content:
-          $ref: '#/components/schemas/AddRelationshipWsResponse'
-        errors:
-          type: array
-          items:
-            type: string
-        trackingId:
-          type: string
+        relationship:
+          $ref: '#/components/schemas/RelationshipWs'
     Map_string_Object:
       type: object
       additionalProperties: {}
       description: Generic map of string keys to arbitrary values.
-    AddRelationshipWsRequest:
-      type: object
-      properties:
-        relationship:
-          $ref: '#/components/schemas/NewRelationshipRequest'
     RelationshipWs:
       type: object
       description: Relationship between two identities.
@@ -132,11 +102,41 @@ components:
         endDate:
           type: string
           format: date-time
-    AddRelationshipWsResponse:
+    AddRelationshipWsRequest:
       type: object
       properties:
         relationship:
-          $ref: '#/components/schemas/RelationshipWs'
+          $ref: '#/components/schemas/NewRelationshipRequest'
+    ServiceResponse_addRelationshipService:
+      type: object
+      properties:
+        auditId:
+          type: string
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
+          type: string
+        content:
+          $ref: '#/components/schemas/AddRelationshipWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    ServiceRequest_addRelationshipService:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/AddRelationshipWsRequest'
+        trackingId:
+          type: string
     RelationshipWs_2:
       type: object
       properties:

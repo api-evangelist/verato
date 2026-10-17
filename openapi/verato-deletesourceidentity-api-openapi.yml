@@ -54,31 +54,6 @@ components:
         source:
           description: The source to remove from the database.
           $ref: '#/components/schemas/Source'
-    ServiceRequest_deleteSourceIdentity:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/DeleteSourceIdentityWsRequest'
-        trackingId:
-          type: string
-    DeleteSourceIdentityWsResponse:
-      type: object
-      description: 'Service response for a source-based delete. Indicates which linkIds were
-
-        modified and which were deleted.
-
-        '
-      properties:
-        linkIdsModified:
-          type: array
-          description: link IDs with information removed but not deleted.
-          items:
-            type: string
-        linkIdsDeleted:
-          type: array
-          description: link IDs that were deleted.
-          items:
-            type: string
     ServiceResponse_deleteSourceIdentity:
       type: object
       properties:
@@ -115,6 +90,31 @@ components:
         id:
           type: string
           description: ID of an identity within the given data source.
+    DeleteSourceIdentityWsResponse:
+      type: object
+      description: 'Service response for a source-based delete. Indicates which linkIds were
+
+        modified and which were deleted.
+
+        '
+      properties:
+        linkIdsModified:
+          type: array
+          description: link IDs with information removed but not deleted.
+          items:
+            type: string
+        linkIdsDeleted:
+          type: array
+          description: link IDs that were deleted.
+          items:
+            type: string
+    ServiceRequest_deleteSourceIdentity:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/DeleteSourceIdentityWsRequest'
+        trackingId:
+          type: string
     DeleteSourceIdentityWsRequest_2:
       type: object
       properties:
@@ -124,6 +124,19 @@ components:
       required:
       - source
       description: Deletes all information associated with the source provided within
+    Source_2:
+      type: object
+      properties:
+        date:
+          type: string
+          description: The date of the source data in ISO format (yyyy-mm-dd).
+        name:
+          type: string
+          description: The name of the data source.  Must be unique across Verato.
+        id:
+          type: string
+          description: The ID of an identity within the given data source.
+      description: Represents the information tracking an identity to a source that contains the identity
     DeleteSourceIdentityWsResponse_2:
       type: object
       properties:
@@ -138,19 +151,6 @@ components:
             type: string
           description: The list of LINK ids that were deleted
       description: Service response for a Source-based query
-    Source_2:
-      type: object
-      properties:
-        date:
-          type: string
-          description: The date of the source data in ISO format (yyyy-mm-dd).
-        name:
-          type: string
-          description: The name of the data source.  Must be unique across Verato.
-        id:
-          type: string
-          description: The ID of an identity within the given data source.
-      description: Represents the information tracking an identity to a source that contains the identity
   securitySchemes:
     basicAuth:
       type: http

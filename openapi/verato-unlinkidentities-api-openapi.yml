@@ -43,61 +43,6 @@ paths:
       description: Sandbox Organization Link API
 components:
   schemas:
-    UnlinkIdentitiesWsResponse:
-      type: object
-      description: 'Response to unlink identities request, providing link IDs and source
-
-        information for the newly separated identities.
-
-        '
-      required:
-      - unlinkedId
-      - unlinkedFromId
-      - unlinkedSource
-      - unlinkedFromSource
-      properties:
-        unlinkedId:
-          type: string
-          description: link ID of the identity that was unlinked.
-        unlinkedSource:
-          description: Source info of the identity that was unlinked.
-          $ref: '#/components/schemas/Source'
-        unlinkedFromId:
-          type: string
-          description: link ID of the identity unlinked from.
-        unlinkedFromSource:
-          description: Source info for the identity unlinked from.
-          $ref: '#/components/schemas/Source'
-    ServiceResponse_unlinkIdentities:
-      type: object
-      properties:
-        auditId:
-          type: string
-        success:
-          type: boolean
-        warnings:
-          type: array
-          items:
-            type: string
-        retryableError:
-          type: boolean
-        message:
-          type: string
-        content:
-          $ref: '#/components/schemas/UnlinkIdentitiesWsResponse'
-        errors:
-          type: array
-          items:
-            type: string
-        trackingId:
-          type: string
-    ServiceRequest_unlinkIdentities:
-      type: object
-      properties:
-        content:
-          $ref: '#/components/schemas/UnlinkIdentitiesWsRequest'
-        trackingId:
-          type: string
     UnlinkIdentitiesWsRequest:
       type: object
       description: 'Request to unlink data from one identity to create a separate identity.
@@ -126,27 +71,61 @@ components:
         id:
           type: string
           description: ID of an identity within the given data source.
-    UnlinkIdentitiesWsResponse_2:
+    ServiceResponse_unlinkIdentities:
       type: object
       properties:
-        unlinkedId:
+        auditId:
           type: string
-          description: Link ID of the Identity that was unlinked
-        unlinkedSource:
-          $ref: '#/components/schemas/Source_2'
-          description: The source information of identity that was unlinked
-        unlinkedFromId:
+        success:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+        retryableError:
+          type: boolean
+        message:
           type: string
-          description: Link ID of Identity unlinked from.
-        unlinkedFromSource:
-          $ref: '#/components/schemas/Source_2'
-          description: The source information for unlinked from Identity
+        content:
+          $ref: '#/components/schemas/UnlinkIdentitiesWsResponse'
+        errors:
+          type: array
+          items:
+            type: string
+        trackingId:
+          type: string
+    UnlinkIdentitiesWsResponse:
+      type: object
+      description: 'Response to unlink identities request, providing link IDs and source
+
+        information for the newly separated identities.
+
+        '
       required:
       - unlinkedId
       - unlinkedFromId
       - unlinkedSource
       - unlinkedFromSource
-      description: When two identities have been linked by the LinkIdentities WebService, unlink them by extracting the previously linked Identity into its own record.
+      properties:
+        unlinkedId:
+          type: string
+          description: link ID of the identity that was unlinked.
+        unlinkedSource:
+          description: Source info of the identity that was unlinked.
+          $ref: '#/components/schemas/Source'
+        unlinkedFromId:
+          type: string
+          description: link ID of the identity unlinked from.
+        unlinkedFromSource:
+          description: Source info for the identity unlinked from.
+          $ref: '#/components/schemas/Source'
+    ServiceRequest_unlinkIdentities:
+      type: object
+      properties:
+        content:
+          $ref: '#/components/schemas/UnlinkIdentitiesWsRequest'
+        trackingId:
+          type: string
     UnlinkIdentitiesWsRequest_2:
       type: object
       required:
@@ -173,6 +152,27 @@ components:
           type: string
           description: The ID of an identity within the given data source.
       description: Represents the information tracking an identity to a source that contains the identity
+    UnlinkIdentitiesWsResponse_2:
+      type: object
+      properties:
+        unlinkedId:
+          type: string
+          description: Link ID of the Identity that was unlinked
+        unlinkedSource:
+          $ref: '#/components/schemas/Source_2'
+          description: The source information of identity that was unlinked
+        unlinkedFromId:
+          type: string
+          description: Link ID of Identity unlinked from.
+        unlinkedFromSource:
+          $ref: '#/components/schemas/Source_2'
+          description: The source information for unlinked from Identity
+      required:
+      - unlinkedId
+      - unlinkedFromId
+      - unlinkedSource
+      - unlinkedFromSource
+      description: When two identities have been linked by the LinkIdentities WebService, unlink them by extracting the previously linked Identity into its own record.
   securitySchemes:
     basicAuth:
       type: http
